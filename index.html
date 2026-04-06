@@ -807,7 +807,7 @@ async function doRegister() {
 async function doGoogleLogin() {
   await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: window.location.href }
+    options: { redirectTo: 'https://rgproj.github.io/mini-ceo-challenge' }
   });
 }
 
