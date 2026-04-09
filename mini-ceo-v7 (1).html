@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mini CEO Challenge 💼</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4023211751342070" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+:root {
+  --pink:#FF6B9D;--purple:#A855F7;--teal:#14B8A6;--amber:#F59E0B;
+  --green:#22C55E;--red:#EF4444;--blue:#3B82F6;
+  --bg:#FFF5FB;--card:#FFFFFF;--text:#1E1B2E;--muted:#7C6F8A;--border:#F0E4F7;
+  --shadow:0 4px 20px rgba(168,85,247,.10);--radius:20px;--radius-sm:12px;
+  --font-d:'Fredoka One',cursive;--font-b:'Nunito',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;width:100%;overflow:hidden;font-family:var(--font-b);background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;user-select:none;}
+#app{width:100%;height:100%;max-width:480px;margin:0 auto;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;padding:0 0 88px;opacity:0;pointer-events:none;transform:translateY(24px);transition:opacity .3s,transform .3s;scrollbar-width:none;}
+.screen::-webkit-scrollbar{display:none;}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+
+.hero-band{background:linear-gradient(135deg,#A855F7 0%,#EC4899 60%,#F59E0B 100%);padding:44px 24px 26px;border-radius:0 0 var(--radius) var(--radius);color:#fff;text-align:center;position:relative;overflow:hidden;flex-shrink:0;}
+.hero-band::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E") repeat;}
+.hero-title{font-family:var(--font-d);font-size:32px;color:#fff;position:relative;}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.88);margin-top:4px;position:relative;}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:0 16px 12px;border:1.5px solid var(--border);}
+.card-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font-b);font-size:15px;font-weight:800;padding:13px 22px;border-radius:50px;border:none;cursor:pointer;transition:transform .15s;width:100%;}
+.btn:active{transform:scale(.95);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;box-shadow:0 4px 16px rgba(168,85,247,.35);}
+.btn-secondary{background:var(--card);color:var(--purple);border:2px solid var(--purple);}
+.btn-green{background:linear-gradient(135deg,#14B8A6,#22C55E);color:#fff;}
+.btn-amber{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;}
+.btn-red{background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;}
+.btn-google{background:#fff;color:#333;border:2px solid #ddd;}
+.btn-sm{font-size:13px;padding:8px 16px;width:auto;}
+
+input[type=text],input[type=email],input[type=password]{width:100%;padding:13px 16px;border-radius:var(--radius-sm);border:2px solid var(--border);font-family:var(--font-b);font-size:15px;font-weight:600;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s;}
+input[type=text]:focus,input[type=email]:focus,input[type=password]:focus{border-color:var(--purple);}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:linear-gradient(to right,var(--purple) 0%,var(--purple) var(--pct,50%),var(--border) var(--pct,50%));border-radius:3px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--purple);border:3px solid #fff;box-shadow:0 2px 8px rgba(168,85,247,.4);}
+
+.avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;}
+.avatar-opt{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:var(--radius-sm);border:2.5px solid var(--border);cursor:pointer;background:var(--bg);transition:all .15s;}
+.avatar-opt.selected{border-color:var(--purple);background:rgba(168,85,247,.1);transform:scale(1.08);}
+.flag-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;}
+.flag-opt{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:24px;border-radius:var(--radius-sm);border:2.5px solid var(--border);cursor:pointer;background:var(--bg);transition:all .15s;}
+.flag-opt.selected{border-color:var(--purple);background:rgba(168,85,247,.1);transform:scale(1.08);}
+
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-box{background:var(--bg);border-radius:var(--radius-sm);padding:13px;border:1.5px solid var(--border);text-align:center;}
+.stat-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.stat-val{font-size:21px;font-weight:900;color:var(--text);margin-top:2px;}
+.stat-val.green{color:var(--green);}.stat-val.pink{color:var(--pink);}
+.stat-val.amber{color:var(--amber);}.stat-val.blue{color:var(--blue);}
+
+.progress-track{background:var(--border);border-radius:4px;height:8px;overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--green));transition:width .6s cubic-bezier(.4,0,.2,1);}
+
+.rounds-bar{display:flex;gap:8px;align-items:center;justify-content:center;padding:12px 16px;}
+.round-dot{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;border:2.5px solid var(--border);background:var(--bg);transition:all .2s;}
+.round-dot.used{background:var(--purple);border-color:var(--purple);color:#fff;}
+.round-dot.current{background:linear-gradient(135deg,var(--purple),var(--pink));border-color:var(--pink);color:#fff;transform:scale(1.15);box-shadow:0 4px 12px rgba(168,85,247,.4);}
+.round-dot.empty{opacity:.4;}
+
+.shop-config-tabs{display:flex;gap:0;margin:0 16px 12px;border-radius:var(--radius-sm);overflow:hidden;border:2px solid var(--purple);}
+.shop-config-tab{flex:1;padding:10px 6px;text-align:center;font-size:12px;font-weight:800;cursor:pointer;background:var(--bg);color:var(--purple);border:none;transition:all .15s;}
+.shop-config-tab.active{background:var(--purple);color:#fff;}
+.shop-config-tab .tab-icon{display:block;font-size:18px;margin-bottom:2px;}
+
+.slider-row{margin-bottom:16px;}
+.slider-labels{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.slider-name{font-size:14px;font-weight:700;}
+.slider-val{font-size:17px;font-weight:900;color:var(--purple);background:rgba(168,85,247,.1);padding:2px 10px;border-radius:20px;}
+
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.promo-opt{padding:12px 10px;border-radius:var(--radius-sm);border:2px solid var(--border);cursor:pointer;background:var(--bg);transition:all .15s;text-align:center;}
+.promo-opt .promo-icon{font-size:20px;margin-bottom:3px;}
+.promo-opt .promo-name{font-size:11px;font-weight:800;}
+.promo-opt .promo-effect{font-size:9px;color:var(--muted);margin-top:1px;}
+.promo-opt.selected{border-color:var(--teal);background:rgba(20,184,166,.08);}
+
+.result-hero{background:linear-gradient(135deg,#22C55E,#14B8A6);padding:26px 24px 18px;border-radius:0 0 var(--radius) var(--radius);color:#fff;text-align:center;flex-shrink:0;}
+.result-hero.loss{background:linear-gradient(135deg,#F59E0B,#EF4444);}
+.result-hero.neutral{background:linear-gradient(135deg,var(--purple),var(--blue));}
+.result-big{font-family:var(--font-d);font-size:42px;line-height:1;}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1.5px solid var(--border);font-size:13px;}
+.result-row:last-child{border-bottom:none;}
+.rr-label{color:var(--muted);font-weight:600;}
+.rr-plus{color:var(--green);font-weight:800;}
+.rr-minus{color:var(--red);font-weight:800;}
+
+.event-banner{border-radius:var(--radius);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;margin:0 16px 12px;border:2px solid;}
+.event-banner.good{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.35);}
+.event-banner.bad{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.35);}
+.event-banner.neutral{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.35);}
+
+.tip-bubble{background:rgba(168,85,247,.07);border-left:4px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 12px;margin:0 16px 12px;font-size:12px;line-height:1.55;}
+.tip-bubble strong{color:var(--purple);}
+
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800;}
+.badge-purple{background:rgba(168,85,247,.15);color:var(--purple);}
+.badge-green{background:rgba(34,197,94,.15);color:#16A34A;}
+.badge-amber{background:rgba(245,158,11,.15);color:#B45309;}
+
+.challenge-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(236,72,153,.08));border:2px dashed var(--purple);border-radius:var(--radius);padding:12px 16px;margin:0 16px 12px;}
+
+.shop-card{background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+
+.lb-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1.5px solid var(--border);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-size:15px;font-weight:900;width:24px;text-align:center;}
+.lb-info{flex:1;}
+.lb-name{font-size:13px;font-weight:800;}
+.lb-shop{font-size:11px;color:var(--muted);}
+.lb-score{font-size:15px;font-weight:900;color:var(--green);}
+
+.coins-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--border);}
+.coins-item:last-child{border-bottom:none;}
+.coins-item-icon{font-size:30px;flex-shrink:0;}
+.coins-item-info{flex:1;}
+.coins-item-name{font-size:14px;font-weight:800;}
+.coins-item-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.coins-item-price{font-size:12px;font-weight:900;color:var(--amber);margin-top:3px;}
+
+/* Overlays */
+#no-coins-overlay,#daily-ad-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9990;display:none;align-items:center;justify-content:center;padding:24px;}
+#no-coins-overlay.show,#daily-ad-overlay.show{display:flex;}
+.overlay-card{background:var(--card);border-radius:var(--radius);width:100%;max-width:360px;padding:28px 22px;text-align:center;}
+
+#tutorial-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9990;display:none;align-items:center;justify-content:center;padding:24px;}
+#tutorial-overlay.show{display:flex;}
+.tutorial-card{background:var(--card);border-radius:var(--radius);width:100%;max-width:420px;max-height:90vh;overflow-y:auto;}
+.tut-slide{padding:26px 22px;display:none;text-align:center;}
+.tut-slide.active{display:block;}
+.tut-dots{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+.tut-dot{width:8px;height:8px;border-radius:50%;background:var(--border);}
+.tut-dot.active{background:var(--purple);}
+
+.auth-tabs{display:flex;margin:12px 16px 0;}
+.auth-tab{flex:1;padding:10px;text-align:center;font-weight:800;font-size:14px;cursor:pointer;border-bottom:3px solid var(--border);color:var(--muted);}
+.auth-tab.active{border-bottom-color:var(--purple);color:var(--purple);}
+
+.share-card{background:linear-gradient(135deg,#A855F7 0%,#EC4899 60%,#F59E0B 100%);border-radius:var(--radius);padding:22px;margin:0 16px 12px;color:#fff;text-align:center;position:relative;overflow:hidden;}
+.share-card::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.07'%3E%3Ccircle cx='20' cy='20' r='14'/%3E%3C/g%3E%3C/svg%3E") repeat;}
+.share-card *{position:relative;}
+
+.ref-code{font-family:var(--font-d);font-size:20px;letter-spacing:3px;color:var(--purple);background:rgba(168,85,247,.08);border-radius:var(--radius-sm);padding:12px;text-align:center;border:2px dashed var(--purple);word-break:break-all;}
+
+#navbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:1.5px solid var(--border);display:none;align-items:center;padding:8px 0 env(safe-area-inset-bottom,8px);z-index:999;box-shadow:0 -4px 20px rgba(168,85,247,.08);}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;font-size:10px;font-weight:700;color:var(--muted);background:none;border:none;font-family:var(--font-b);}
+.nav-btn .nav-icon{font-size:20px;}
+.nav-btn.active{color:var(--purple);}
+.nav-btn.play-btn .nav-icon-wrap{background:linear-gradient(135deg,var(--purple),var(--pink));width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(168,85,247,.4);margin-top:-14px;}
+
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1E1B2E;color:#fff;padding:12px 20px;border-radius:50px;font-size:14px;font-weight:700;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:9999;max-width:calc(100% - 48px);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .4s;}
+#loading.hidden{opacity:0;pointer-events:none;}
+#loading .spin{font-size:48px;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes popIn{0%{transform:scale(.7);opacity:0}80%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.pop-in{animation:popIn .4s cubic-bezier(.4,0,.2,1) both;}
+.pulse{animation:pulse 2s ease-in-out infinite;}
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998;}
+.spacer{height:14px;}.mt-12{margin-top:12px;}
+.pending-badge{display:inline-block;background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;font-weight:900;text-align:center;line-height:18px;margin-left:4px;}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div id="toast"></div>
+<div id="loading"><div class="spin">💼</div><p style="margin-top:16px;font-weight:700;color:var(--muted);">Loading Mini CEO...</p></div>
+
+<!-- Daily Ad Overlay (shown on first login each day) -->
+<div id="daily-ad-overlay">
+  <div class="overlay-card">
+    <div style="font-size:52px;margin-bottom:10px;">🎁</div>
+    <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Daily Bonus!</div>
+    <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:20px;">Watch a short ad to collect your <strong>+50 coins</strong> for today!</div>
+    <!-- AdSense placeholder -->
+    <div style="background:var(--bg);border:2px dashed var(--border);border-radius:var(--radius-sm);padding:24px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:32px;margin-bottom:6px;">📺</div>
+      <div style="font-size:13px;color:var(--muted);">Ad will appear here</div>
+      <!-- <ins class="adsbygoogle" data-ad-slot="YOUR_SLOT_ID"></ins> -->
+    </div>
+    <button class="btn btn-amber" onclick="collectDailyBonus()">Collect +50 Coins 🪙</button>
+    <div style="margin-top:10px;font-size:12px;color:var(--muted);">Free daily reward — come back tomorrow!</div>
+  </div>
+</div>
+
+<!-- No Coins Overlay -->
+<div id="no-coins-overlay">
+  <div class="overlay-card">
+    <div style="font-size:52px;margin-bottom:10px;">🪙</div>
+    <div style="font-family:var(--font-d);font-size:22px;margin-bottom:8px;">No Coins Left!</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;">Watch a short ad to get <strong>+5 coins</strong>, or come back tomorrow for your free +50!</div>
+    <div style="background:var(--bg);border:2px dashed var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:4px;">📺</div>
+      <div style="font-size:12px;color:var(--muted);">Ad will appear here</div>
+    </div>
+    <button class="btn btn-amber" onclick="watchAdForCoins()" style="margin-bottom:8px;">📺 Watch Ad — Get +5 Coins</button>
+    <button class="btn btn-secondary" onclick="closeNoCoins()">⏰ Come Back Tomorrow</button>
+    <div style="margin-top:10px;font-size:11px;color:var(--muted);">Daily reset at midnight 🌙</div>
+  </div>
+</div>
+
+<!-- Tutorial -->
+<div id="tutorial-overlay">
+  <div class="tutorial-card">
+    <div class="tut-slide active" id="tut-1">
+      <div style="font-size:56px;margin-bottom:12px;">💼</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Welcome to Mini CEO!</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Run shops, make smart decisions, and grow your empire!</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">1</div><div>Each round costs <strong>10 🪙</strong> — up to 5 rounds per day</div></div>
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">2</div><div>Configure each shop separately — price, stock, promo</div></div>
+        <div style="display:flex;gap:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">3</div><div>Watch the daily ad to get <strong>+50 free coins</strong> every day!</div></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot active"></div><div class="tut-dot"></div><div class="tut-dot"></div></div>
+      <button class="btn btn-primary" onclick="tutNext()">Next →</button>
+    </div>
+    <div class="tut-slide" id="tut-2">
+      <div style="font-size:56px;margin-bottom:12px;">🪙</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Coins System</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>🎁 Start bonus</span><span style="font-weight:800;color:var(--green);">+100 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>📺 Daily ad</span><span style="font-weight:800;color:var(--green);">+50 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>📺 Watch ad (anytime)</span><span style="font-weight:800;color:var(--green);">+5 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>▶️ Per round played</span><span style="font-weight:800;color:var(--red);">-10 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;"><span>🏅 Achievements</span><span style="font-weight:800;color:var(--amber);">+1 to +10 🪙</span></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot"></div><div class="tut-dot active"></div><div class="tut-dot"></div></div>
+      <button class="btn btn-primary" onclick="tutNext()">Next →</button>
+    </div>
+    <div class="tut-slide" id="tut-3">
+      <div style="font-size:56px;margin-bottom:12px;">🔥</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Streak Bonus!</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px;">Win multiple rounds in a row to build your streak and earn bonus coins!</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>🔥 3 round streak</span><span style="font-weight:800;color:var(--amber);">+3 bonus coins</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>🔥 5 round streak</span><span style="font-weight:800;color:var(--amber);">+5 bonus coins</span></div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;"><span>🔥 10 round streak</span><span style="font-weight:800;color:var(--amber);">+10 bonus coins</span></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot"></div><div class="tut-dot"></div><div class="tut-dot active"></div></div>
+      <button class="btn btn-green" onclick="closeTutorial()">Let's Go! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- AUTH -->
+  <div id="screen-auth" class="screen">
+    <div class="hero-band">
+      <div style="font-size:50px;margin-bottom:8px;" class="pulse">💼</div>
+      <div class="hero-title">Mini CEO</div>
+      <div class="hero-sub">Build your empire, one day at a time ✨</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</div>
+      <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Sign Up</div>
+    </div>
+    <div id="auth-login-form">
+      <div class="card mt-12">
+        <div class="card-title">👋 Welcome back!</div>
+        <input type="email" id="login-email" placeholder="Email" style="margin-bottom:8px;">
+        <input type="password" id="login-password" placeholder="Password" style="margin-bottom:12px;">
+        <button class="btn btn-primary" onclick="doLogin()">Login 🚀</button>
+      </div>
+      <div style="padding:0 16px;"><button class="btn btn-google" onclick="doGoogleLogin()"><span style="font-size:17px;font-weight:900;">G</span> Continue with Google</button></div>
+    </div>
+    <div id="auth-register-form" style="display:none;">
+      <div class="card mt-12">
+        <div class="card-title">🌟 Create account</div>
+        <input type="text" id="reg-username" placeholder="Username" style="margin-bottom:8px;" maxlength="20">
+        <input type="email" id="reg-email" placeholder="Email" style="margin-bottom:8px;">
+        <input type="password" id="reg-password" placeholder="Password (min 6)" style="margin-bottom:12px;">
+        <button class="btn btn-primary" onclick="doRegister()">Create Account ✨</button>
+      </div>
+      <div style="padding:0 16px;"><button class="btn btn-google" onclick="doGoogleLogin()"><span style="font-size:17px;font-weight:900;">G</span> Continue with Google</button></div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div id="screen-onboarding" class="screen">
+    <div class="hero-band"><div style="font-size:42px;margin-bottom:8px;">🏪</div><div class="hero-title">Set Up Your Shop</div><div class="hero-sub">Personalize your experience!</div></div>
+    <div class="spacer"></div>
+    <div class="card"><div class="card-title">🎨 Avatar</div><div class="avatar-grid" id="avatar-grid"></div></div>
+    <div class="card"><div class="card-title">🌍 Country</div><div class="flag-grid" id="flag-grid"></div></div>
+    <div class="card"><div class="card-title">🏪 First Shop</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="onboard-shop-grid"></div></div>
+    <div style="padding:0 16px 16px;"><button class="btn btn-primary" onclick="completeOnboarding()">Start My Journey 🚀</button></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="screen-dashboard" class="screen">
+    <div class="hero-band" id="dash-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;position:relative;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span id="dash-flag" style="font-size:20px;">🌍</span>
+          <span id="dash-avatar" style="font-size:28px;">😺</span>
+          <div style="text-align:left;"><div style="font-size:11px;opacity:.8;">Hey,</div><div style="font-family:var(--font-d);font-size:20px;" id="dash-name">CEO!</div></div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div style="text-align:right;"><div style="font-size:11px;opacity:.8;">Day</div><div style="font-family:var(--font-d);font-size:22px;" id="dash-day">1</div></div>
+          <button onclick="doSignOut()" style="background:rgba(255,255,255,.2);border:none;border-radius:50%;width:30px;height:30px;font-size:13px;cursor:pointer;color:#fff;">🚪</button>
+        </div>
+      </div>
+      <div style="height:10px;"></div>
+      <div style="display:flex;gap:8px;position:relative;">
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">CASH 💰</div><div style="font-family:var(--font-d);font-size:19px;" id="dash-cash">$250</div></div>
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">COINS 🪙</div><div style="font-family:var(--font-d);font-size:19px;" id="dash-coins">100</div></div>
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;cursor:pointer;" onclick="showStreakInfo()">
+          <div style="font-size:10px;opacity:.8;font-weight:700;">STREAK 🔥</div>
+          <div style="font-family:var(--font-d);font-size:19px;" id="dash-streak">0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rounds -->
+    <div class="card mt-12">
+      <div class="card-title">⚡ Today's Rounds</div>
+      <div class="rounds-bar" id="rounds-bar"></div>
+      <div style="text-align:center;font-size:12px;color:var(--muted);" id="rounds-label">5 rounds left • 10 🪙 per round</div>
+    </div>
+
+    <!-- Daily ad button -->
+    <div id="daily-ad-btn" style="display:none;padding:0 16px 12px;">
+      <button class="btn btn-amber" onclick="showDailyAd()" style="font-size:14px;">📺 Watch Daily Ad — Collect +50 Coins!</button>
+    </div>
+
+    <!-- Reputation -->
+    <div class="card">
+      <div class="card-title">⭐ Reputation</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span id="dash-rep-label" style="font-size:14px;font-weight:800;">Good</span><span id="dash-rep-val" style="font-size:14px;font-weight:900;color:var(--purple);">60/100</span></div>
+      <div class="progress-track"><div class="progress-fill" id="dash-rep-bar" style="width:60%;"></div></div>
+    </div>
+
+    <!-- My Shops -->
+    <div style="padding:14px 16px 6px;font-size:15px;font-weight:900;">🏪 My Shops</div>
+    <div style="padding:0 16px;" id="my-shops-list"></div>
+
+    <!-- Challenge -->
+    <div class="challenge-card">
+      <div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;">🎯 Today's Challenge</div>
+      <div style="font-size:14px;font-weight:800;margin-top:3px;" id="challenge-text">Make $100 profit!</div>
+      <div id="challenge-reward" class="badge badge-amber" style="margin-top:6px;">+50 coins</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="card">
+      <div class="card-title">📊 Stats</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-label">Total Profit</div><div class="stat-val green" id="dash-total-profit">$0</div></div>
+        <div class="stat-box"><div class="stat-label">Best Round</div><div class="stat-val pink" id="dash-best-day">$0</div></div>
+        <div class="stat-box"><div class="stat-label">Level ⭐</div><div class="stat-val amber" id="dash-level">1</div></div>
+        <div class="stat-box"><div class="stat-label">Shops 🏪</div><div class="stat-val blue" id="dash-shop-count">1</div></div>
+      </div>
+    </div>
+
+    <div class="tip-bubble" id="dash-tip">💡 <strong>Tip:</strong> Watch the daily ad for +50 free coins every day!</div>
+    <div class="card"><div class="card-title">🏅 Badges</div><div id="badges-list"><span style="font-size:13px;color:var(--muted);">Play to earn badges!</span></div></div>
+    <div id="sync-status" style="text-align:center;font-size:11px;color:var(--muted);padding:0 16px 6px;"></div>
+
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-primary" id="btn-play-day" onclick="startRound()">▶️ Play Round <span id="dash-round-btn">1</span> <span style="font-size:12px;opacity:.8;">(10 🪙)</span></button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-amber" onclick="showScreen('coins-store')" style="font-size:14px;">🪙 Coins Store — <span id="dash-coins-btn">0</span> coins</button>
+    </div>
+  </div>
+
+  <!-- PLAY -->
+  <div id="screen-play" class="screen">
+    <div class="hero-band" style="padding:30px 24px 16px;">
+      <div style="position:relative;">
+        <div style="font-size:12px;opacity:.8;margin-bottom:2px;">Round <span id="play-round-num">1</span>/5 • Day <span id="play-day-num">1</span></div>
+        <div style="font-family:var(--font-d);font-size:22px;">Configure Your Shops</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px;">Cash: <strong id="play-cash">$250</strong> &nbsp;|&nbsp; 🪙 <strong id="play-coins">100</strong></div>
+      </div>
+    </div>
+
+    <div id="play-shop-tabs-wrap" style="margin-top:12px;"></div>
+    <div id="play-shop-panel"></div>
+
+    <div class="card">
+      <div class="card-title">📣 Advertising (all shops)</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Ad spend</span><span class="slider-val" id="ads-val">$10</span></div>
+        <input type="range" id="sl-ads" min="0" max="80" step="5" value="10" oninput="updateBudgetSummary()" style="--pct:12.5%">
+      </div>
+      <div id="ads-tip" class="tip-bubble" style="margin:0;font-size:11px;">📣 Ads boost all shops equally!</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Round Budget</div>
+      <div id="budget-rows"></div>
+      <div class="result-row" style="border:none;padding-top:10px;border-top:2px solid var(--border);"><span style="font-weight:900;">Cash after spend</span><span id="ps-cash-after" style="font-weight:900;">$190</span></div>
+    </div>
+
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-green" id="btn-open-business" onclick="runRound()">Open for Business! 🎉</button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-secondary" onclick="showScreen('dashboard')">← Back</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="screen-results" class="screen">
+    <div id="result-hero" class="result-hero">
+      <div id="result-emoji" style="font-size:50px;" class="pop-in">🎉</div>
+      <div class="result-big" id="result-headline">+$82</div>
+      <div style="font-size:14px;opacity:.9;margin-top:4px;" id="result-sublabel">Round Profit</div>
+    </div>
+
+    <!-- Streak banner -->
+    <div id="streak-banner" style="display:none;background:linear-gradient(135deg,#F59E0B,#EF4444);margin:0 16px;border-radius:var(--radius);padding:14px 18px;color:#fff;text-align:center;margin-top:12px;">
+      <div style="font-size:24px;">🔥</div>
+      <div style="font-family:var(--font-d);font-size:20px;" id="streak-text">3 Round Streak!</div>
+      <div style="font-size:13px;opacity:.9;" id="streak-bonus-text">+3 bonus coins!</div>
+    </div>
+
+    <div style="padding:12px 16px 4px;font-size:14px;font-weight:900;" id="shop-results-title"></div>
+    <div style="padding:0 16px;" id="shop-results-list"></div>
+
+    <div id="result-event" class="event-banner good" style="margin-top:10px;">
+      <div style="font-size:24px;flex-shrink:0;" id="ev-icon">☀️</div>
+      <div><div style="font-size:13px;font-weight:800;" id="ev-title">Hot Weather!</div><div style="font-size:12px;color:var(--muted);margin-top:2px;" id="ev-desc">Sales boosted!</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Round Total</div>
+      <div class="result-row"><span class="rr-label">Total revenue</span><span class="rr-plus" id="rr-rev">+$72</span></div>
+      <div class="result-row"><span class="rr-label">Stock costs</span><span class="rr-minus" id="rr-invcost">-$20</span></div>
+      <div class="result-row"><span class="rr-label">Ad spend</span><span class="rr-minus" id="rr-adcost">-$10</span></div>
+      <div class="result-row"><span class="rr-label">Staff cost</span><span class="rr-minus" id="rr-staffcost">-$20</span></div>
+      <div class="result-row" style="border:none;padding-top:10px;border-top:2px solid var(--border);"><span style="font-weight:900;font-size:14px;">Net profit</span><span style="font-weight:900;font-size:17px;" id="rr-profit">+$22</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⭐ Reputation</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;" id="rep-change-label">+3</span><span style="font-size:13px;font-weight:900;color:var(--purple);" id="rep-new-val">78/100</span></div>
+      <div class="progress-track"><div class="progress-fill" id="result-rep-bar" style="width:78%;"></div></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;" id="rep-reason">Customers were happy!</div>
+    </div>
+
+    <div id="challenge-result-card" class="card" style="display:none;"><div class="card-title">🎯 Challenge</div><div id="challenge-result-content"></div></div>
+    <div id="new-badges-card" class="card" style="display:none;"><div class="card-title">🏅 New Badges!</div><div id="new-badges-content" style="display:flex;flex-wrap:wrap;gap:8px;"></div></div>
+    <div class="tip-bubble" id="result-explain">💡 <strong>Tip:</strong> <span id="explain-text">Configure each shop separately for best results!</span></div>
+
+    <div class="card" style="text-align:center;">
+      <div style="font-size:30px;">🪙</div>
+      <div style="font-family:var(--font-d);font-size:24px;color:var(--amber);" id="coins-earned">+25</div>
+      <div style="font-size:12px;color:var(--muted);">coins earned this round</div>
+      <div style="font-size:13px;font-weight:800;color:var(--purple);margin-top:4px;" id="coins-total-display">Total: 0 🪙</div>
+    </div>
+
+    <!-- Watch ad for +5 coins -->
+    <div style="background:rgba(168,85,247,.05);border:2px dashed rgba(168,85,247,.25);border-radius:var(--radius);padding:16px;margin:0 16px 12px;text-align:center;cursor:pointer;" onclick="watchAdForCoins()">
+      <div style="font-size:22px;margin-bottom:4px;">📺</div>
+      <div style="font-weight:800;font-size:13px;">Watch a short ad — Get +5 coins!</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;">Play more rounds today</div>
+    </div>
+
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-primary" id="btn-next-round" onclick="goToNextRound()">Next Round ➡️</button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-secondary" onclick="showShareCard()">📲 Share Result</button>
+    </div>
+  </div>
+
+  <!-- COINS STORE -->
+  <div id="screen-coins-store" class="screen">
+    <div class="hero-band" style="padding:34px 24px 20px;">
+      <div style="font-family:var(--font-d);font-size:24px;position:relative;">🪙 Coins Store</div>
+      <div style="font-size:12px;opacity:.85;position:relative;margin-top:3px;">Unlock upgrades!</div>
+      <div style="margin-top:10px;position:relative;background:rgba(255,255,255,.2);border-radius:10px;padding:8px 16px;display:inline-block;">
+        <div style="font-size:10px;opacity:.8;">Your coins</div>
+        <div style="font-family:var(--font-d);font-size:22px;" id="store-coins-display">0</div>
+      </div>
+    </div>
+
+    <!-- Earn more coins -->
+    <div style="padding:12px 16px 4px;font-size:14px;font-weight:900;">📺 Earn More Coins</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1.5px solid var(--border);">
+        <div style="font-size:28px;">📺</div>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:800;">Watch Ad</div><div style="font-size:11px;color:var(--muted);">Get +5 coins instantly</div></div>
+        <button class="btn btn-sm btn-amber" onclick="watchAdForCoins()" style="width:auto;">Watch +5</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:10px 0;">
+        <div style="font-size:28px;">🎁</div>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:800;">Daily Ad</div><div style="font-size:11px;color:var(--muted);">+50 coins — resets every day</div></div>
+        <button class="btn btn-sm btn-green" onclick="showDailyAd()" id="store-daily-btn" style="width:auto;">Collect</button>
+      </div>
+    </div>
+
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🏪 Unlock Shops</div>
+    <div class="card" id="shop-unlock-list"></div>
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">⚡ Upgrades</div>
+    <div class="card" id="upgrades-list"></div>
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🎨 Themes</div>
+    <div class="card" id="themes-list"></div>
+    <div style="padding:0 16px 16px;margin-top:6px;"><button class="btn btn-secondary" onclick="showScreen('dashboard')">← Back</button></div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="screen-social" class="screen">
+    <div class="hero-band" style="padding:34px 24px 20px;">
+      <div style="font-family:var(--font-d);font-size:24px;position:relative;">🏆 Leaderboard</div>
+      <div style="font-size:12px;opacity:.85;position:relative;margin-top:3px;">Weekly Top CEOs</div>
+    </div>
+    <div style="display:flex;gap:0;padding:12px 16px 0;">
+      <button class="btn btn-sm" id="tab-friends-lb" onclick="switchLbTab('friends')" style="border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--purple);color:#fff;border-color:var(--purple);">Friends</button>
+      <button class="btn btn-sm" id="tab-global-lb" onclick="switchLbTab('global')" style="border-radius:0 12px 12px 0;flex:1;background:var(--bg);color:var(--purple);">Global</button>
+    </div>
+    <div class="card mt-12" id="lb-list"><div style="font-size:13px;color:var(--muted);">Loading...</div></div>
+    <div class="card" style="background:rgba(168,85,247,.06);border-color:var(--purple);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:22px;font-weight:900;color:var(--purple);width:26px;text-align:center;" id="my-rank">#?</div>
+        <div style="font-size:16px;" id="social-my-flag">🌍</div>
+        <div style="font-size:22px;" id="social-my-avatar">😺</div>
+        <div style="flex:1;"><div style="font-weight:800;font-size:13px;" id="social-my-name">You</div><div style="font-size:11px;color:var(--muted);">This week</div></div>
+        <div style="font-size:15px;font-weight:900;color:var(--green);" id="my-score">$0</div>
+      </div>
+    </div>
+    <div class="card" id="friend-requests-card" style="display:none;"><div class="card-title">📬 Requests <span id="req-count-badge" class="pending-badge">0</span></div><div id="friend-requests-list"></div></div>
+    <div class="card"><div class="card-title">👯 Add Friend</div><input type="text" id="add-friend-inp" placeholder="Enter username..." style="margin-bottom:8px;" maxlength="20"><button class="btn btn-primary" onclick="sendFriendRequest()">Send Request 💌</button></div>
+    <div class="card"><div class="card-title">💌 Invite Code</div><div class="ref-code" id="ref-code">Loading...</div><div style="height:8px;"></div><button class="btn btn-secondary" onclick="copyRefCode()">📋 Copy</button></div>
+    <div style="padding:0 16px 16px;margin-top:4px;"><button class="btn btn-red btn-sm" style="width:100%;" onclick="doSignOut()">🚪 Sign Out</button></div>
+  </div>
+
+  <!-- SHARE -->
+  <div id="screen-share" class="screen">
+    <div style="padding:18px 16px 0;display:flex;align-items:center;gap:10px;">
+      <button class="btn btn-sm btn-secondary" onclick="showScreen('results')" style="width:auto;">← Back</button>
+      <span style="font-size:16px;font-weight:900;">Share Result 📲</span>
+    </div>
+    <div class="share-card mt-12">
+      <div style="font-family:var(--font-d);font-size:28px;" id="sc-shop-emoji">🥤</div>
+      <div style="font-family:var(--font-d);font-size:18px;margin-top:4px;" id="sc-shop-name">My Shop</div>
+      <div style="font-size:12px;opacity:.85;margin-top:3px;" id="sc-tagline">Round 1</div>
+      <div style="margin:14px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">PROFIT</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-profit">+$0</div></div>
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">SOLD</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-sold">0</div></div>
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">REP ⭐</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-rep">60</div></div>
+      </div>
+      <div style="font-size:11px;opacity:.7;">🎮 rgproj.github.io/mini-ceo-challenge</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <button class="btn btn-primary" onclick="shareResult()" style="margin-bottom:8px;">📤 Share Now</button>
+      <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="copyShareText()">📋 Copy Text</button>
+    </div>
+  </div>
+
+  <nav id="navbar">
+    <button class="nav-btn active" id="nav-dashboard" onclick="showScreen('dashboard')"><span class="nav-icon">🏠</span><span>Home</span></button>
+    <button class="nav-btn play-btn" id="nav-play" onclick="startRound()"><div class="nav-icon-wrap">▶</div></button>
+    <button class="nav-btn" id="nav-coins" onclick="showScreen('coins-store')"><span class="nav-icon">🪙</span><span>Store</span></button>
+    <button class="nav-btn" id="nav-social" onclick="showScreen('social')"><span class="nav-icon">🏆</span><span>Ranks</span></button>
+  </nav>
+</div>
+
+<script>
+// ═══ SUPABASE ═══
+const SUPABASE_URL='https://uigseedcvsipnejvcvau.supabase.co';
+const SUPABASE_KEY='sb_publishable_WTVamLxXh7sNUytGXO1KhQ_7608zMs0';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+// ═══ CONSTANTS ═══
+const ROUND_COST=10, MAX_ROUNDS=5, START_COINS=100, STAFF_COST=20;
+const DAILY_AD_COINS=50, WATCH_AD_COINS=5;
+
+// Badge coin rewards
+const BADGE_COINS={first_round:1,first_profit:2,streak3:3,streak7:5,sold_out:3,big_round:10,rep_80:5,multi_shop:10,coins100:2,day10:10};
+
+const SHOPS=[
+  {id:'smoothie',   name:'Smoothie Stand', icon:'🥤',unitCost:1.5,minPrice:2, maxPrice:20,unlockCost:0},
+  {id:'sticker',    name:'Sticker Shop',   icon:'🎀',unitCost:0.5,minPrice:1, maxPrice:8, unlockCost:0},
+  {id:'icecream',   name:'Ice Cream Shop', icon:'🍦',unitCost:1.2,minPrice:2, maxPrice:20,unlockCost:200},
+  {id:'accessories',name:'Accessories',    icon:'💍',unitCost:3.0,minPrice:5, maxPrice:20,unlockCost:350},
+];
+const FLAGS=[
+  {code:'il',flag:'🇮🇱'},{code:'us',flag:'🇺🇸'},{code:'gb',flag:'🇬🇧'},
+  {code:'fr',flag:'🇫🇷'},{code:'de',flag:'🇩🇪'},{code:'es',flag:'🇪🇸'},
+  {code:'it',flag:'🇮🇹'},{code:'br',flag:'🇧🇷'},{code:'au',flag:'🇦🇺'},{code:'ca',flag:'🇨🇦'},
+];
+const AVATARS=['😺','🦊','🐼','🦋','🌸','⭐','🌈','🎀','🦄','🍓'];
+const PROMOS=[
+  {id:'none',       icon:'🚫',name:'No Promo',    effect:'Save money',             mult:1.0},
+  {id:'bogo',       icon:'2️⃣',name:'Buy 1 Get 1', effect:'+30% sales,-15% rev',    mult:1.3,revMod:0.85},
+  {id:'loyalty',    icon:'🃏',name:'Loyalty Card',effect:'+20% customers',          mult:1.2},
+  {id:'flash',      icon:'⚡',name:'Flash Sale',  effect:'+40% sales,price-20%',    mult:1.4,priceMod:0.8},
+  {id:'influencer', icon:'📸',name:'Collab Post', effect:'+50% customers,$15 cost', mult:1.5,costMod:15},
+  {id:'bundle',     icon:'📦',name:'Bundle Deal', effect:'+25% sales',              mult:1.25},
+];
+const EVENTS=[
+  {id:'hot',       icon:'☀️', title:'Hot Weather!',       desc:'Sales boosted!',               type:'good',   mult:1.35},
+  {id:'rain',      icon:'🌧️',title:'Rainy Day...',       desc:'Fewer customers today.',         type:'bad',    mult:0.70},
+  {id:'school',    icon:'🏫',title:'School Event!',       desc:'Traffic way up!',               type:'good',   mult:1.45},
+  {id:'influencer',icon:'📸',title:'Influencer Mention!', desc:'Huge buzz. Customers flooding!', type:'good',   mult:1.60},
+  {id:'supplier',  icon:'📦',title:'Supplier Price Hike', desc:'Costs up 20%.',                 type:'bad',    mult:1.0,costMod:1.2},
+  {id:'holiday',   icon:'🎉',title:'Local Holiday!',       desc:'More shoppers!',                type:'good',   mult:1.30},
+  {id:'competitor',icon:'👀',title:'New Competitor',       desc:'Lost some customers.',           type:'bad',    mult:0.80},
+  {id:'normal',    icon:'🌤️',title:'Normal Day',          desc:'Solid business!',               type:'neutral',mult:1.0},
+  {id:'vibes',     icon:'😊',title:'Good Vibes Day',       desc:'Extra cheerful customers.',      type:'neutral',mult:1.10},
+  {id:'weekend',   icon:'🎊',title:'Weekend Rush!',        desc:"People are shopping.",           type:'good',   mult:1.25},
+];
+const CHALLENGES=[
+  {text:'Make $100 profit',      reward:5, check:(r)=>r.profit>=100},
+  {text:'Sell 20+ units total',  reward:4, check:(r)=>r.unitsSold>=20},
+  {text:'Keep rep above 75',     reward:3, check:(r)=>r.newRep>=75},
+  {text:'Sell out a shop',       reward:6, check:(r)=>r.anySoldOut},
+  {text:'Profit without ads',    reward:5, check:(r)=>r.adsSpent===0&&r.profit>0},
+  {text:'Earn $200+ revenue',    reward:4, check:(r)=>r.revenue>=200},
+  {text:'Run a promotion',       reward:3, check:(r)=>r.anyPromo},
+  {text:'Hit reputation 80+',    reward:6, check:(r)=>r.newRep>=80},
+];
+const BADGES=[
+  {id:'first_round', icon:'🌟',label:'First Round!'},
+  {id:'first_profit',icon:'💰',label:'First Profit'},
+  {id:'streak3',     icon:'🔥',label:'3 Round Streak'},
+  {id:'streak7',     icon:'🌈',label:'7 Round Streak'},
+  {id:'sold_out',    icon:'🏪',label:'Sold Out!'},
+  {id:'big_round',   icon:'🚀',label:'Big Round($200)'},
+  {id:'rep_80',      icon:'⭐',label:'Great Rep (80)'},
+  {id:'multi_shop',  icon:'🏬',label:'Multi-Shop CEO'},
+  {id:'coins100',    icon:'🪙',label:'100 Coins'},
+  {id:'day10',       icon:'📅',label:'10 Days Strong'},
+];
+const STORE_UPGRADES=[
+  {id:'warehouse',   icon:'🏭',name:'Warehouse Upgrade', desc:'Buy inventory 20% cheaper',           cost:150},
+  {id:'loyalty_card',icon:'💳',name:'Loyalty Program',   desc:'+15% returning customers per round',   cost:200},
+  {id:'extra_round', icon:'➕',name:'Extra Daily Round',  desc:'Play 6 rounds per day instead of 5',  cost:300},
+];
+const STORE_THEMES=[
+  {id:'pastel',icon:'🌸',name:'Pastel Dream',desc:'Soft pink & mint',cost:100},
+  {id:'neon',  icon:'⚡',name:'Neon Nights', desc:'Dark neon glow',  cost:150},
+  {id:'golden',icon:'✨',name:'Golden CEO',  desc:'Premium gold',    cost:250},
+];
+const TIPS=[
+  'Watch the daily ad for +50 free coins every day!',
+  'Staff costs $20/round per shop — make sure revenue covers it!',
+  'Higher reputation = staff works harder = more sales.',
+  'Set different prices for each shop!',
+  'Build your streak for bonus coins!',
+  'Unlock a 2nd shop to double earnings!',
+  'Running out of stock hurts your reputation.',
+];
+
+// ═══ STATE ═══
+let state={};
+let currentUser=null;
+let todayChallenge=null;
+let lastRoundResult=null;
+let currentLbTab='friends';
+let tutSlide=1;
+let shopConfigs={};
+let activeConfigShopId='';
+
+function defaultState(){
+  return {
+    playerName:'',avatar:'😺',shopId:'smoothie',flag:'🌍',
+    day:1,cash:250,reputation:60,
+    streak:0,level:1,coins:START_COINS,
+    totalProfit:0,bestDay:0,soldOuts:0,prevProfit:0,totalRounds:0,
+    roundsToday:0,lastLoginDate:'',dailyAdCollected:false,
+    earnedBadges:[],unlockedShops:['smoothie'],
+    purchasedUpgrades:[],purchasedThemes:[],
+    shopInventories:{smoothie:0,sticker:0,icecream:0,accessories:0},
+    shopProfits:{smoothie:0,sticker:0,icecream:0,accessories:0},
+    tutorialSeen:false,
+  };
+}
+
+// ═══ BOOT ═══
+window.addEventListener('load',async()=>{
+  buildAvatarGrid();buildFlagGrid();buildOnboardShopGrid();
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){currentUser=session.user;await loadOrCreatePlayer();}
+  else{hideLoading();showScreen('auth');}
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_IN'&&session&&!currentUser){currentUser=session.user;await loadOrCreatePlayer();}
+  });
+});
+function hideLoading(){document.getElementById('loading').classList.add('hidden');}
+
+// ═══ DAILY RESET ═══
+function checkDailyReset(){
+  const today=new Date().toDateString();
+  if(state.lastLoginDate!==today){
+    state.lastLoginDate=today;
+    state.roundsToday=0;
+    state.dailyAdCollected=false; // reset daily ad
+    if(state.totalRounds>0){
+      // Show daily ad overlay to collect 50 coins
+      setTimeout(()=>showDailyAd(),1000);
+    }
+  }
+}
+
+function showDailyAd(){
+  if(state.dailyAdCollected){showToast('✅ Already collected today! Come back tomorrow.');return;}
+  document.getElementById('daily-ad-overlay').classList.add('show');
+}
+
+function collectDailyBonus(){
+  document.getElementById('daily-ad-overlay').classList.remove('show');
+  state.coins=Math.round((state.coins||0)+DAILY_AD_COINS);
+  state.dailyAdCollected=true;
+  document.getElementById('daily-ad-btn').style.display='none';
+  document.getElementById('store-daily-btn').textContent='✅ Collected';
+  document.getElementById('store-daily-btn').disabled=true;
+  showToast('🎁 +'+DAILY_AD_COINS+' coins collected!');
+  spawnConfetti(60);
+  saveStateCloud();
+  initDashboard();
+}
+
+function watchAdForCoins(){
+  // Simulate ad watch — replace with real AdSense/AdMob
+  closeNoCoins();
+  state.coins=Math.round((state.coins||0)+WATCH_AD_COINS);
+  showToast('📺 +'+WATCH_AD_COINS+' coins added!');
+  saveStateCloud();
+  initDashboard();
+  if(document.getElementById('coins-total-display'))
+    document.getElementById('coins-total-display').textContent='Total: '+Math.round(state.coins||0)+' 🪙';
+}
+
+function closeNoCoins(){document.getElementById('no-coins-overlay').classList.remove('show');}
+
+// ═══ STREAK INFO ═══
+function showStreakInfo(){
+  const s=state.streak||0;
+  let msg='';
+  if(s===0)msg='Start winning rounds to build your streak! 🔥';
+  else if(s<3)msg='🔥 '+s+' rounds in a row with profit! Keep going!';
+  else if(s<7)msg='🔥🔥 '+s+' round streak! Bonus coins active!';
+  else msg='🔥🔥🔥 LEGENDARY '+s+' round streak! You\'re on fire!';
+  showToast(msg);
+}
+
+// ═══ TUTORIAL ═══
+function showTutorial(){tutSlide=1;document.querySelectorAll('.tut-slide').forEach(s=>s.classList.remove('active'));document.getElementById('tut-1').classList.add('active');document.getElementById('tutorial-overlay').classList.add('show');}
+function tutNext(){tutSlide++;document.querySelectorAll('.tut-slide').forEach(s=>s.classList.remove('active'));document.getElementById('tut-'+tutSlide)?.classList.add('active');}
+function closeTutorial(){document.getElementById('tutorial-overlay').classList.remove('show');state.tutorialSeen=true;saveStateCloud();}
+
+// ═══ AUTH ═══
+function switchAuthTab(tab){
+  document.getElementById('auth-login-form').style.display=tab==='login'?'block':'none';
+  document.getElementById('auth-register-form').style.display=tab==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+}
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pw=document.getElementById('login-password').value;
+  if(!email||!pw){showToast('⚠️ Fill all fields');return;}
+  showToast('⏳ Logging in...');
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error){showToast('❌ '+error.message);return;}
+  currentUser=data.user;await loadOrCreatePlayer();
+}
+async function doRegister(){
+  const username=document.getElementById('reg-username').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pw=document.getElementById('reg-password').value;
+  if(!username||!email||!pw){showToast('⚠️ Fill all fields');return;}
+  if(pw.length<6){showToast('⚠️ Password min 6 chars');return;}
+  showToast('⏳ Creating...');
+  const {data,error}=await sb.auth.signUp({email,password:pw,options:{data:{username}}});
+  if(error){showToast('❌ '+error.message);return;}
+  if(data.user){currentUser=data.user;window._pendingUsername=username;await loadOrCreatePlayer();}
+  else showToast('📧 Check your email to confirm!');
+}
+async function doGoogleLogin(){await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://rgproj.github.io/mini-ceo-challenge'}});}
+async function doSignOut(){if(!confirm('Sign out?'))return;await sb.auth.signOut();currentUser=null;state={};document.getElementById('navbar').style.display='none';showScreen('auth');}
+
+// ═══ PLAYER LOAD ═══
+async function loadOrCreatePlayer(){
+  const {data:player}=await sb.from('players').select('*').eq('id',currentUser.id).maybeSingle();
+  if(!player){
+    state=defaultState();
+    state.playerName=window._pendingUsername||currentUser.user_metadata?.full_name?.split(' ')[0]||currentUser.email?.split('@')[0]||'CEO';
+    hideLoading();showScreen('onboarding');return;
+  }
+  state.playerName=player.username;state.avatar=player.avatar||'😺';state.shopId=player.shop_id||'smoothie';
+  const {data:gs}=await sb.from('game_states').select('state').eq('player_id',currentUser.id).maybeSingle();
+  if(gs?.state)state={...defaultState(),...gs.state};
+  // Fix missing fields
+  if(!state.unlockedShops)state.unlockedShops=[state.shopId];
+  if(!state.shopInventories)state.shopInventories={smoothie:0,sticker:0,icecream:0,accessories:0};
+  if(!state.shopProfits)state.shopProfits={smoothie:0,sticker:0,icecream:0,accessories:0};
+  if(!state.purchasedUpgrades)state.purchasedUpgrades=[];
+  if(!state.purchasedThemes)state.purchasedThemes=[];
+  if(!state.flag)state.flag='🌍';
+  if(typeof state.coins!=='number'||isNaN(state.coins))state.coins=START_COINS;
+
+  checkDailyReset();
+  todayChallenge=randomChallenge();
+  hideLoading();
+  if(!state.tutorialSeen)showTutorial();
+  initDashboard();showScreen('dashboard');showNavbar();
+}
+
+// ═══ ONBOARDING ═══
+async function completeOnboarding(){
+  const selAvatar=document.querySelector('.avatar-opt.selected');
+  const selFlag=document.querySelector('.flag-opt.selected');
+  const selShop=document.querySelector('#onboard-shop-grid .shop-opt-ob.selected');
+  state.avatar=selAvatar?selAvatar.dataset.avatar:'😺';
+  state.flag=selFlag?selFlag.dataset.flag:'🌍';
+  state.shopId=selShop?selShop.dataset.shop:'smoothie';
+  state.unlockedShops=[state.shopId];
+  if(!state.playerName)state.playerName=currentUser.email?.split('@')[0]||'CEO';
+  checkDailyReset();
+  await sb.from('players').upsert({id:currentUser.id,username:state.playerName,avatar:state.avatar,shop_id:state.shopId});
+  todayChallenge=randomChallenge();
+  await saveStateCloud();
+  showTutorial();initDashboard();showScreen('dashboard');showNavbar();
+}
+
+// ═══ CLOUD SAVE ═══
+async function saveStateCloud(){
+  if(!currentUser)return;
+  if(typeof state.coins!=='number'||isNaN(state.coins))state.coins=0;
+  try{
+    await sb.from('game_states').upsert({player_id:currentUser.id,state,updated_at:new Date().toISOString()});
+    await sb.from('leaderboard').upsert({
+      player_id:currentUser.id,
+      username:state.playerName,
+      avatar:state.avatar,
+      flag:state.flag||'🌍',
+      shop_id:state.shopId,
+      total_profit:Math.round(state.totalProfit||0),
+      level:state.level||1,
+      updated_at:new Date().toISOString()
+    },{onConflict:'player_id'});
+    localStorage.setItem('miniceo_v6',JSON.stringify(state));
+    document.getElementById('sync-status').textContent='☁️ Saved '+new Date().toLocaleTimeString();
+  }catch(e){
+    localStorage.setItem('miniceo_v6',JSON.stringify(state));
+    document.getElementById('sync-status').textContent='💾 Saved locally ('+e.message+')';
+  }
+}
+
+// ═══ SCREEN ROUTING ═══
+const SCREENS=['auth','onboarding','dashboard','play','results','coins-store','social','share'];
+function showScreen(name){
+  SCREENS.forEach(s=>document.getElementById('screen-'+s)?.classList.toggle('active',s===name));
+  ['nav-dashboard','nav-play','nav-coins','nav-social'].forEach(id=>document.getElementById(id)?.classList.remove('active'));
+  if(name==='dashboard'){document.getElementById('nav-dashboard')?.classList.add('active');}
+  if(name==='play'){document.getElementById('nav-play')?.classList.add('active');updatePlayScreen();}
+  if(name==='coins-store'){document.getElementById('nav-coins')?.classList.add('active');updateCoinsStore();}
+  if(name==='social'){document.getElementById('nav-social')?.classList.add('active');updateSocialScreen();}
+}
+function showNavbar(){document.getElementById('navbar').style.display='flex';}
+
+// ═══ GRID BUILDERS ═══
+function buildAvatarGrid(){
+  const ag=document.getElementById('avatar-grid');
+  AVATARS.forEach((a,i)=>{
+    const d=document.createElement('div');
+    d.className='avatar-opt'+(i===0?' selected':'');d.textContent=a;d.dataset.avatar=a;
+    d.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    ag.appendChild(d);
+  });
+}
+function buildFlagGrid(){
+  const fg=document.getElementById('flag-grid');
+  FLAGS.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.className='flag-opt'+(i===0?' selected':'');d.textContent=f.flag;d.dataset.flag=f.flag;
+    d.onclick=()=>{document.querySelectorAll('.flag-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    fg.appendChild(d);
+  });
+}
+function buildOnboardShopGrid(){
+  const sg=document.getElementById('onboard-shop-grid');
+  SHOPS.filter(s=>s.unlockCost===0).forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='shop-opt-ob'+(i===0?' selected':'');d.dataset.shop=s.id;
+    d.style.cssText='display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:var(--radius);border:2.5px solid var(--border);cursor:pointer;background:var(--bg);text-align:center;transition:all .15s;';
+    d.innerHTML=`<div style="font-size:30px;">${s.icon}</div><div style="font-size:12px;font-weight:800;">${s.name}</div><div style="font-size:10px;color:var(--muted);">Free!</div>`;
+    d.onclick=()=>{document.querySelectorAll('.shop-opt-ob').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    sg.appendChild(d);
+  });
+}
+
+// ═══ DASHBOARD ═══
+function initDashboard(){
+  document.getElementById('dash-flag').textContent=state.flag||'🌍';
+  document.getElementById('dash-avatar').textContent=state.avatar;
+  document.getElementById('dash-name').textContent=state.playerName;
+  document.getElementById('dash-day').textContent=state.day;
+  document.getElementById('dash-cash').textContent='$'+Math.round(state.cash);
+  const coins=Math.round(state.coins||0);
+  document.getElementById('dash-coins').textContent=coins;
+  document.getElementById('dash-coins-btn').textContent=coins;
+  document.getElementById('dash-streak').textContent=state.streak||0;
+  document.getElementById('dash-level').textContent=state.level||1;
+  document.getElementById('dash-total-profit').textContent='$'+Math.round(state.totalProfit);
+  document.getElementById('dash-best-day').textContent='$'+Math.round(state.bestDay);
+  document.getElementById('dash-shop-count').textContent=(state.unlockedShops||[]).length;
+
+  const maxR=state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS;
+  const used=state.roundsToday||0;
+  const left=Math.max(0,maxR-used);
+  document.getElementById('dash-round-btn').textContent=used+1;
+  document.getElementById('rounds-label').textContent=left+' rounds left today • '+ROUND_COST+' 🪙 per round';
+  renderRoundsBar(used,maxR);
+
+  const rep=Math.round(state.reputation);
+  document.getElementById('dash-rep-val').textContent=rep+'/100';
+  document.getElementById('dash-rep-bar').style.width=rep+'%';
+  document.getElementById('dash-rep-label').textContent=repLabel(rep);
+
+  // Daily ad button
+  const dailyBtn=document.getElementById('daily-ad-btn');
+  if(!state.dailyAdCollected){dailyBtn.style.display='block';}
+  else{dailyBtn.style.display='none';}
+
+  if(!todayChallenge)todayChallenge=randomChallenge();
+  document.getElementById('challenge-text').textContent=todayChallenge.text;
+  document.getElementById('challenge-reward').textContent='+'+todayChallenge.reward+' coins';
+  document.getElementById('dash-tip').innerHTML='💡 <strong>Tip:</strong> '+TIPS[Math.floor(Math.random()*TIPS.length)];
+
+  renderMyShops();renderBadges();
+
+  const btn=document.getElementById('btn-play-day');
+  if(left<=0){btn.disabled=true;btn.innerHTML='⏰ No rounds left today';}
+  else if(coins<ROUND_COST){btn.disabled=true;btn.innerHTML='Not enough coins 🪙';}
+  else{btn.disabled=false;btn.innerHTML='▶️ Play Round '+(used+1)+' <span style="font-size:12px;opacity:.8;">('+ROUND_COST+' 🪙)</span>';}
+}
+
+function renderRoundsBar(used,max){
+  const bar=document.getElementById('rounds-bar');bar.innerHTML='';
+  for(let i=0;i<max;i++){
+    const dot=document.createElement('div');
+    if(i<used)dot.className='round-dot used';
+    else if(i===used)dot.className='round-dot current';
+    else dot.className='round-dot empty';
+    dot.textContent=i<used?'✓':(i===used?'▶':(i+1));
+    bar.appendChild(dot);
+  }
+}
+function renderMyShops(){
+  const list=document.getElementById('my-shops-list');list.innerHTML='';
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const inv=state.shopInventories?.[sid]||0;
+    const profit=state.shopProfits?.[sid]||0;
+    const card=document.createElement('div');card.className='shop-card';
+    card.innerHTML=`<div style="font-size:28px;">${shop.icon}</div><div style="flex:1;"><div style="font-size:13px;font-weight:800;">${shop.name}</div><div style="font-size:11px;color:var(--muted);">Stock: ${inv} • Staff: -$${STAFF_COST}/round</div></div><div style="font-weight:900;font-size:14px;color:${profit>=0?'var(--green)':'var(--red)'};">${profit>=0?'+':''}$${Math.round(profit)}</div>`;
+    list.appendChild(card);
+  });
+}
+function repLabel(r){if(r>=90)return'🌟 Legendary';if(r>=80)return'⭐ Excellent';if(r>=70)return'😊 Great';if(r>=55)return'🙂 Good';if(r>=40)return'😐 Okay';return'😟 Struggling';}
+function renderBadges(){
+  const earned=BADGES.filter(b=>state.earnedBadges?.includes(b.id));
+  document.getElementById('badges-list').innerHTML=earned.length?earned.map(b=>`<span class="badge badge-purple">${b.icon} ${b.label}</span>`).join(''):'<span style="font-size:13px;color:var(--muted);">Play to earn badges!</span>';
+}
+function randomChallenge(){return CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];}
+
+// ═══ START ROUND ═══
+function startRound(){
+  const maxR=state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS;
+  if((state.roundsToday||0)>=maxR){showToast('⏰ No rounds left today!');return;}
+  if((state.coins||0)<ROUND_COST){document.getElementById('no-coins-overlay').classList.add('show');return;}
+  showScreen('play');
+}
+
+// ═══ PLAY SCREEN ═══
+function updatePlayScreen(){
+  const used=state.roundsToday||0;
+  document.getElementById('play-round-num').textContent=used+1;
+  document.getElementById('play-day-num').textContent=state.day;
+  document.getElementById('play-cash').textContent='$'+Math.round(state.cash);
+  document.getElementById('play-coins').textContent=Math.round(state.coins||0);
+
+  shopConfigs={};
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    shopConfigs[sid]={price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+  });
+  activeConfigShopId=(state.unlockedShops||[])[0]||state.shopId;
+
+  buildShopConfigTabs();
+  renderShopConfigPanel(activeConfigShopId);
+  updateBudgetSummary();
+}
+
+function buildShopConfigTabs(){
+  const wrap=document.getElementById('play-shop-tabs-wrap');
+  const shops=state.unlockedShops||[];
+  if(shops.length<=1){wrap.innerHTML='';return;}
+  wrap.innerHTML=`<div class="shop-config-tabs">${shops.map(sid=>{
+    const s=SHOPS.find(x=>x.id===sid);if(!s)return'';
+    return `<button class="shop-config-tab${sid===activeConfigShopId?' active':''}" onclick="switchConfigShop('${sid}')"><span class="tab-icon">${s.icon}</span>${s.name}</button>`;
+  }).join('')}</div>`;
+}
+
+function switchConfigShop(shopId){
+  saveCurrentShopConfig();
+  activeConfigShopId=shopId;
+  buildShopConfigTabs();
+  renderShopConfigPanel(shopId);
+  updateBudgetSummary();
+}
+
+function saveCurrentShopConfig(){
+  if(!activeConfigShopId||!shopConfigs[activeConfigShopId])return;
+  const priceEl=document.getElementById('sl-price');
+  const invEl=document.getElementById('sl-inv');
+  const promoSel=document.querySelector(`#promo-grid-${activeConfigShopId} .promo-opt.selected`);
+  if(priceEl)shopConfigs[activeConfigShopId].price=parseFloat(priceEl.value);
+  if(invEl)shopConfigs[activeConfigShopId].invBuy=parseInt(invEl.value);
+  if(promoSel)shopConfigs[activeConfigShopId].promoId=promoSel.dataset.promo||'none';
+}
+
+function renderShopConfigPanel(shopId){
+  const shop=SHOPS.find(s=>s.id===shopId);if(!shop)return;
+  const cfg=shopConfigs[shopId]||{price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+  const costMult=state.purchasedUpgrades?.includes('warehouse')?0.8:1;
+  const effectiveCost=(shop.unitCost*costMult).toFixed(2);
+  const pricePct=((cfg.price-shop.minPrice)/(shop.maxPrice-shop.minPrice)*100).toFixed(1);
+
+  document.getElementById('play-shop-panel').innerHTML=`
+    <div class="card">
+      <div class="card-title">💲 Price — ${shop.icon} ${shop.name}</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Price per item</span><span class="slider-val" id="price-val">$${cfg.price.toFixed(2)}</span></div>
+        <input type="range" id="sl-price" min="${shop.minPrice}" max="${shop.maxPrice}" step="0.5" value="${cfg.price}" oninput="onPriceChange(this)" style="--pct:${pricePct}%">
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--muted);"><span>$${shop.minPrice}</span><span>$${shop.maxPrice}</span></div>
+      </div>
+      <div id="price-tip" class="tip-bubble" style="margin:0;font-size:11px;">🧠 Find the sweet spot!</div>
+    </div>
+    <div class="card">
+      <div class="card-title">📦 Inventory — ${shop.icon} ${shop.name}</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Units to buy</span><span class="slider-val" id="inv-val">${cfg.invBuy}</span></div>
+        <input type="range" id="sl-inv" min="0" max="100" step="5" value="${cfg.invBuy}" oninput="onInvChange(this)" style="--pct:${cfg.invBuy}%">
+      </div>
+      <div style="padding:8px 10px;background:var(--bg);border-radius:var(--radius-sm);font-size:12px;display:flex;justify-content:space-between;">
+        <span style="color:var(--muted);">Cost/unit: <strong>$${effectiveCost}</strong></span>
+        <span>Total: <strong id="inv-cost-display" style="color:var(--red);">$${Math.round(cfg.invBuy*shop.unitCost*costMult)}</strong></span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎁 Promotion — ${shop.icon} ${shop.name}</div>
+      <div class="promo-grid" id="promo-grid-${shopId}"></div>
+    </div>
+  `;
+
+  const pg=document.getElementById('promo-grid-'+shopId);
+  PROMOS.forEach(p=>{
+    const d=document.createElement('div');
+    d.className='promo-opt'+(p.id===cfg.promoId?' selected':'');d.dataset.promo=p.id;
+    d.innerHTML=`<div class="promo-icon">${p.icon}</div><div class="promo-name">${p.name}</div><div class="promo-effect">${p.effect}</div>`;
+    d.onclick=()=>{document.querySelectorAll(`#promo-grid-${shopId} .promo-opt`).forEach(x=>x.classList.remove('selected'));d.classList.add('selected');shopConfigs[shopId].promoId=p.id;updateBudgetSummary();};
+    pg.appendChild(d);
+  });
+  updatePriceTip(cfg.price,shop);
+}
+
+function onPriceChange(el){
+  const val=parseFloat(el.value);
+  document.getElementById('price-val').textContent='$'+val.toFixed(2);
+  const shop=SHOPS.find(s=>s.id===activeConfigShopId);
+  el.style.setProperty('--pct',((val-shop.minPrice)/(shop.maxPrice-shop.minPrice)*100).toFixed(1)+'%');
+  shopConfigs[activeConfigShopId].price=val;
+  updatePriceTip(val,shop);updateBudgetSummary();
+}
+function onInvChange(el){
+  const val=parseInt(el.value);
+  const shop=SHOPS.find(s=>s.id===activeConfigShopId);
+  const costMult=state.purchasedUpgrades?.includes('warehouse')?0.8:1;
+  document.getElementById('inv-val').textContent=val;
+  document.getElementById('inv-cost-display').textContent='$'+Math.round(val*shop.unitCost*costMult);
+  el.style.setProperty('--pct',val+'%');
+  shopConfigs[activeConfigShopId].invBuy=val;updateBudgetSummary();
+}
+function updatePriceTip(price,shop){
+  const mid=(shop.minPrice+shop.maxPrice)/2;
+  const el=document.getElementById('price-tip');if(!el)return;
+  el.innerHTML=price>mid*1.4?'⚠️ <strong>Premium:</strong> Higher profit/sale, but fewer customers.'
+    :price<mid*0.7?'💡 <strong>Budget:</strong> Great for volume — watch margins!'
+    :'🧠 <strong>Sweet spot!</strong> Good balance of price and demand.';
+}
+function updateBudgetSummary(){
+  saveCurrentShopConfig();
+  const ads=parseInt(document.getElementById('sl-ads')?.value||10);
+  document.getElementById('ads-val').textContent='$'+ads;
+  document.getElementById('sl-ads')?.style.setProperty('--pct',(ads/80*100).toFixed(1)+'%');
+
+  const costMult=state.purchasedUpgrades?.includes('warehouse')?0.8:1;
+  const numShops=(state.unlockedShops||[]).length;
+  const staffTotal=STAFF_COST*numShops;
+  let totalInvCost=0;
+  let budgetRows='';
+
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    const invCost=Math.round(cfg.invBuy*shop.unitCost*costMult);
+    totalInvCost+=invCost;
+    budgetRows+=`<div class="result-row"><span class="rr-label">${shop.icon} ${shop.name} stock</span><span class="rr-minus">-$${invCost}</span></div>`;
+  });
+
+  const promo=PROMOS.find(p=>p.id===shopConfigs[activeConfigShopId]?.promoId)||PROMOS[0];
+  const promoExtra=promo.costMod||0;
+  const cashAfter=Math.round(state.cash-totalInvCost-ads-staffTotal-promoExtra);
+
+  budgetRows+=`<div class="result-row"><span class="rr-label">Ad spend</span><span class="rr-minus">-$${ads}</span></div>`;
+  budgetRows+=`<div class="result-row"><span class="rr-label">Staff (${numShops} shop${numShops>1?'s':''})</span><span class="rr-minus">-$${staffTotal}</span></div>`;
+  budgetRows+=`<div class="result-row"><span class="rr-label">Round cost</span><span class="rr-minus">-${ROUND_COST} 🪙</span></div>`;
+  document.getElementById('budget-rows').innerHTML=budgetRows;
+
+  const caEl=document.getElementById('ps-cash-after');
+  caEl.textContent=cashAfter>=0?'$'+cashAfter:'-$'+Math.abs(cashAfter);
+  caEl.style.color=cashAfter>=0?'var(--green)':'var(--red)';
+
+  const canAfford=cashAfter>=0&&(state.coins||0)>=ROUND_COST;
+  const btn=document.getElementById('btn-open-business');
+  if(btn){btn.disabled=!canAfford;btn.textContent=canAfford?'Open for Business! 🎉':'💸 Not enough cash!';}
+
+  document.getElementById('ads-tip').innerHTML=ads>50?'⚠️ <strong>High spend:</strong> Lots of customers, margins tight!'
+    :ads===0?'💡 <strong>No ads:</strong> Word-of-mouth only!'
+    :'📣 <strong>Solid:</strong> Good boost without overspending!';
+}
+
+// ═══ RUN ROUND ═══
+async function runRound(){
+  saveCurrentShopConfig();
+  const maxR=state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS;
+  if((state.roundsToday||0)>=maxR){showToast('⏰ No rounds left!');return;}
+  if((state.coins||0)<ROUND_COST){document.getElementById('no-coins-overlay').classList.add('show');return;}
+
+  const ads=parseInt(document.getElementById('sl-ads')?.value||10);
+  const costMult=state.purchasedUpgrades?.includes('warehouse')?0.8:1;
+  const numShops=(state.unlockedShops||[]).length;
+  const staffTotal=STAFF_COST*numShops;
+
+  let totalInvCost=0;
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    totalInvCost+=cfg.invBuy*shop.unitCost*costMult;
+  });
+
+  const primaryPromo=PROMOS.find(p=>p.id===shopConfigs[state.shopId]?.promoId)||PROMOS[0];
+  const totalSpend=totalInvCost+ads+staffTotal+(primaryPromo.costMod||0);
+
+  if(totalSpend>state.cash){showToast("💸 Can't afford that!");return;}
+
+  state.coins=Math.max(0,Math.round((state.coins||0)-ROUND_COST));
+  state.cash-=(totalInvCost+ads+staffTotal+(primaryPromo.costMod||0));
+
+  (state.unlockedShops||[]).forEach(sid=>{
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    state.shopInventories[sid]=(state.shopInventories[sid]||0)+cfg.invBuy;
+  });
+
+  const event=state.day<=2&&Math.random()<0.5?EVENTS.find(e=>e.id==='normal'):EVENTS[Math.floor(Math.random()*EVENTS.length)];
+
+  let totalRevenue=0,totalProfit=0,totalUnitsSold=0,totalInvCostActual=0;
+  let anySoldOut=false,anyPromo=false;
+  const shopResults=[];
+
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+    const promo=PROMOS.find(p=>p.id===cfg.promoId)||PROMOS[0];
+    const shopCost=shop.unitCost*costMult;
+    const inv=state.shopInventories[sid]||0;
+
+    let demand=10+(state.reputation/100)*14+(state.day*0.2);
+    const mid=(shop.minPrice+shop.maxPrice)/2;
+    demand*=Math.pow(mid/cfg.price,1.4);
+    demand*=1+(ads/80)*0.5;
+    demand*=promo.mult||1;
+    demand*=event.mult||1;
+    if(state.purchasedUpgrades?.includes('loyalty_card'))demand*=1.15;
+    demand=Math.round(demand+(Math.random()-0.5)*5);
+
+    const unitsSold=Math.min(demand,inv);
+    const soldOut=demand>=inv&&inv>0;
+    const leftover=inv-unitsSold;
+
+    let effectivePrice=cfg.price;
+    if(promo.priceMod)effectivePrice*=promo.priceMod;
+    if(promo.revMod)effectivePrice*=promo.revMod;
+
+    const revenue=unitsSold*effectivePrice;
+    const cogs=unitsSold*shopCost*(event.costMod||1);
+    const wasteCost=leftover*shopCost*0.3;
+    const shopProfit=revenue-cogs-wasteCost;
+
+    state.shopInventories[sid]=leftover;
+    state.shopProfits[sid]=(state.shopProfits[sid]||0)+shopProfit;
+    totalRevenue+=revenue;totalProfit+=shopProfit;totalUnitsSold+=unitsSold;
+    totalInvCostActual+=cogs;
+    if(soldOut){anySoldOut=true;state.soldOuts++;}
+    if(promo.id!=='none')anyPromo=true;
+    shopResults.push({shop,shopProfit,unitsSold,soldOut,revenue,price:cfg.price});
+  });
+
+  // Total profit after staff
+  totalProfit-=staffTotal;
+
+  // Rep
+  let repChange=0;
+  if(totalUnitsSold===0)repChange-=8;
+  if(anySoldOut)repChange+=3;
+  if(totalProfit>50)repChange+=2;
+  repChange+=Math.round((Math.random()-0.5)*4);
+  repChange=Math.max(-8,Math.min(8,repChange));
+  const newRep=Math.min(100,Math.max(10,state.reputation+repChange));
+
+  state.cash=Math.round((state.cash+totalRevenue)*100)/100;
+  state.reputation=newRep;
+  state.totalProfit+=totalProfit;
+  if(totalProfit>state.bestDay)state.bestDay=totalProfit;
+  state.streak=totalProfit>0?(state.streak||0)+1:0;
+  state.level=Math.max(1,Math.floor(state.totalProfit/200)+1);
+  state.totalRounds=(state.totalRounds||0)+1;
+  state.roundsToday=(state.roundsToday||0)+1;
+  if((state.roundsToday||0)>=(state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS))state.day++;
+
+  // Streak bonus
+  let streakBonus=0;
+  if(totalProfit>0){
+    if((state.streak)%10===0&&state.streak>=10)streakBonus=10;
+    else if((state.streak)%5===0&&state.streak>=5)streakBonus=5;
+    else if((state.streak)%3===0&&state.streak>=3)streakBonus=3;
+  }
+
+  // Coins from profit
+  const coinsBase=Math.max(0,Math.round(totalProfit/10))+(anySoldOut?3:0)+(anyPromo?2:0)+streakBonus;
+  const challengeResult={profit:totalProfit,unitsSold:totalUnitsSold,anySoldOut,adsSpent:ads,newRep,revenue:totalRevenue,anyPromo};
+  const challengePassed=todayChallenge?.check(challengeResult);
+  const challengeCoins=challengePassed?todayChallenge.reward:0;
+  const totalCoinsEarned=coinsBase+challengeCoins;
+  state.coins=Math.round((state.coins||0)+totalCoinsEarned);
+  state.prevProfit=totalProfit;
+
+  const newBadges=checkBadges();
+  await saveStateCloud();
+
+  lastRoundResult={profit:totalProfit,unitsSold:totalUnitsSold,revenue:totalRevenue,invCost:totalInvCostActual,adsSpend:ads,coinsEarned:totalCoinsEarned,newRep,repChange,event,challengePassed,newBadges,anySoldOut,shopResults,staffTotal,streakBonus};
+  renderResults(lastRoundResult,challengePassed,newBadges,anySoldOut,shopResults,streakBonus);
+  showScreen('results');
+}
+
+function checkBadges(){
+  const nb=[];
+  const checks={
+    first_round:(state.totalRounds||0)>=1,
+    first_profit:(state.totalProfit||0)>0,
+    streak3:(state.streak||0)>=3,
+    streak7:(state.streak||0)>=7,
+    sold_out:(state.soldOuts||0)>=1,
+    big_round:(state.bestDay||0)>=200,
+    rep_80:(state.reputation||0)>=80,
+    multi_shop:(state.unlockedShops||[]).length>=2,
+    coins100:(state.coins||0)>=100,
+    day10:(state.day||0)>=10,
+  };
+  BADGES.forEach(b=>{
+    if(!state.earnedBadges?.includes(b.id)&&checks[b.id]){
+      state.earnedBadges.push(b.id);
+      nb.push(b);
+      // Award badge coins
+      const bonusCoins=BADGE_COINS[b.id]||1;
+      state.coins=Math.round((state.coins||0)+bonusCoins);
+      showToast('🏅 '+b.label+' unlocked! +'+bonusCoins+' coins!');
+    }
+  });
+  return nb;
+}
+
+// ═══ RENDER RESULTS ═══
+function renderResults(r,challengePassed,newBadges,anySoldOut,shopResults,streakBonus){
+  const profit=Math.round(r.profit);
+  const hero=document.getElementById('result-hero');
+  if(profit>80){hero.className='result-hero';document.getElementById('result-emoji').textContent='🚀';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Amazing round!';}
+  else if(profit>20){hero.className='result-hero';document.getElementById('result-emoji').textContent='🎉';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Nice profit!';}
+  else if(profit>=0){hero.className='result-hero neutral';document.getElementById('result-emoji').textContent='😊';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Broke even!';}
+  else{hero.className='result-hero loss';document.getElementById('result-emoji').textContent='😬';document.getElementById('result-headline').textContent='-$'+Math.abs(profit);document.getElementById('result-sublabel').textContent='Bounce back!';}
+
+  // Streak banner
+  const streakBanner=document.getElementById('streak-banner');
+  if(streakBonus>0&&profit>0){
+    streakBanner.style.display='block';
+    document.getElementById('streak-text').textContent=(state.streak||0)+' Round Streak!';
+    document.getElementById('streak-bonus-text').textContent='+'+streakBonus+' bonus coins!';
+  } else streakBanner.style.display='none';
+
+  if(shopResults.length>1){
+    document.getElementById('shop-results-title').textContent='🏪 All Shops This Round';
+    document.getElementById('shop-results-list').innerHTML=shopResults.map(sr=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:10px;background:var(--card);border-radius:var(--radius-sm);border:1.5px solid var(--border);margin-bottom:8px;">
+        <span style="font-size:24px;">${sr.shop.icon}</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:13px;">${sr.shop.name}</div><div style="font-size:11px;color:var(--muted);">$${sr.price.toFixed(2)} • Sold ${sr.unitsSold}${sr.soldOut?' 🏪':''}</div></div>
+        <div style="font-weight:900;font-size:14px;color:${sr.shopProfit>=0?'var(--green)':'var(--red);'}">${sr.shopProfit>=0?'+':''}$${Math.round(sr.shopProfit)}</div>
+      </div>`).join('');
+  } else {
+    document.getElementById('shop-results-title').textContent='';
+    document.getElementById('shop-results-list').innerHTML='';
+  }
+
+  const ev=r.event;
+  document.getElementById('result-event').className='event-banner '+ev.type;
+  document.getElementById('ev-icon').textContent=ev.icon;
+  document.getElementById('ev-title').textContent=ev.title;
+  document.getElementById('ev-desc').textContent=ev.desc;
+
+  document.getElementById('rr-rev').textContent='+$'+Math.round(r.revenue);
+  document.getElementById('rr-invcost').textContent='-$'+Math.round(r.invCost||0);
+  document.getElementById('rr-adcost').textContent='-$'+r.adsSpend;
+  document.getElementById('rr-staffcost').textContent='-$'+r.staffTotal;
+  document.getElementById('rr-profit').textContent=(profit>=0?'+':'')+('$'+profit);
+  document.getElementById('rr-profit').style.color=profit>=0?'var(--green)':'var(--red)';
+
+  const rep=Math.round(r.newRep);
+  document.getElementById('rep-change-label').textContent=(r.repChange>=0?'+':'')+r.repChange+' reputation';
+  document.getElementById('rep-change-label').style.color=r.repChange>=0?'var(--green)':'var(--red)';
+  document.getElementById('rep-new-val').textContent=rep+'/100';
+  document.getElementById('result-rep-bar').style.width=rep+'%';
+  document.getElementById('rep-reason').textContent=r.unitsSold===0?'No sales — try lower price or more ads.':anySoldOut?'Sold out! Great — buy more stock next time.':r.repChange>0?'Customers were happy!':'Mixed day — keep experimenting!';
+
+  const cCard=document.getElementById('challenge-result-card');
+  if(todayChallenge){
+    cCard.style.display='block';
+    document.getElementById('challenge-result-content').innerHTML=challengePassed
+      ?`<div class="badge badge-green">✅ ${todayChallenge.text}</div><div style="margin-top:6px;font-size:12px;color:var(--muted);">+${todayChallenge.reward} coins!</div>`
+      :`<div class="badge badge-amber">❌ ${todayChallenge.text}</div><div style="margin-top:6px;font-size:12px;color:var(--muted);">Almost! Try next round.</div>`;
+  } else cCard.style.display='none';
+
+  const nbCard=document.getElementById('new-badges-card');
+  if(newBadges.length>0){nbCard.style.display='block';document.getElementById('new-badges-content').innerHTML=newBadges.map(b=>`<span class="badge badge-purple">${b.icon} ${b.label}</span>`).join('');}
+  else nbCard.style.display='none';
+
+  document.getElementById('coins-earned').textContent='+'+r.coinsEarned;
+  document.getElementById('coins-total-display').textContent='Total: '+Math.round(state.coins||0)+' 🪙';
+
+  // Tips based on result
+  const tips=[
+    profit<0?'Your revenue didn\'t cover staff + costs. Try higher price or more stock.':null,
+    anySoldOut?'You sold out! Buy more stock next time to maximize revenue.':null,
+    r.repChange<0?'Reputation dropped. Check if you ran out of stock or prices were too high.':null,
+    'Watch the daily ad for +50 free coins — come back every day!',
+  ].filter(Boolean);
+  document.getElementById('explain-text').textContent=tips[0]||'Set different prices per shop for best results!';
+
+  // Next round button
+  const maxR=state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS;
+  const roundsLeft=Math.max(0,maxR-(state.roundsToday||0));
+  const btn=document.getElementById('btn-next-round');
+  if(roundsLeft>0&&(state.coins||0)>=ROUND_COST){btn.textContent='Next Round ➡️ ('+roundsLeft+' left)';btn.disabled=false;}
+  else if(roundsLeft===0){btn.textContent='✅ All rounds done! See you tomorrow!';btn.disabled=true;}
+  else{btn.textContent='Not enough coins — watch an ad 📺';btn.disabled=false;btn.onclick=()=>{watchAdForCoins();btn.textContent='Next Round ➡️ ('+roundsLeft+' left)';btn.onclick=goToNextRound;};}
+
+  if(profit>0)spawnConfetti(profit>80?120:60);
+}
+
+// ═══ FIXED: Next Round goes directly to play screen ═══
+async function goToNextRound(){
+  const maxR=state.purchasedUpgrades?.includes('extra_round')?6:MAX_ROUNDS;
+  const roundsLeft=Math.max(0,maxR-(state.roundsToday||0));
+
+  if(roundsLeft<=0){
+    showToast('⏰ No rounds left today!');
+    initDashboard();showScreen('dashboard');return;
+  }
+  if((state.coins||0)<ROUND_COST){
+    document.getElementById('no-coins-overlay').classList.add('show');return;
+  }
+
+  // Reset challenge for next round
+  todayChallenge=randomChallenge();
+  await saveStateCloud();
+  // Go directly to play screen
+  showScreen('play');
+}
+
+// ═══ COINS STORE ═══
+function updateCoinsStore(){
+  const coins=Math.round(state.coins||0);
+  document.getElementById('store-coins-display').textContent=coins;
+
+  // Update daily btn
+  const dailyBtn=document.getElementById('store-daily-btn');
+  if(dailyBtn){
+    if(state.dailyAdCollected){dailyBtn.textContent='✅ Collected';dailyBtn.disabled=true;}
+    else{dailyBtn.textContent='Collect';dailyBtn.disabled=false;}
+  }
+
+  document.getElementById('shop-unlock-list').innerHTML=SHOPS.filter(s=>s.unlockCost>0).map(s=>{
+    const owned=state.unlockedShops?.includes(s.id);
+    const canAfford=coins>=s.unlockCost;
+    return `<div class="coins-item"><div class="coins-item-icon">${s.icon}</div><div class="coins-item-info"><div class="coins-item-name">${s.name}</div><div class="coins-item-desc">${owned?'✅ Active & running!':'Runs alongside existing shops!'}</div>${!owned?`<div class="coins-item-price">🪙 ${s.unlockCost}</div>`:''}</div>${owned?'<div class="badge badge-green">Active</div>':`<button class="btn btn-sm ${canAfford?'btn-amber':'btn-secondary'}" onclick="buyShop('${s.id}')" ${canAfford?'':'disabled'} style="width:auto;">${canAfford?'Unlock':'Need more'}</button>`}</div>`;
+  }).join('');
+
+  document.getElementById('upgrades-list').innerHTML=STORE_UPGRADES.map(u=>{
+    const owned=state.purchasedUpgrades?.includes(u.id);
+    const canAfford=coins>=u.cost;
+    return `<div class="coins-item"><div class="coins-item-icon">${u.icon}</div><div class="coins-item-info"><div class="coins-item-name">${u.name}</div><div class="coins-item-desc">${u.desc}</div>${!owned?`<div class="coins-item-price">🪙 ${u.cost}</div>`:''}</div>${owned?'<div class="badge badge-green">Active</div>':`<button class="btn btn-sm ${canAfford?'btn-primary':'btn-secondary'}" onclick="buyUpgrade('${u.id}')" ${canAfford?'':'disabled'} style="width:auto;">${canAfford?'Buy':'Need more'}</button>`}</div>`;
+  }).join('');
+
+  document.getElementById('themes-list').innerHTML=STORE_THEMES.map(t=>{
+    const owned=state.purchasedThemes?.includes(t.id);
+    const canAfford=coins>=t.cost;
+    return `<div class="coins-item"><div class="coins-item-icon">${t.icon}</div><div class="coins-item-info"><div class="coins-item-name">${t.name}</div><div class="coins-item-desc">${t.desc}</div>${!owned?`<div class="coins-item-price">🪙 ${t.cost}</div>`:''}</div>${owned?'<div class="badge badge-purple">Owned</div>':`<button class="btn btn-sm ${canAfford?'btn-primary':'btn-secondary'}" onclick="buyTheme('${t.id}')" ${canAfford?'':'disabled'} style="width:auto;">${canAfford?'Buy':'Need more'}</button>`}</div>`;
+  }).join('');
+}
+
+async function buyShop(shopId){
+  const shop=SHOPS.find(s=>s.id===shopId);
+  if(!shop||(state.coins||0)<shop.unlockCost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-shop.unlockCost);
+  state.unlockedShops.push(shopId);
+  await saveStateCloud();updateCoinsStore();spawnConfetti(80);showToast('🎉 '+shop.icon+' '+shop.name+' unlocked!');checkBadges();
+}
+async function buyUpgrade(id){
+  const u=STORE_UPGRADES.find(x=>x.id===id);
+  if(!u||(state.coins||0)<u.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-u.cost);
+  state.purchasedUpgrades.push(id);
+  await saveStateCloud();updateCoinsStore();showToast('✅ '+u.name+' activated!');
+}
+async function buyTheme(id){
+  const t=STORE_THEMES.find(x=>x.id===id);
+  if(!t||(state.coins||0)<t.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-t.cost);
+  state.purchasedThemes.push(id);
+  await saveStateCloud();updateCoinsStore();showToast('🎨 '+t.name+' unlocked!');
+}
+
+// ═══ SOCIAL ═══
+async function updateSocialScreen(){
+  document.getElementById('social-my-flag').textContent=state.flag||'🌍';
+  document.getElementById('social-my-avatar').textContent=state.avatar;
+  document.getElementById('social-my-name').textContent=state.playerName||'You';
+  document.getElementById('my-score').textContent='$'+Math.round(state.totalProfit);
+  document.getElementById('ref-code').textContent='MC-'+(state.playerName||'BOSS').toUpperCase().slice(0,5)+'-'+Math.abs(hashStr(state.playerName||'')).toString().slice(0,4);
+  await loadLeaderboard(currentLbTab);
+  await loadFriendRequests();
+}
+
+async function loadLeaderboard(tab){
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('lb-list').innerHTML='<div style="font-size:13px;color:var(--muted);">Loading...</div>';
+  let rows=[];
+  if(tab==='global'){
+    const {data,error}=await sb.from('leaderboard').select('*').order('total_profit',{ascending:false}).limit(10);
+    if(error)console.error('LB error:',error);
+    rows=data||[];
+  } else {
+    if(!currentUser)return;
+    const {data:fs}=await sb.from('friendships').select('player_id,friend_id').eq('status','accepted');
+    const ids=new Set([currentUser.id]);
+    (fs||[]).forEach(f=>{ids.add(f.player_id);ids.add(f.friend_id);});
+    const {data}=await sb.from('leaderboard').select('*').in('player_id',[...ids]).order('total_profit',{ascending:false});
+    rows=data||[];
+  }
+  if(!rows.length){
+    document.getElementById('lb-list').innerHTML='<div class="card-title">'+(tab==='friends'?'🏆 Friends':'🏆 Global')+'</div><div style="font-size:13px;color:var(--muted);">No data yet — play a round to appear here!</div>';
+    return;
+  }
+  const myIdx=rows.findIndex(r=>r.player_id===currentUser?.id);
+  document.getElementById('my-rank').textContent=myIdx>=0?'#'+(myIdx+1):'#?';
+  document.getElementById('lb-list').innerHTML='<div class="card-title">'+(tab==='friends'?'🏆 Friends':'🏆 Global')+'</div>'+
+    rows.slice(0,8).map((p,i)=>`
+      <div class="lb-row">
+        <div class="lb-rank">${medals[i]||('#'+(i+1))}</div>
+        <div style="font-size:18px;">${p.avatar||'😺'}</div>
+        <div style="font-size:16px;">${p.flag||'🌍'}</div>
+        <div class="lb-info"><div class="lb-name">${p.username||'Player'}</div><div class="lb-shop">${SHOPS.find(s=>s.id===p.shop_id)?.name||''} • Lv.${p.level||1}</div></div>
+        <div class="lb-score">$${(p.total_profit||0).toLocaleString()}</div>
+      </div>`).join('');
+}
+
+function switchLbTab(tab){
+  currentLbTab=tab;
+  const f=document.getElementById('tab-friends-lb');const g=document.getElementById('tab-global-lb');
+  if(tab==='friends'){f.style.cssText='border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--purple);color:#fff;border-color:var(--purple);';g.style.cssText='border-radius:0 12px 12px 0;flex:1;background:var(--bg);color:var(--purple);';}
+  else{g.style.cssText='border-radius:0 12px 12px 0;flex:1;background:var(--purple);color:#fff;border-color:var(--purple);';f.style.cssText='border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--bg);color:var(--purple);';}
+  loadLeaderboard(tab);
+}
+
+async function sendFriendRequest(){
+  const username=document.getElementById('add-friend-inp').value.trim();
+  if(!username){showToast('Enter a username!');return;}
+  const {data:friend}=await sb.from('players').select('id').eq('username',username).maybeSingle();
+  if(!friend){showToast('❌ User "'+username+'" not found');return;}
+  const {error}=await sb.from('friendships').insert({player_id:currentUser.id,friend_id:friend.id,status:'pending'});
+  if(error){showToast('❌ '+(error.code==='23505'?'Already sent!':error.message));return;}
+  document.getElementById('add-friend-inp').value='';showToast('💌 Request sent!');
+}
+async function loadFriendRequests(){
+  if(!currentUser)return;
+  const {data}=await sb.from('friendships').select('id,player_id,players!friendships_player_id_fkey(username,avatar)').eq('friend_id',currentUser.id).eq('status','pending');
+  const card=document.getElementById('friend-requests-card');
+  if(!data||!data.length){card.style.display='none';return;}
+  card.style.display='block';
+  document.getElementById('req-count-badge').textContent=data.length;
+  document.getElementById('friend-requests-list').innerHTML=data.map(r=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);"><span style="font-size:20px;">${r.players?.avatar||'😺'}</span><span style="flex:1;font-weight:700;font-size:13px;">${r.players?.username||'Player'}</span><button class="btn btn-sm btn-green" onclick="acceptFriend('${r.id}')" style="width:auto;">Accept ✅</button></div>`).join('');
+}
+async function acceptFriend(id){
+  await sb.from('friendships').update({status:'accepted'}).eq('id',id);
+  showToast('🎉 Friend accepted!');await loadFriendRequests();await loadLeaderboard(currentLbTab);
+}
+function copyRefCode(){try{navigator.clipboard.writeText('Join Mini CEO! Code: '+document.getElementById('ref-code').textContent);}catch(e){}showToast('📋 Code copied!');}
+
+// ═══ SHARE ═══
+function showShareCard(){
+  const shop=SHOPS.find(s=>s.id===state.shopId)||SHOPS[0];
+  const r=lastRoundResult||{profit:0,unitsSold:0,newRep:state.reputation};
+  document.getElementById('sc-shop-emoji').textContent=shop.icon;
+  document.getElementById('sc-shop-name').textContent=state.playerName+"'s "+shop.name;
+  document.getElementById('sc-tagline').textContent='Round '+(state.totalRounds||1)+' • $'+Math.round(state.totalProfit)+' total';
+  document.getElementById('sc-profit').textContent=(r.profit>=0?'+':'')+('$'+Math.round(r.profit||0));
+  document.getElementById('sc-sold').textContent=r.unitsSold||0;
+  document.getElementById('sc-rep').textContent=Math.round(r.newRep||state.reputation);
+  showScreen('share');
+}
+function buildShareText(){
+  const shop=SHOPS.find(s=>s.id===state.shopId)||SHOPS[0];
+  const r=lastRoundResult||{profit:0,unitsSold:0};
+  return `🏆 Mini CEO Challenge\n${state.flag||'🌍'} ${state.avatar} ${state.playerName}'s ${shop.name}\n\nRound ${state.totalRounds}: $${Math.round(r.profit||0)} profit\n📦 Sold: ${r.unitsSold||0} • ⭐ Rep: ${Math.round(state.reputation)}/100\n🔥 Streak: ${state.streak||0}\n\n🎮 Play: rgproj.github.io/mini-ceo-challenge`;
+}
+function shareResult(){const text=buildShareText();if(navigator.share)navigator.share({title:'Mini CEO',text,url:'https://rgproj.github.io/mini-ceo-challenge'});else{try{navigator.clipboard.writeText(text);}catch(e){}showToast('📋 Copied!');}}
+function copyShareText(){try{navigator.clipboard.writeText(buildShareText());}catch(e){}showToast('📋 Copied! Paste anywhere 🎉');}
+
+// ═══ CONFETTI ═══
+function spawnConfetti(count){
+  const canvas=document.getElementById('confetti-canvas');const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#A855F7','#EC4899','#F59E0B','#22C55E','#3B82F6','#14B8A6'];
+  const pieces=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:-10-Math.random()*200,r:4+Math.random()*6,d:2+Math.random()*3,color:colors[Math.floor(Math.random()*colors.length)],tilt:0,tiltAngle:0,tiltSpeed:0.03+Math.random()*0.05}));
+  let frame=0;
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.beginPath();ctx.fillStyle=p.color;ctx.ellipse(p.x,p.y,p.r,p.r*0.6,p.tilt,0,2*Math.PI);ctx.fill();p.y+=p.d;p.tilt=Math.sin(p.tiltAngle)*10;p.tiltAngle+=p.tiltSpeed;if(p.y>canvas.height)p.y=-10;});if(++frame<200)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);}
+  draw();
+}
+
+// ═══ HELPERS ═══
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function hashStr(s=''){let h=0;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h;}
+</script>
+</body>
+</html>
