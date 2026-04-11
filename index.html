@@ -576,7 +576,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;heigh
         <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">SOLD</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-sold">0</div></div>
         <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">REP ⭐</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-rep">60</div></div>
       </div>
-      <div style="font-size:11px;opacity:.7;">🎮 rgproj.github.io/mini-ceo-challenge</div>
+      <div style="font-size:11px;opacity:.7;">🎮 miniceo.fun</div>
     </div>
     <div class="card" style="text-align:center;">
       <button class="btn btn-primary" onclick="shareResult()" style="margin-bottom:8px;">📤 Share Now</button>
@@ -859,7 +859,7 @@ async function doRegister(){
     await loadOrCreatePlayer();
   } else showToast('📧 Check your email to confirm!');
 }
-async function doGoogleLogin(){await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://rgproj.github.io/mini-ceo-challenge'}});}
+async function doGoogleLogin(){await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://miniceo.fun'}});}
 async function doSignOut(){if(!confirm('Sign out?'))return;await sb.auth.signOut();currentUser=null;state={};document.body.className='';document.getElementById('navbar').style.display='none';showScreen('auth');}
 
 // ═══ PLAYER LOAD ═══
@@ -1802,9 +1802,9 @@ function showShareCard(){
 function buildShareText(){
   const shopIcons=(state.unlockedShops||[]).map(sid=>SHOPS.find(s=>s.id===sid)?.icon||'').join('');
   const r=lastRoundResult||{profit:0,unitsSold:0};
-  return`🏆 Mini CEO Challenge\n${state.flag||'🌍'} ${state.avatar} ${state.bizName} ${shopIcons}\n\nRound ${state.totalRounds}: $${Math.round(r.profit||0)} profit\n📦 ${r.unitsSold||0} sold • ⭐ Rep ${Math.round(state.reputation)}/100 • 🔥 Streak ${state.streak||0}\n\n🎮 rgproj.github.io/mini-ceo-challenge\nUse my referral: ${state.referralCode} for +100 coins!`;
+  return`🏆 Mini CEO Challenge\n${state.flag||'🌍'} ${state.avatar} ${state.bizName} ${shopIcons}\n\nRound ${state.totalRounds}: $${Math.round(r.profit||0)} profit\n📦 ${r.unitsSold||0} sold • ⭐ Rep ${Math.round(state.reputation)}/100 • 🔥 Streak ${state.streak||0}\n\n🎮 miniceo.fun\nUse my referral: ${state.referralCode} for +100 coins!`;
 }
-function shareResult(){const text=buildShareText();if(navigator.share)navigator.share({title:'Mini CEO',text,url:'https://rgproj.github.io/mini-ceo-challenge'});else{try{navigator.clipboard.writeText(text);}catch(e){}showToast('📋 Copied!');}}
+function shareResult(){const text=buildShareText();if(navigator.share)navigator.share({title:'Mini CEO',text,url:'https://miniceo.fun'});else{try{navigator.clipboard.writeText(text);}catch(e){}showToast('📋 Copied!');}}
 function copyShareText(){try{navigator.clipboard.writeText(buildShareText());}catch(e){}showToast('📋 Copied! 🎉');}
 
 // ═══ CONFETTI ═══
