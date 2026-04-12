@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mini CEO Challenge 💼</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4023211751342070" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap');
+:root {
+  --pink:#FF6B9D;--purple:#A855F7;--teal:#14B8A6;--amber:#F59E0B;
+  --green:#22C55E;--red:#EF4444;--blue:#3B82F6;
+  --bg:#FFF5FB;--card:#FFFFFF;--text:#1E1B2E;--muted:#7C6F8A;--border:#F0E4F7;
+  --shadow:0 4px 20px rgba(168,85,247,.10);--radius:20px;--radius-sm:12px;
+  --font-d:'Fredoka One',cursive;--font-b:'Nunito',sans-serif;
+  --hero-grad:linear-gradient(135deg,#A855F7 0%,#EC4899 60%,#F59E0B 100%);
+  --btn-grad:linear-gradient(135deg,var(--purple),var(--pink));
+}
+body.theme-pastel{--bg:#FFF0F5;--card:#FFF8FB;--border:#FFD6E8;--muted:#B07090;--purple:#E91E8C;--pink:#FF69B4;--hero-grad:linear-gradient(135deg,#FF69B4,#FFB3D1,#B2F5EA);--btn-grad:linear-gradient(135deg,#E91E8C,#FF69B4);}
+body.theme-neon{--bg:#0D0D1A;--card:#1A1A2E;--text:#E0E0FF;--muted:#8080AA;--border:#2A2A4A;--shadow:0 4px 20px rgba(160,80,255,.25);--purple:#BF40FF;--pink:#FF40AA;--hero-grad:linear-gradient(135deg,#1A0033,#2D0066,#000D1A);--btn-grad:linear-gradient(135deg,#BF40FF,#FF40AA);}
+body.theme-golden{--bg:#1A1400;--card:#2A2000;--text:#FFE566;--muted:#CC9900;--border:#4A3800;--shadow:0 4px 20px rgba(255,200,0,.15);--purple:#FFD700;--pink:#FFA500;--hero-grad:linear-gradient(135deg,#3D2B00,#7A5500,#1A1400);--btn-grad:linear-gradient(135deg,#FFD700,#FFA500);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;width:100%;overflow:hidden;font-family:var(--font-b);background:var(--bg);color:var(--text);-webkit-tap-highlight-color:transparent;user-select:none;transition:background .3s,color .3s;}
+#app{width:100%;height:100%;max-width:480px;margin:0 auto;overflow:hidden;position:relative;}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;padding:0 0 88px;opacity:0;pointer-events:none;transform:translateY(24px);transition:opacity .3s,transform .3s;scrollbar-width:none;}
+.screen::-webkit-scrollbar{display:none;}
+.screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
+.hero-band{background:var(--hero-grad);padding:44px 24px 26px;border-radius:0 0 var(--radius) var(--radius);color:#fff;text-align:center;position:relative;overflow:hidden;flex-shrink:0;}
+.hero-band::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E") repeat;}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:0 16px 12px;border:1.5px solid var(--border);}
+.card-title{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:var(--font-b);font-size:15px;font-weight:800;padding:13px 22px;border-radius:50px;border:none;cursor:pointer;transition:transform .15s;width:100%;}
+.btn:active{transform:scale(.95);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.btn-primary{background:var(--btn-grad);color:#fff;box-shadow:0 4px 16px rgba(168,85,247,.35);}
+.btn-secondary{background:var(--card);color:var(--purple);border:2px solid var(--purple);}
+.btn-green{background:linear-gradient(135deg,#14B8A6,#22C55E);color:#fff;}
+.btn-amber{background:linear-gradient(135deg,#F59E0B,#EF4444);color:#fff;}
+.btn-red{background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;}
+.btn-google{background:#fff;color:#333;border:2px solid #ddd;}
+.btn-sm{font-size:13px;padding:8px 16px;width:auto;}
+input[type=text],input[type=email],input[type=password],input[type=number]{width:100%;padding:13px 16px;border-radius:var(--radius-sm);border:2px solid var(--border);font-family:var(--font-b);font-size:15px;font-weight:600;background:var(--bg);color:var(--text);outline:none;transition:border-color .2s;}
+input:focus{border-color:var(--purple);}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:linear-gradient(to right,var(--purple) 0%,var(--purple) var(--pct,50%),var(--border) var(--pct,50%));border-radius:3px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--purple);border:3px solid var(--card);box-shadow:0 2px 8px rgba(168,85,247,.4);}
+.avatar-grid,.flag-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;}
+.avatar-opt,.flag-opt{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:24px;border-radius:var(--radius-sm);border:2.5px solid var(--border);cursor:pointer;background:var(--bg);transition:all .15s;}
+.avatar-opt.selected,.flag-opt.selected{border-color:var(--purple);background:rgba(168,85,247,.1);transform:scale(1.08);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.stat-box{background:var(--bg);border-radius:var(--radius-sm);padding:13px;border:1.5px solid var(--border);text-align:center;}
+.stat-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.stat-val{font-size:21px;font-weight:900;margin-top:2px;}
+.stat-val.green{color:var(--green);}.stat-val.pink{color:var(--pink);}
+.stat-val.amber{color:var(--amber);}.stat-val.blue{color:var(--blue);}
+.progress-track{background:var(--border);border-radius:4px;height:8px;overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--green));transition:width .6s cubic-bezier(.4,0,.2,1);}
+.shop-config-tabs{display:flex;gap:0;margin:0 16px 12px;border-radius:var(--radius-sm);overflow:hidden;border:2px solid var(--purple);overflow-x:auto;}
+.shop-config-tab{flex-shrink:0;padding:8px 10px;text-align:center;font-size:11px;font-weight:800;cursor:pointer;background:var(--bg);color:var(--purple);border:none;transition:all .15s;font-family:var(--font-b);white-space:nowrap;}
+.shop-config-tab.active{background:var(--purple);color:#fff;}
+.slider-row{margin-bottom:16px;}
+.slider-labels{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.slider-name{font-size:14px;font-weight:700;}
+.slider-val{font-size:17px;font-weight:900;color:var(--purple);background:rgba(168,85,247,.1);padding:2px 10px;border-radius:20px;}
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.promo-opt{padding:10px 8px;border-radius:var(--radius-sm);border:2px solid var(--border);cursor:pointer;background:var(--bg);transition:all .15s;text-align:center;}
+.promo-opt .promo-icon{font-size:18px;margin-bottom:2px;}
+.promo-opt .promo-name{font-size:11px;font-weight:800;color:var(--text);}
+.promo-opt .promo-effect{font-size:9px;color:var(--muted);}
+.promo-opt.selected{border-color:var(--teal);background:rgba(20,184,166,.08);}
+.result-hero{background:linear-gradient(135deg,#22C55E,#14B8A6);padding:26px 24px 18px;border-radius:0 0 var(--radius) var(--radius);color:#fff;text-align:center;flex-shrink:0;}
+.result-hero.loss{background:linear-gradient(135deg,#F59E0B,#EF4444);}
+.result-hero.neutral{background:linear-gradient(135deg,var(--purple),var(--blue));}
+.result-big{font-family:var(--font-d);font-size:42px;line-height:1;}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1.5px solid var(--border);font-size:13px;}
+.result-row:last-child{border-bottom:none;}
+.rr-label{color:var(--muted);font-weight:600;}
+.rr-plus{color:var(--green);font-weight:800;}
+.rr-minus{color:var(--red);font-weight:800;}
+.event-banner{border-radius:var(--radius);padding:14px 16px;display:flex;gap:10px;align-items:flex-start;margin:0 16px 12px;border:2px solid;}
+.event-banner.good{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.35);}
+.event-banner.bad{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.35);}
+.event-banner.neutral{background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.35);}
+.tip-bubble{background:rgba(168,85,247,.07);border-left:4px solid var(--purple);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:10px 12px;margin:0 16px 12px;font-size:12px;line-height:1.55;}
+.tip-bubble strong{color:var(--purple);}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800;}
+.badge-purple{background:rgba(168,85,247,.15);color:var(--purple);}
+.badge-green{background:rgba(34,197,94,.15);color:#16A34A;}
+.badge-amber{background:rgba(245,158,11,.15);color:#B45309;}
+.challenge-card{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(236,72,153,.08));border:2px dashed var(--purple);border-radius:var(--radius);padding:12px 16px;margin:0 16px 12px;}
+.shop-card{background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);padding:12px 14px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.lb-row{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1.5px solid var(--border);}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-size:15px;font-weight:900;width:24px;text-align:center;}
+.lb-info{flex:1;}
+.lb-name{font-size:13px;font-weight:800;}
+.lb-sub{font-size:11px;color:var(--muted);}
+.lb-score{font-size:15px;font-weight:900;color:var(--green);}
+.coins-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1.5px solid var(--border);}
+.coins-item:last-child{border-bottom:none;}
+.coins-item-icon{font-size:28px;flex-shrink:0;}
+.coins-item-info{flex:1;}
+.coins-item-name{font-size:14px;font-weight:800;}
+.coins-item-desc{font-size:11px;color:var(--muted);margin-top:2px;}
+.coins-item-price{font-size:12px;font-weight:900;color:var(--amber);margin-top:3px;}
+.lv-badge{display:inline-flex;align-items:center;gap:3px;background:var(--btn-grad);color:#fff;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:800;margin-left:6px;}
+.stale-warn{background:rgba(239,68,68,.08);border:2px solid rgba(239,68,68,.3);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:8px;font-size:12px;color:var(--red);font-weight:700;}
+.profile-stat{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1.5px solid var(--border);font-size:13px;}
+.profile-stat:last-child{border-bottom:none;}
+.gift-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px solid var(--border);}
+.gift-item:last-child{border-bottom:none;}
+
+/* ── GIFT POPUP ANIMATION ── */
+.gift-box-wrap{position:relative;height:120px;display:flex;align-items:center;justify-content:center;margin:10px 0 20px;}
+.gift-box{font-size:72px;animation:giftBounce .6s cubic-bezier(.4,0,.2,1) both;cursor:pointer;transition:transform .2s;position:relative;z-index:1;}
+.gift-box:hover{transform:scale(1.1) rotate(5deg);}
+.gift-box.open{animation:giftOpen .5s cubic-bezier(.4,0,.2,1) both;}
+.gift-rays{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;}
+.gift-rays.show{animation:raysOut .6s ease both;}
+@keyframes giftBounce{0%{transform:scale(0) rotate(-20deg);opacity:0}60%{transform:scale(1.2) rotate(5deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes giftOpen{0%{transform:scale(1)}30%{transform:scale(1.3) rotate(-10deg)}60%{transform:scale(0.8) rotate(10deg)}100%{transform:scale(0);opacity:0}}
+@keyframes raysOut{0%{opacity:0;transform:scale(0.5)}50%{opacity:1}100%{opacity:0;transform:scale(2)}}
+.gift-from{font-size:14px;color:var(--muted);margin-bottom:6px;}
+.gift-value-display{font-family:var(--font-d);font-size:36px;color:var(--amber);margin:10px 0 4px;opacity:0;animation:fadeUp .5s .4s ease both;}
+.gift-value-label{font-size:13px;color:var(--muted);opacity:0;animation:fadeUp .5s .5s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── MYSTERY BOX ── */
+.mystery-box-wrap{text-align:center;padding:20px 0;}
+.mystery-box-icon{font-size:72px;animation:giftBounce .6s ease both;cursor:pointer;display:inline-block;transition:transform .2s;}
+.mystery-box-icon:hover{transform:scale(1.1) rotate(-5deg);}
+.mystery-box-icon.spinning{animation:spin .5s linear infinite;}
+.mystery-result{opacity:0;transform:scale(0);transition:all .4s cubic-bezier(.4,0,.2,1);}
+.mystery-result.show{opacity:1;transform:scale(1);}
+@keyframes spin{to{transform:rotate(360deg);}}
+.rarity-badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:800;margin-bottom:8px;}
+.rarity-rare{background:rgba(59,130,246,.2);color:var(--blue);}
+.rarity-epic{background:rgba(168,85,247,.2);color:var(--purple);}
+.rarity-legendary{background:rgba(245,158,11,.2);color:var(--amber);}
+.rarity-ultra{background:rgba(239,68,68,.2);color:var(--red);}
+
+/* ── TOURNAMENT CARD ── */
+.tournament-card{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(239,68,68,.1));border:2px solid rgba(245,158,11,.4);border-radius:var(--radius);padding:16px;margin:0 16px 12px;}
+.tournament-timer{font-family:var(--font-d);font-size:28px;color:var(--amber);text-align:center;margin:6px 0;}
+.tournament-rank{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(245,158,11,.2);font-size:13px;}
+.tournament-rank:last-child{border-bottom:none;}
+
+/* ── ONLINE COUNTER ── */
+.online-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);border:1.5px solid rgba(34,197,94,.3);border-radius:50px;padding:6px 14px;font-size:13px;font-weight:700;color:var(--green);margin:0 16px 12px;}
+.online-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+
+/* ── STREAK SHIELD ── */
+.shield-active{display:inline-flex;align-items:center;gap:6px;background:rgba(59,130,246,.1);border:1.5px solid rgba(59,130,246,.3);border-radius:50px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--blue);}
+
+/* ── OVERLAYS ── */
+#no-coins-overlay,#daily-ad-overlay,#profile-overlay,#gift-overlay,#mystery-overlay,#gift-received-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9990;display:none;align-items:center;justify-content:center;padding:24px;}
+#no-coins-overlay.show,#daily-ad-overlay.show,#profile-overlay.show,#gift-overlay.show,#mystery-overlay.show,#gift-received-overlay.show{display:flex;}
+.overlay-card{background:var(--card);border-radius:var(--radius);width:100%;max-width:380px;padding:26px 22px;text-align:center;max-height:90vh;overflow-y:auto;position:relative;}
+#tutorial-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9990;display:none;align-items:center;justify-content:center;padding:24px;}
+#tutorial-overlay.show{display:flex;}
+.tutorial-card{background:var(--card);border-radius:var(--radius);width:100%;max-width:420px;max-height:90vh;overflow-y:auto;}
+.tut-slide{padding:26px 22px;display:none;text-align:center;}
+.tut-slide.active{display:block;}
+.tut-dots{display:flex;justify-content:center;gap:8px;margin-bottom:16px;}
+.tut-dot{width:8px;height:8px;border-radius:50%;background:var(--border);}
+.tut-dot.active{background:var(--purple);}
+.auth-tabs{display:flex;margin:12px 16px 0;}
+.auth-tab{flex:1;padding:10px;text-align:center;font-weight:800;font-size:14px;cursor:pointer;border-bottom:3px solid var(--border);color:var(--muted);}
+.auth-tab.active{border-bottom-color:var(--purple);color:var(--purple);}
+.share-card{background:var(--hero-grad);border-radius:var(--radius);padding:22px;margin:0 16px 12px;color:#fff;text-align:center;position:relative;overflow:hidden;}
+.share-card::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='0.07'%3E%3Ccircle cx='20' cy='20' r='14'/%3E%3C/g%3E%3C/svg%3E") repeat;}
+.share-card *{position:relative;}
+.ref-code{font-family:var(--font-d);font-size:20px;letter-spacing:3px;color:var(--purple);background:rgba(168,85,247,.08);border-radius:var(--radius-sm);padding:12px;text-align:center;border:2px dashed var(--purple);word-break:break-all;}
+#navbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:1.5px solid var(--border);display:none;align-items:center;padding:8px 0 env(safe-area-inset-bottom,8px);z-index:999;box-shadow:0 -4px 20px rgba(168,85,247,.08);}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;font-size:10px;font-weight:700;color:var(--muted);background:none;border:none;font-family:var(--font-b);}
+.nav-btn .nav-icon{font-size:20px;}
+.nav-btn.active{color:var(--purple);}
+.nav-btn.play-btn .nav-icon-wrap{background:var(--btn-grad);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 16px rgba(168,85,247,.4);margin-top:-14px;}
+#toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1E1B2E;color:#fff;padding:12px 20px;border-radius:50px;font-size:14px;font-weight:700;opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:9999;max-width:calc(100% - 48px);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .4s;}
+#loading.hidden{opacity:0;pointer-events:none;}
+#loading .spin{font-size:48px;animation:spinL 1s linear infinite;}
+@keyframes spinL{to{transform:rotate(360deg);}}
+@keyframes popIn{0%{transform:scale(.7);opacity:0}80%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes pulseAnim{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.pop-in{animation:popIn .4s cubic-bezier(.4,0,.2,1) both;}
+.pulse{animation:pulseAnim 2s ease-in-out infinite;}
+#confetti-canvas{position:fixed;inset:0;pointer-events:none;z-index:9998;}
+.spacer{height:14px;}.mt-12{margin-top:12px;}
+.pending-badge{display:inline-block;background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;font-size:11px;font-weight:900;text-align:center;line-height:18px;margin-left:4px;}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+<div id="toast"></div>
+<div id="loading"><div class="spin">💼</div><p style="margin-top:16px;font-weight:700;color:var(--muted);">Loading Mini CEO...</p></div>
+
+<!-- Gift Received Popup -->
+<div id="gift-received-overlay">
+  <div class="overlay-card">
+    <div class="gift-from" id="gift-from-text">🎁 Gift from someone!</div>
+    <div class="gift-box-wrap">
+      <div class="gift-rays" id="gift-rays">✨</div>
+      <div class="gift-box" id="gift-box-emoji" onclick="openGiftBox()">🎁</div>
+    </div>
+    <div id="gift-reveal" style="display:none;">
+      <div class="gift-value-display" id="gift-value-big">+100 🪙</div>
+      <div class="gift-value-label" id="gift-value-label">coins from your friend!</div>
+    </div>
+    <button class="btn btn-primary" id="gift-claim-btn" onclick="claimReceivedGift()" style="margin-top:14px;">Claim! 🎉</button>
+  </div>
+</div>
+
+<!-- Mystery Box Overlay -->
+<div id="mystery-overlay">
+  <div class="overlay-card">
+    <div style="font-family:var(--font-d);font-size:22px;margin-bottom:6px;">🎰 Mystery Box</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;">Spend <strong>50 🪙</strong> — win something amazing!</div>
+    <div class="mystery-box-wrap">
+      <div class="mystery-box-icon" id="mystery-icon" onclick="openMysteryBox()">🎰</div>
+      <div class="mystery-result" id="mystery-result">
+        <div class="rarity-badge" id="mystery-rarity">Legendary</div>
+        <div style="font-size:56px;margin:8px 0;" id="mystery-prize-icon">👑</div>
+        <div style="font-family:var(--font-d);font-size:22px;color:var(--text);" id="mystery-prize-name">Crown Sticker!</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;" id="mystery-prize-desc">Equipped automatically!</div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:14px;" id="mystery-prompt">Tap the box to open!</div>
+    <button class="btn btn-amber" id="mystery-open-btn" onclick="openMysteryBox()">Open Box! 🎰 (50 🪙)</button>
+    <div style="height:8px;"></div>
+    <button class="btn btn-secondary" onclick="closeMystery()">Maybe later</button>
+  </div>
+</div>
+
+<!-- Daily Ad -->
+<div id="daily-ad-overlay">
+  <div class="overlay-card">
+    <div style="font-size:52px;margin-bottom:10px;">🎁</div>
+    <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Daily Bonus!</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;">Watch a short ad to collect your <strong>+50 coins</strong>!</div>
+    <div style="background:var(--bg);border:2px dashed var(--border);border-radius:var(--radius-sm);padding:20px;margin-bottom:14px;">
+      <div style="font-size:32px;margin-bottom:6px;">📺</div>
+      <div style="font-size:12px;color:var(--muted);">Ad placeholder (AdSense)</div>
+    </div>
+    <button class="btn btn-amber" onclick="collectDailyBonus()">Collect +50 Coins 🪙</button>
+  </div>
+</div>
+
+<!-- No Coins -->
+<div id="no-coins-overlay">
+  <div class="overlay-card">
+    <div style="font-size:52px;margin-bottom:10px;">🪙</div>
+    <div style="font-family:var(--font-d);font-size:22px;margin-bottom:8px;">Need More Coins!</div>
+    <div style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;">Each round costs <strong>10 coins</strong>.</div>
+    <div style="background:var(--bg);border:2px dashed var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:12px;">
+      <div style="font-size:24px;margin-bottom:4px;">📺</div>
+      <div style="font-size:11px;color:var(--muted);">Ad placeholder</div>
+    </div>
+    <button class="btn btn-amber" onclick="watchAdForCoins()" style="margin-bottom:8px;">📺 Watch Ad — +5 Coins</button>
+    <button class="btn btn-green" onclick="showDailyAd();closeNoCoins();" style="margin-bottom:8px;">🎁 Daily Bonus (+50)</button>
+    <button class="btn btn-secondary" onclick="closeNoCoins()">Close</button>
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div id="profile-overlay">
+  <div class="overlay-card">
+    <button onclick="closeProfile()" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+    <div id="profile-content"></div>
+  </div>
+</div>
+
+<!-- Gift Send Overlay -->
+<div id="gift-overlay">
+  <div class="overlay-card">
+    <div style="font-size:40px;margin-bottom:8px;">🎁</div>
+    <div style="font-family:var(--font-d);font-size:22px;margin-bottom:12px;" id="gift-title">Send a Gift</div>
+    <div id="gift-content"></div>
+    <button class="btn btn-secondary" onclick="closeGift()" style="margin-top:10px;">Cancel</button>
+  </div>
+</div>
+
+<!-- Tutorial -->
+<div id="tutorial-overlay">
+  <div class="tutorial-card">
+    <div class="tut-slide active" id="tut-1">
+      <div style="font-size:56px;margin-bottom:12px;">💼</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Welcome to Mini CEO!</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">1</div><div>Each round costs <strong>10 🪙</strong> — play as many as you want!</div></div>
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">2</div><div>Configure each shop separately</div></div>
+        <div style="display:flex;gap:10px;font-size:13px;"><div style="background:var(--purple);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">3</div><div>Watch daily ad for <strong>+50 free coins</strong> every day!</div></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot active"></div><div class="tut-dot"></div><div class="tut-dot"></div></div>
+      <button class="btn btn-primary" onclick="tutNext()">Next →</button>
+    </div>
+    <div class="tut-slide" id="tut-2">
+      <div style="font-size:56px;margin-bottom:12px;">🪙</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">Coins System</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>🎁 Start</span><span style="font-weight:800;color:var(--green);">+100 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>📺 Daily ad</span><span style="font-weight:800;color:var(--green);">+50 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;"><span>▶️ Per round</span><span style="font-weight:800;color:var(--green);">+1 base 🪙</span></div>
+        <div style="display:flex;justify-content:space-between;padding:7px 0;font-size:13px;"><span>▶️ Each round costs</span><span style="font-weight:800;color:var(--red);">-10 🪙</span></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot"></div><div class="tut-dot active"></div><div class="tut-dot"></div></div>
+      <button class="btn btn-primary" onclick="tutNext()">Next →</button>
+    </div>
+    <div class="tut-slide" id="tut-3">
+      <div style="font-size:56px;margin-bottom:12px;">🎰</div>
+      <div style="font-family:var(--font-d);font-size:24px;margin-bottom:8px;">New Features!</div>
+      <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:16px;text-align:left;">
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><span>🎰</span><div><strong>Mystery Box</strong> — spend 50 coins, win rare prizes!</div></div>
+        <div style="display:flex;gap:10px;margin-bottom:10px;font-size:13px;"><span>🏆</span><div><strong>Weekly Tournament</strong> — compete for top prizes!</div></div>
+        <div style="display:flex;gap:10px;font-size:13px;"><span>🛡️</span><div><strong>Streak Shield</strong> — protect your streak!</div></div>
+      </div>
+      <div class="tut-dots"><div class="tut-dot"></div><div class="tut-dot"></div><div class="tut-dot active"></div></div>
+      <button class="btn btn-green" onclick="closeTutorial()">Let's Go! 🎉</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <!-- AUTH -->
+  <div id="screen-auth" class="screen">
+    <div class="hero-band">
+      <div style="font-size:50px;margin-bottom:8px;" class="pulse">💼</div>
+      <div style="font-family:var(--font-d);font-size:32px;color:#fff;position:relative;">Mini CEO</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.88);margin-top:4px;position:relative;">Build your empire ✨</div>
+    </div>
+    <div class="auth-tabs">
+      <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Login</div>
+      <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Sign Up</div>
+    </div>
+    <div id="auth-login-form">
+      <div class="card mt-12">
+        <div class="card-title">👋 Welcome back!</div>
+        <input type="email" id="login-email" placeholder="Email" style="margin-bottom:8px;">
+        <input type="password" id="login-password" placeholder="Password" style="margin-bottom:12px;">
+        <button class="btn btn-primary" onclick="doLogin()">Login 🚀</button>
+      </div>
+      <div style="padding:0 16px;"><button class="btn btn-google" onclick="doGoogleLogin()"><span style="font-size:17px;font-weight:900;">G</span> Continue with Google</button></div>
+    </div>
+    <div id="auth-register-form" style="display:none;">
+      <div class="card mt-12">
+        <div class="card-title">🌟 Create account</div>
+        <input type="text" id="reg-username" placeholder="Username" style="margin-bottom:8px;" maxlength="20">
+        <input type="email" id="reg-email" placeholder="Email" style="margin-bottom:8px;">
+        <input type="password" id="reg-password" placeholder="Password (min 6)" style="margin-bottom:8px;">
+        <input type="text" id="reg-referral" placeholder="Referral code (optional)" style="margin-bottom:12px;" maxlength="20">
+        <button class="btn btn-primary" onclick="doRegister()">Create Account ✨</button>
+      </div>
+      <div style="padding:0 16px;"><button class="btn btn-google" onclick="doGoogleLogin()"><span style="font-size:17px;font-weight:900;">G</span> Continue with Google</button></div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div id="screen-onboarding" class="screen">
+    <div class="hero-band"><div style="font-size:42px;margin-bottom:8px;">🏪</div><div style="font-family:var(--font-d);font-size:28px;color:#fff;position:relative;">Set Up Your Empire</div></div>
+    <div class="spacer"></div>
+    <div class="card"><div class="card-title">🏢 Business Name</div><input type="text" id="biz-name-inp" placeholder="e.g. Sofia's Empire" maxlength="30"></div>
+    <div class="card"><div class="card-title">🎨 Avatar</div><div class="avatar-grid" id="avatar-grid"></div></div>
+    <div class="card"><div class="card-title">🌍 Country</div><div class="flag-grid" id="flag-grid"></div></div>
+    <div class="card"><div class="card-title">🏪 First Shop</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;" id="onboard-shop-grid"></div></div>
+    <div style="padding:0 16px 16px;"><button class="btn btn-primary" onclick="completeOnboarding()">Start My Journey 🚀</button></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="screen-dashboard" class="screen">
+    <div class="hero-band">
+      <div style="display:flex;align-items:center;justify-content:space-between;position:relative;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span id="dash-flag" style="font-size:20px;">🌍</span>
+          <span id="dash-avatar" style="font-size:26px;">😺</span>
+          <span id="dash-icon-badge" style="font-size:18px;"></span>
+          <div style="text-align:left;">
+            <div style="font-size:11px;opacity:.8;">Hey,</div>
+            <div style="font-family:var(--font-d);font-size:18px;line-height:1.1;" id="dash-name">CEO!</div>
+            <div style="font-size:10px;opacity:.75;" id="dash-biz-name"></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div id="shield-indicator" style="display:none;"><span class="shield-active">🛡️ Shield</span></div>
+          <button onclick="doSignOut()" style="background:rgba(255,255,255,.2);border:none;border-radius:50%;width:30px;height:30px;font-size:13px;cursor:pointer;color:#fff;">🚪</button>
+        </div>
+      </div>
+      <div style="height:10px;"></div>
+      <div style="display:flex;gap:8px;position:relative;">
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">CASH 💰</div><div style="font-family:var(--font-d);font-size:18px;" id="dash-cash">$250</div></div>
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">COINS 🪙</div><div style="font-family:var(--font-d);font-size:18px;" id="dash-coins">100</div></div>
+        <div style="flex:1;background:rgba(255,255,255,.2);border-radius:10px;padding:8px;text-align:center;cursor:pointer;" onclick="showStreakInfo()"><div style="font-size:10px;opacity:.8;font-weight:700;">STREAK 🔥</div><div style="font-family:var(--font-d);font-size:18px;" id="dash-streak">0</div></div>
+      </div>
+    </div>
+
+    <!-- Online counter -->
+    <div style="padding:10px 16px 0;">
+      <div class="online-pill"><div class="online-dot"></div><span id="online-count">12 CEOs playing now</span></div>
+    </div>
+
+    <!-- Daily ad -->
+    <div id="daily-ad-btn" style="display:none;padding:8px 16px 0;">
+      <button class="btn btn-amber" onclick="showDailyAd()" style="font-size:13px;">📺 Watch Daily Ad — Collect +50 Coins!</button>
+    </div>
+
+    <!-- Stale warning -->
+    <div id="stale-warning" style="display:none;margin:8px 16px 0;">
+      <div class="stale-warn" id="stale-warning-text">⚠️ Some stock is getting old!</div>
+    </div>
+
+    <!-- Pending gifts -->
+    <div id="pending-gifts-btn" style="display:none;padding:8px 16px 0;">
+      <button class="btn btn-green" onclick="showPendingGifts()" style="font-size:13px;">🎁 You have gifts waiting!</button>
+    </div>
+
+    <!-- Weekly Tournament -->
+    <div id="tournament-dash" class="tournament-card" style="display:none;">
+      <div style="font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;">🏆 Weekly Tournament</div>
+      <div class="tournament-timer" id="tournament-timer">47:23:11</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;" id="tournament-rank-dash">You're #? this week</div>
+    </div>
+
+    <div class="card mt-12">
+      <div class="card-title">⭐ Reputation</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span id="dash-rep-label" style="font-size:14px;font-weight:800;">Good</span><span id="dash-rep-val" style="font-size:14px;font-weight:900;color:var(--purple);">60/100</span></div>
+      <div class="progress-track"><div class="progress-fill" id="dash-rep-bar" style="width:60%;"></div></div>
+    </div>
+
+    <div style="padding:12px 16px 6px;font-size:15px;font-weight:900;">🏪 My Empire</div>
+    <div style="padding:0 16px;" id="my-shops-list"></div>
+
+    <div class="challenge-card">
+      <div style="font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;">🎯 Challenge</div>
+      <div style="font-size:14px;font-weight:800;margin-top:3px;" id="challenge-text">Make $100 profit!</div>
+      <div id="challenge-reward" class="badge badge-amber" style="margin-top:6px;">+3 coins</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Stats</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-label">Total Profit</div><div class="stat-val green" id="dash-total-profit">$0</div></div>
+        <div class="stat-box"><div class="stat-label">Best Round</div><div class="stat-val pink" id="dash-best-day">$0</div></div>
+        <div class="stat-box"><div class="stat-label">Level ⭐</div><div class="stat-val amber" id="dash-level">1</div></div>
+        <div class="stat-box"><div class="stat-label">Shops 🏪</div><div class="stat-val blue" id="dash-shop-count">1</div></div>
+      </div>
+    </div>
+
+    <div class="tip-bubble" id="dash-tip">💡 <strong>Tip:</strong> Watch the daily ad for +50 free coins!</div>
+    <div class="card"><div class="card-title">🏅 Badges</div><div id="badges-list"><span style="font-size:13px;color:var(--muted);">Play to earn badges!</span></div></div>
+    <div id="sync-status" style="text-align:center;font-size:11px;color:var(--muted);padding:0 16px 6px;"></div>
+
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-primary" id="btn-play-day" onclick="startRound()">▶️ Play Round <span style="font-size:12px;opacity:.8;">(10 🪙)</span></button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-amber" onclick="showScreen('coins-store')" style="font-size:14px;">🪙 Store — <span id="dash-coins-btn">0</span> coins</button>
+    </div>
+  </div>
+
+  <!-- PLAY -->
+  <div id="screen-play" class="screen">
+    <div class="hero-band" style="padding:30px 24px 16px;">
+      <div style="position:relative;">
+        <div style="font-size:12px;opacity:.8;margin-bottom:2px;">Round <span id="play-round-num">1</span></div>
+        <div style="font-family:var(--font-d);font-size:20px;" id="play-biz-title">My Empire</div>
+        <div style="font-size:12px;opacity:.85;margin-top:2px;">Cash: <strong id="play-cash">$250</strong> &nbsp;|&nbsp; 🪙 <strong id="play-coins">100</strong></div>
+      </div>
+    </div>
+    <div id="play-shop-tabs-wrap" style="margin-top:12px;"></div>
+    <div id="play-shop-panel"></div>
+    <div class="card">
+      <div class="card-title">📣 Advertising (all shops)</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Ad spend</span><span class="slider-val" id="ads-val">$10</span></div>
+        <input type="range" id="sl-ads" min="0" max="80" step="5" value="10" oninput="updateBudgetSummary()" style="--pct:12.5%">
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Round Budget</div>
+      <div id="budget-rows"></div>
+      <div class="result-row" style="border:none;padding-top:10px;border-top:2px solid var(--border);"><span style="font-weight:900;">Cash after spend</span><span id="ps-cash-after" style="font-weight:900;">$190</span></div>
+    </div>
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-green" id="btn-open-business" onclick="runRound()">Open for Business! 🎉</button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-secondary" onclick="showScreen('dashboard')">← Back</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="screen-results" class="screen">
+    <div id="result-hero" class="result-hero">
+      <div id="result-emoji" style="font-size:50px;" class="pop-in">🎉</div>
+      <div class="result-big" id="result-headline">+$82</div>
+      <div style="font-size:14px;opacity:.9;margin-top:4px;" id="result-sublabel">Round Profit</div>
+    </div>
+    <div id="streak-banner" style="display:none;background:linear-gradient(135deg,#F59E0B,#EF4444);margin:12px 16px 0;border-radius:var(--radius);padding:14px;color:#fff;text-align:center;">
+      <div style="font-size:22px;">🔥</div>
+      <div style="font-family:var(--font-d);font-size:20px;" id="streak-text">Streak!</div>
+      <div style="font-size:13px;opacity:.9;" id="streak-bonus-text">+1 bonus coin!</div>
+    </div>
+    <div id="bad-event-extra" style="display:none;background:rgba(239,68,68,.08);border:2px solid rgba(239,68,68,.35);border-radius:var(--radius);padding:14px;margin:10px 16px 0;text-align:center;">
+      <div style="font-size:24px;" id="bad-event-icon">💸</div>
+      <div style="font-size:14px;font-weight:800;color:var(--red);" id="bad-event-title">Tax Audit!</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;" id="bad-event-desc">-$50 deducted</div>
+    </div>
+    <div style="padding:10px 16px 4px;font-size:14px;font-weight:900;" id="shop-results-title"></div>
+    <div style="padding:0 16px;" id="shop-results-list"></div>
+    <div id="result-event" class="event-banner good" style="margin-top:10px;">
+      <div style="font-size:24px;flex-shrink:0;" id="ev-icon">☀️</div>
+      <div><div style="font-size:13px;font-weight:800;" id="ev-title">Hot Weather!</div><div style="font-size:12px;color:var(--muted);margin-top:2px;" id="ev-desc">Sales boosted!</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📊 Round Total</div>
+      <div class="result-row"><span class="rr-label">Revenue</span><span class="rr-plus" id="rr-rev">+$72</span></div>
+      <div class="result-row"><span class="rr-label">Stock costs</span><span class="rr-minus" id="rr-invcost">-$20</span></div>
+      <div class="result-row"><span class="rr-label">Ad spend</span><span class="rr-minus" id="rr-adcost">-$10</span></div>
+      <div class="result-row"><span class="rr-label">Staff cost</span><span class="rr-minus" id="rr-staffcost">-$20</span></div>
+      <div id="bad-event-row" class="result-row" style="display:none;"><span class="rr-label" id="bad-event-row-label">Event</span><span class="rr-minus" id="bad-event-row-val">-$50</span></div>
+      <div class="result-row" style="border:none;padding-top:10px;border-top:2px solid var(--border);"><span style="font-weight:900;font-size:14px;">Net profit</span><span style="font-weight:900;font-size:17px;" id="rr-profit">+$22</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">⭐ Reputation</div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;font-weight:700;" id="rep-change-label">+3</span><span style="font-size:13px;font-weight:900;color:var(--purple);" id="rep-new-val">78/100</span></div>
+      <div class="progress-track"><div class="progress-fill" id="result-rep-bar" style="width:78%;"></div></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;" id="rep-reason">Customers were happy!</div>
+    </div>
+    <div id="challenge-result-card" class="card" style="display:none;"><div class="card-title">🎯 Challenge</div><div id="challenge-result-content"></div></div>
+    <div id="new-badges-card" class="card" style="display:none;"><div class="card-title">🏅 New Badges!</div><div id="new-badges-content" style="display:flex;flex-wrap:wrap;gap:8px;"></div></div>
+    <div class="tip-bubble"><strong>💡</strong> <span id="explain-text">Set different prices per shop!</span></div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:30px;">🪙</div>
+      <div style="font-family:var(--font-d);font-size:24px;color:var(--amber);" id="coins-earned">+1</div>
+      <div style="font-size:12px;color:var(--muted);">coins earned</div>
+      <div style="font-size:13px;font-weight:800;color:var(--purple);margin-top:4px;" id="coins-total-display">Total: 0 🪙</div>
+    </div>
+    <div style="background:rgba(168,85,247,.05);border:2px dashed rgba(168,85,247,.25);border-radius:var(--radius);padding:14px;margin:0 16px 12px;text-align:center;cursor:pointer;" onclick="watchAdForCoins()">
+      <div style="font-size:20px;margin-bottom:3px;">📺</div>
+      <div style="font-weight:800;font-size:13px;">Watch a short ad — Get +5 coins!</div>
+    </div>
+    <div style="padding:0 16px 16px;">
+      <button class="btn btn-primary" id="btn-next-round" onclick="goToNextRound()">Next Round ➡️</button>
+      <div style="height:8px;"></div>
+      <button class="btn btn-secondary" onclick="showShareCard()">📲 Share Result</button>
+    </div>
+  </div>
+
+  <!-- COINS STORE -->
+  <div id="screen-coins-store" class="screen">
+    <div class="hero-band" style="padding:34px 24px 20px;">
+      <div style="font-family:var(--font-d);font-size:24px;position:relative;">🪙 Coins Store</div>
+      <div style="font-size:12px;opacity:.85;position:relative;margin-top:3px;">Level up your empire!</div>
+      <div style="margin-top:10px;position:relative;background:rgba(255,255,255,.2);border-radius:10px;padding:8px 16px;display:inline-block;">
+        <div style="font-size:10px;opacity:.8;">Your coins</div>
+        <div style="font-family:var(--font-d);font-size:22px;" id="store-coins-display">0</div>
+      </div>
+    </div>
+
+    <div style="padding:10px 16px 4px;font-size:14px;font-weight:900;">📺 Earn Coins</div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1.5px solid var(--border);">
+        <div style="font-size:26px;">📺</div>
+        <div style="flex:1;"><div style="font-size:13px;font-weight:800;">Watch Ad</div><div style="font-size:11px;color:var(--muted);">+5 coins instantly</div></div>
+        <button class="btn btn-sm btn-amber" onclick="watchAdForCoins()" style="width:auto;">+5 🪙</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+        <div style="font-size:26px;">🎁</div>
+        <div style="flex:1;"><div style="font-size:13px;font-weight:800;">Daily Bonus</div><div style="font-size:11px;color:var(--muted);">+50 coins — resets daily</div></div>
+        <button class="btn btn-sm btn-green" onclick="showDailyAd()" id="store-daily-btn" style="width:auto;">Collect</button>
+      </div>
+    </div>
+
+    <!-- Mystery Box -->
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🎰 Mystery Box</div>
+    <div class="card" style="text-align:center;background:linear-gradient(135deg,rgba(168,85,247,.06),rgba(245,158,11,.06));border-color:rgba(168,85,247,.3);">
+      <div style="font-size:48px;margin-bottom:8px;">🎰</div>
+      <div style="font-size:15px;font-weight:800;margin-bottom:4px;">Win Rare Prizes!</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Coins • Stickers • Avatars • Themes<br>Everything from Common to Mythic!</div>
+      <button class="btn btn-amber" onclick="openMysteryOverlay()">Open Mystery Box — 50 🪙</button>
+    </div>
+
+    <!-- Streak Shield -->
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🛡️ Streak Shield</div>
+    <div class="card" id="streak-shield-card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:36px;">🛡️</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:800;">Streak Shield</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">Protects your streak if you lose a round!</div>
+          <div style="font-size:12px;font-weight:900;color:var(--amber);margin-top:3px;" id="shield-store-price">🪙 30 coins</div>
+        </div>
+        <div id="shield-store-btn"></div>
+      </div>
+    </div>
+
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🏪 Unlock Shops</div>
+    <div class="card" id="shop-unlock-list"></div>
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">⚡ Upgrades <span style="font-size:12px;font-weight:600;color:var(--muted);">(3 levels each)</span></div>
+    <div class="card" id="upgrades-list"></div>
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">👑 Luxury Icons</div>
+    <div class="card" id="icons-list"></div>
+    <div style="padding:4px 16px;font-size:14px;font-weight:900;">🎨 Themes</div>
+    <div class="card" id="themes-list"></div>
+    <div style="padding:0 16px 16px;margin-top:6px;"><button class="btn btn-secondary" onclick="showScreen('dashboard')">← Back</button></div>
+  </div>
+
+  <!-- SOCIAL -->
+  <div id="screen-social" class="screen">
+    <div class="hero-band" style="padding:34px 24px 20px;">
+      <div style="font-family:var(--font-d);font-size:24px;position:relative;">🏆 Leaderboard</div>
+      <div style="font-size:12px;opacity:.85;position:relative;margin-top:3px;">Weekly Top CEOs</div>
+    </div>
+
+    <!-- Weekly Tournament Banner -->
+    <div class="tournament-card mt-12">
+      <div style="font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;">🏆 Weekly Tournament — Ends in</div>
+      <div class="tournament-timer" id="tournament-timer-social">47:23:11</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;text-align:center;">Top 3 win exclusive prizes!</div>
+      <div class="tournament-rank"><span>🥇 #1 Prize</span><span style="font-weight:800;color:var(--amber);">500 🪙 + Mythic Avatar</span></div>
+      <div class="tournament-rank"><span>🥈 #2 Prize</span><span style="font-weight:800;color:var(--muted);">200 🪙 + Ultra Sticker</span></div>
+      <div class="tournament-rank"><span>🥉 #3 Prize</span><span style="font-weight:800;color:var(--blue);">100 🪙 + Legendary Sticker</span></div>
+    </div>
+
+    <div style="display:flex;gap:0;padding:12px 16px 0;">
+      <button class="btn btn-sm" id="tab-friends-lb" onclick="switchLbTab('friends')" style="border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--purple);color:#fff;border-color:var(--purple);">Friends</button>
+      <button class="btn btn-sm" id="tab-global-lb" onclick="switchLbTab('global')" style="border-radius:0 12px 12px 0;flex:1;background:var(--bg);color:var(--purple);">Global</button>
+    </div>
+    <div class="card mt-12" id="lb-list"><div style="font-size:13px;color:var(--muted);">Loading...</div></div>
+    <div class="card" style="background:rgba(168,85,247,.06);border-color:var(--purple);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="font-size:22px;font-weight:900;color:var(--purple);width:26px;text-align:center;" id="my-rank">#?</div>
+        <div style="font-size:16px;" id="social-my-flag">🌍</div>
+        <div style="font-size:22px;" id="social-my-avatar">😺</div>
+        <div style="flex:1;"><div style="font-weight:800;font-size:13px;" id="social-my-name">You</div><div style="font-size:11px;color:var(--muted);" id="social-my-biz"></div></div>
+        <div style="font-size:15px;font-weight:900;color:var(--green);" id="my-score">$0</div>
+      </div>
+    </div>
+    <div class="card" id="pending-gifts-card" style="display:none;"><div class="card-title">🎁 Pending Gifts <span id="gift-count-badge" class="pending-badge">0</span></div><div id="pending-gifts-list"></div></div>
+    <div class="card" id="friend-requests-card" style="display:none;"><div class="card-title">📬 Requests <span id="req-count-badge" class="pending-badge">0</span></div><div id="friend-requests-list"></div></div>
+    <div class="card">
+      <div class="card-title">👯 Friends</div>
+      <input type="text" id="add-friend-inp" placeholder="Enter username..." style="margin-bottom:8px;" maxlength="20">
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" style="flex:1;" onclick="sendFriendRequest()">Add 💌</button>
+        <button class="btn btn-amber btn-sm" style="flex:1;" onclick="viewFriendProfile()">Profile 👤</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎁 Send a Gift</div>
+      <input type="text" id="gift-username-inp" placeholder="Friend's username" style="margin-bottom:8px;" maxlength="20">
+      <button class="btn btn-green" onclick="openGiftModal()">Send Gift 🎁</button>
+    </div>
+    <div class="card">
+      <div class="card-title">💌 Invite Code</div>
+      <div class="ref-code" id="ref-code">Loading...</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center;">Both you and your friend get <strong>+100 coins</strong>!</div>
+      <div style="height:8px;"></div>
+      <button class="btn btn-secondary" onclick="copyRefCode()">📋 Copy Code</button>
+    </div>
+    <div style="padding:0 16px 16px;margin-top:4px;"><button class="btn btn-red btn-sm" style="width:100%;" onclick="doSignOut()">🚪 Sign Out</button></div>
+  </div>
+
+  <!-- SHARE -->
+  <div id="screen-share" class="screen">
+    <div style="padding:18px 16px 0;display:flex;align-items:center;gap:10px;">
+      <button class="btn btn-sm btn-secondary" onclick="showScreen('results')" style="width:auto;">← Back</button>
+      <span style="font-size:16px;font-weight:900;">Share Result 📲</span>
+    </div>
+    <div class="share-card mt-12">
+      <div style="font-family:var(--font-d);font-size:22px;" id="sc-biz-name">My Empire</div>
+      <div style="font-size:12px;opacity:.85;margin-top:2px;" id="sc-tagline">Round 1</div>
+      <div style="margin:14px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">PROFIT</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-profit">+$0</div></div>
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">SOLD</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-sold">0</div></div>
+        <div style="background:rgba(255,255,255,.2);border-radius:10px;padding:10px 6px;text-align:center;"><div style="font-size:10px;opacity:.8;font-weight:700;">REP ⭐</div><div style="font-family:var(--font-d);font-size:17px;" id="sc-rep">60</div></div>
+      </div>
+      <div style="font-size:11px;opacity:.7;">🎮 miniceo.fun</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <button class="btn btn-primary" onclick="shareResult()" style="margin-bottom:8px;">📤 Share Now</button>
+      <button class="btn btn-secondary btn-sm" style="width:100%;" onclick="copyShareText()">📋 Copy Text</button>
+    </div>
+  </div>
+
+  <nav id="navbar">
+    <button class="nav-btn active" id="nav-dashboard" onclick="showScreen('dashboard')"><span class="nav-icon">🏠</span><span>Home</span></button>
+    <button class="nav-btn play-btn" id="nav-play" onclick="startRound()"><div class="nav-icon-wrap">▶</div></button>
+    <button class="nav-btn" id="nav-coins" onclick="showScreen('coins-store')"><span class="nav-icon">🪙</span><span>Store</span></button>
+    <button class="nav-btn" id="nav-social" onclick="showScreen('social')"><span class="nav-icon">🏆</span><span>Ranks</span></button>
+  </nav>
+</div>
+
+<script>
+const SUPABASE_URL='https://uigseedcvsipnejvcvau.supabase.co';
+const SUPABASE_KEY='sb_publishable_WTVamLxXh7sNUytGXO1KhQ_7608zMs0';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+// ═══ CONSTANTS ═══
+const ROUND_COST=10, START_COINS=100, STAFF_COST=20;
+const DAILY_AD_COINS=50, WATCH_AD_COINS=5, REFERRAL_BONUS=100;
+const SHIELD_COST=30, MYSTERY_BOX_COST=50;
+const BADGE_COINS={first_round:1,first_profit:1,streak3:2,streak7:3,sold_out:2,big_round:5,rep_80:3,multi_shop:5,coins100:1,day10:5,empire:8};
+
+// ═══ BALANCED COIN REWARDS ═══
+function calcRoundCoins(profit,anySoldOut,anyPromo,streakBonus,challengeCoins){
+  let coins=1; // base: always +1
+  if(profit>50)coins+=1;   // good round
+  if(profit>150)coins+=1;  // great round (rare)
+  if(anySoldOut)coins+=1;  // sold out bonus (rare-ish)
+  if(anyPromo)coins+=0;    // no bonus for promo — encourages ad watching
+  coins+=streakBonus;      // streak bonus (rare)
+  coins+=challengeCoins;   // challenge bonus (3-6 coins, rare)
+  return coins;
+}
+
+// ═══ 8 SHOPS ═══
+const SHOPS=[
+  {id:'smoothie',   name:'Smoothie Stand',  icon:'🥤',unitCost:1.5,  minPrice:2,  maxPrice:20, unlockCost:0,    tier:1},
+  {id:'sticker',    name:'Sticker Shop',    icon:'🎀',unitCost:0.5,  minPrice:1,  maxPrice:8,  unlockCost:0,    tier:1},
+  {id:'icecream',   name:'Ice Cream Shop',  icon:'🍦',unitCost:1.2,  minPrice:2,  maxPrice:20, unlockCost:200,  tier:2},
+  {id:'accessories',name:'Accessories',     icon:'💍',unitCost:3.0,  minPrice:5,  maxPrice:25, unlockCost:400,  tier:2},
+  {id:'coffee',     name:'Coffee Shop',     icon:'☕',unitCost:2.5,  minPrice:4,  maxPrice:18, unlockCost:800,  tier:3},
+  {id:'fashion',    name:'Fashion Boutique',icon:'👗',unitCost:8.0,  minPrice:15, maxPrice:60, unlockCost:1500, tier:3},
+  {id:'foodtruck',  name:'Food Truck',      icon:'🍕',unitCost:4.0,  minPrice:8,  maxPrice:30, unlockCost:2500, tier:4},
+  {id:'luxury',     name:'Luxury Goods',    icon:'💎',unitCost:20.0, minPrice:50, maxPrice:200,unlockCost:5000, tier:4},
+];
+const UPGRADES=[
+  {id:'warehouse',icon:'🏭',name:'Warehouse',  desc:'Reduce inventory cost',   levels:[{cost:100,bonus:'-10% cost'},{cost:250,bonus:'-20% cost'},{cost:500,bonus:'-35% cost'}]},
+  {id:'staff',    icon:'👩',name:'Staff Training',desc:'Boost staff performance',levels:[{cost:150,bonus:'+10% sales'},{cost:350,bonus:'+25% sales'},{cost:700,bonus:'+40% sales'}]},
+  {id:'marketing',icon:'📣',name:'Marketing',  desc:'Attract more customers',   levels:[{cost:200,bonus:'+15% customers'},{cost:450,bonus:'+30% customers'},{cost:900,bonus:'+50% customers'}]},
+];
+const LUXURY_STICKERS=[
+  {id:'crown', icon:'👑',name:'Crown',    cost:50, rarity:'Rare'},
+  {id:'heart', icon:'❤️',name:'Heart',    cost:50, rarity:'Rare'},
+  {id:'fire',  icon:'🔥',name:'Fire',     cost:80, rarity:'Epic'},
+  {id:'bolt',  icon:'⚡',name:'Lightning',cost:80, rarity:'Epic'},
+  {id:'star',  icon:'⭐',name:'Gold Star',cost:120,rarity:'Legendary'},
+  {id:'gem',   icon:'💎',name:'Diamond',  cost:200,rarity:'Legendary'},
+  {id:'trophy',icon:'🏆',name:'Trophy',   cost:300,rarity:'Legendary'},
+  {id:'comet', icon:'☄️',name:'Comet',   cost:500,rarity:'Ultra'},
+];
+const LUXURY_AVATARS=[
+  {id:'lion',   icon:'🦁',name:'Lion',     cost:200, rarity:'Epic'},
+  {id:'tiger',  icon:'🐯',name:'Tiger',    cost:200, rarity:'Epic'},
+  {id:'dragon', icon:'🐉',name:'Dragon',   cost:500, rarity:'Legendary'},
+  {id:'unicorn',icon:'🦄',name:'Unicorn',  cost:500, rarity:'Legendary'},
+  {id:'wizard', icon:'🧙',name:'Wizard',   cost:800, rarity:'Ultra'},
+  {id:'fairy',  icon:'🧚',name:'Fairy',    cost:800, rarity:'Ultra'},
+  {id:'robot',  icon:'🤖',name:'Robot CEO',cost:1000,rarity:'Ultra'},
+  {id:'alien',  icon:'👾',name:'Alien Boss',cost:2000,rarity:'Mythic'},
+];
+
+// ═══ MYSTERY BOX PRIZES ═══
+const MYSTERY_PRIZES=[
+  {type:'coins', value:10,  icon:'🪙', name:'+10 Coins',      rarity:'Common',    rarityClass:'rarity-rare',    weight:35},
+  {type:'coins', value:25,  icon:'🪙', name:'+25 Coins',      rarity:'Rare',      rarityClass:'rarity-rare',    weight:25},
+  {type:'coins', value:50,  icon:'🪙', name:'+50 Coins!',     rarity:'Epic',      rarityClass:'rarity-epic',    weight:15},
+  {type:'coins', value:100, icon:'💰', name:'+100 Coins!!',   rarity:'Legendary', rarityClass:'rarity-legendary',weight:8},
+  {type:'coins', value:500, icon:'💰', name:'+500 COINS!!!',  rarity:'Ultra',     rarityClass:'rarity-ultra',   weight:2},
+  {type:'sticker',value:'crown', icon:'👑',name:'Crown Sticker',rarity:'Rare',    rarityClass:'rarity-rare',    weight:6},
+  {type:'sticker',value:'fire',  icon:'🔥',name:'Fire Sticker', rarity:'Epic',    rarityClass:'rarity-epic',    weight:4},
+  {type:'sticker',value:'trophy',icon:'🏆',name:'Trophy Sticker',rarity:'Legendary',rarityClass:'rarity-legendary',weight:2},
+  {type:'sticker',value:'comet', icon:'☄️',name:'Comet Sticker',rarity:'Ultra',   rarityClass:'rarity-ultra',   weight:1},
+  {type:'avatar', value:'lion',  icon:'🦁',name:'Lion Avatar',  rarity:'Epic',    rarityClass:'rarity-epic',    weight:1},
+  {type:'avatar', value:'dragon',icon:'🐉',name:'Dragon Avatar',rarity:'Legendary',rarityClass:'rarity-legendary',weight:0.7},
+  {type:'avatar', value:'alien', icon:'👾',name:'Alien Avatar', rarity:'Mythic',  rarityClass:'rarity-ultra',   weight:0.3},
+];
+
+const THEMES=[
+  {id:'default',icon:'🌈',name:'Default',     desc:'Original colorful',   cost:0,  cls:''},
+  {id:'pastel', icon:'🌸',name:'Pastel Dream',desc:'Soft pink & mint',    cost:100,cls:'theme-pastel'},
+  {id:'neon',   icon:'⚡',name:'Neon Nights', desc:'Dark neon glow',      cost:150,cls:'theme-neon'},
+  {id:'golden', icon:'✨',name:'Golden CEO',  desc:'Premium gold & black',cost:250,cls:'theme-golden'},
+];
+const FLAGS=[
+  {flag:'🇮🇱'},{flag:'🇺🇸'},{flag:'🇬🇧'},{flag:'🇫🇷'},{flag:'🇩🇪'},
+  {flag:'🇪🇸'},{flag:'🇮🇹'},{flag:'🇧🇷'},{flag:'🇦🇺'},{flag:'🇨🇦'},
+];
+const AVATARS_BASE=['😺','🦊','🐼','🦋','🌸','⭐','🌈','🎀','🍓','🎭'];
+const PROMOS=[
+  {id:'none',      icon:'🚫',name:'No Promo',   effect:'Save money',            mult:1.0},
+  {id:'bogo',      icon:'2️⃣',name:'Buy 1 Get 1',effect:'+30% sales,-15% rev',   mult:1.3,revMod:0.85},
+  {id:'loyalty',   icon:'🃏',name:'Loyalty',    effect:'+20% customers',         mult:1.2},
+  {id:'flash',     icon:'⚡',name:'Flash Sale', effect:'+40% sales,price-20%',   mult:1.4,priceMod:0.8},
+  {id:'influencer',icon:'📸',name:'Collab Post',effect:'+50% customers,$15 cost',mult:1.5,costMod:15},
+  {id:'bundle',    icon:'📦',name:'Bundle',     effect:'+25% sales',             mult:1.25},
+];
+const GOOD_EVENTS=[
+  {id:'hot',       icon:'☀️', title:'Hot Weather!',       desc:'Sales boosted!',           mult:1.35,type:'good'},
+  {id:'school',    icon:'🏫',title:'School Event!',       desc:'Traffic way up!',           mult:1.45,type:'good'},
+  {id:'influencer',icon:'📸',title:'Influencer Mention!', desc:'Customers flooding in!',    mult:1.60,type:'good'},
+  {id:'holiday',   icon:'🎉',title:'Local Holiday!',       desc:'More shoppers!',            mult:1.30,type:'good'},
+  {id:'weekend',   icon:'🎊',title:'Weekend Rush!',        desc:"People are shopping.",      mult:1.25,type:'good'},
+  {id:'normal',    icon:'🌤️',title:'Normal Day',          desc:'Solid business!',           mult:1.0, type:'neutral'},
+  {id:'vibes',     icon:'😊',title:'Good Vibes Day',       desc:'Cheerful customers.',        mult:1.10,type:'neutral'},
+];
+const BAD_EVENTS=[
+  {id:'rain',     icon:'🌧️',title:'Rainy Day...',       desc:'Fewer customers.',           mult:0.70,type:'bad',salesMult:true},
+  {id:'competitor',icon:'👀',title:'New Competitor',       desc:'Lost some customers.',       mult:0.80,type:'bad',salesMult:true},
+  {id:'tax',      icon:'💸',title:'Tax Audit!',           desc:'Government takes a cut.',    mult:1.0, type:'bad',cashPenalty:50},
+  {id:'quality',  icon:'🐛',title:'Quality Issue!',       desc:'Customers complained.',      mult:0.90,type:'bad',repPenalty:15},
+  {id:'fire',     icon:'🏚️',title:'Warehouse Problem!',  desc:'Lost some stock.',           mult:1.0, type:'bad',stockLoss:0.4},
+  {id:'review',   icon:'📰',title:'Bad Review!',          desc:'Demand dropped badly.',      mult:0.50,type:'bad',salesMult:true},
+  {id:'outage',   icon:'⚡',title:'Power Outage!',        desc:'All shops closed.',          mult:0.0, type:'bad',salesMult:true},
+];
+const CHALLENGES=[
+  {text:'Make $100 profit',     reward:3,check:(r)=>r.profit>=100},
+  {text:'Sell 20+ units total', reward:2,check:(r)=>r.unitsSold>=20},
+  {text:'Keep rep above 75',    reward:2,check:(r)=>r.newRep>=75},
+  {text:'Sell out a shop',      reward:4,check:(r)=>r.anySoldOut},
+  {text:'Profit without ads',   reward:3,check:(r)=>r.adsSpent===0&&r.profit>0},
+  {text:'Earn $200+ revenue',   reward:2,check:(r)=>r.revenue>=200},
+  {text:'Run a promotion',      reward:1,check:(r)=>r.anyPromo},
+  {text:'Hit reputation 80+',   reward:4,check:(r)=>r.newRep>=80},
+];
+const BADGES=[
+  {id:'first_round', icon:'🌟',label:'First Round!'},
+  {id:'first_profit',icon:'💰',label:'First Profit'},
+  {id:'streak3',     icon:'🔥',label:'3 Round Streak'},
+  {id:'streak7',     icon:'🌈',label:'7 Round Streak'},
+  {id:'sold_out',    icon:'🏪',label:'Sold Out!'},
+  {id:'big_round',   icon:'🚀',label:'Big Round($200)'},
+  {id:'rep_80',      icon:'⭐',label:'Great Rep (80)'},
+  {id:'multi_shop',  icon:'🏬',label:'Multi-Shop CEO'},
+  {id:'coins100',    icon:'🪙',label:'100 Coins'},
+  {id:'day10',       icon:'📅',label:'10 Days Strong'},
+  {id:'empire',      icon:'👑',label:'Full Empire (4+ shops)'},
+];
+const TIPS=[
+  'Watch the daily ad for +50 free coins!',
+  'Old stock loses value after 3 rounds — sell fast!',
+  'More shops = bulk discount on inventory!',
+  'Upgrade Warehouse to cut costs by 35%!',
+  'Invite friends for +100 coins each!',
+  'Try the Mystery Box for rare prizes!',
+  'Build your streak for bonus coins!',
+  'Streak Shield protects you from losing streaks!',
+];
+
+// ═══ STATE ═══
+let state={},currentUser=null,todayChallenge=null,lastRoundResult=null;
+let currentLbTab='friends',tutSlide=1,shopConfigs={},activeConfigShopId='';
+let pendingGiftData=null; // for gift received popup
+
+function defaultState(){
+  return {
+    playerName:'',bizName:'',avatar:'😺',shopId:'smoothie',flag:'🌍',
+    day:1,cash:250,reputation:60,
+    streak:0,level:1,coins:START_COINS,
+    totalProfit:0,bestDay:0,soldOuts:0,prevProfit:0,totalRounds:0,
+    lastLoginDate:'',dailyAdCollected:false,
+    hasStreakShield:false,
+    earnedBadges:[],unlockedShops:['smoothie'],
+    upgradeLevel:{warehouse:0,staff:0,marketing:0},
+    purchasedThemes:['default'],activeTheme:'default',
+    purchasedStickers:[],purchasedAvatars:[],activeSticker:'',
+    shopInventories:{smoothie:0,sticker:0,icecream:0,accessories:0,coffee:0,fashion:0,foodtruck:0,luxury:0},
+    shopProfits:{smoothie:0,sticker:0,icecream:0,accessories:0,coffee:0,fashion:0,foodtruck:0,luxury:0},
+    shopStaleRounds:{smoothie:0,sticker:0,icecream:0,accessories:0,coffee:0,fashion:0,foodtruck:0,luxury:0},
+    referralCode:'',referredBy:'',
+    tutorialSeen:false,
+  };
+}
+
+// ═══ COIN SYNC — single source of truth ═══
+function syncCoinsDisplay(){
+  const coins=Math.round(state.coins||0);
+  const ids=['dash-coins','dash-coins-btn','store-coins-display','play-coins'];
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=coins;});
+  const ctd=document.getElementById('coins-total-display');
+  if(ctd)ctd.textContent='Total: '+coins+' 🪙';
+}
+
+// ═══ BOOT ═══
+window.addEventListener('load',async()=>{
+  buildAvatarGrid();buildFlagGrid();buildOnboardShopGrid();
+  updateOnlineCount();
+  setInterval(updateOnlineCount,30000);
+  startTournamentTimer();
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){currentUser=session.user;await loadOrCreatePlayer();}
+  else{hideLoading();showScreen('auth');}
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_IN'&&session&&!currentUser){currentUser=session.user;await loadOrCreatePlayer();}
+  });
+});
+function hideLoading(){document.getElementById('loading').classList.add('hidden');}
+
+// ═══ ONLINE COUNTER ═══
+function updateOnlineCount(){
+  // Simulated — replace with real Supabase presence later
+  const base=8,variance=Math.floor(Math.random()*20);
+  const count=base+variance;
+  const el=document.getElementById('online-count');
+  if(el)el.textContent=count+' CEOs playing now';
+}
+
+// ═══ TOURNAMENT TIMER ═══
+function startTournamentTimer(){
+  function getTimeLeft(){
+    const now=new Date();
+    const endOfWeek=new Date(now);
+    endOfWeek.setDate(now.getDate()+(7-now.getDay()));
+    endOfWeek.setHours(23,59,59,0);
+    const diff=endOfWeek-now;
+    const h=Math.floor(diff/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    return`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  function update(){
+    const t=getTimeLeft();
+    ['tournament-timer','tournament-timer-social'].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.textContent=t;
+    });
+  }
+  update();setInterval(update,1000);
+}
+
+// ═══ THEME ═══
+function applyTheme(id){
+  const t=THEMES.find(x=>x.id===id)||THEMES[0];
+  document.body.className=t.cls;
+  state.activeTheme=id;
+}
+
+// ═══ DAILY RESET ═══
+function checkDailyReset(){
+  const today=new Date().toDateString();
+  if(state.lastLoginDate!==today){
+    state.lastLoginDate=today;
+    state.dailyAdCollected=false;
+    if(state.totalRounds>0)setTimeout(()=>showDailyAd(),1200);
+  }
+}
+function showDailyAd(){if(state.dailyAdCollected){showToast('✅ Already collected today!');return;}document.getElementById('daily-ad-overlay').classList.add('show');}
+function collectDailyBonus(){
+  document.getElementById('daily-ad-overlay').classList.remove('show');
+  state.coins=Math.round((state.coins||0)+DAILY_AD_COINS);
+  state.dailyAdCollected=true;
+  syncCoinsDisplay();
+  showToast('🎁 +'+DAILY_AD_COINS+' coins!');
+  spawnConfetti(60);saveStateCloud();initDashboard();
+}
+function watchAdForCoins(){
+  closeNoCoins();
+  state.coins=Math.round((state.coins||0)+WATCH_AD_COINS);
+  syncCoinsDisplay();
+  showToast('📺 +'+WATCH_AD_COINS+' coins added!');
+  saveStateCloud();initDashboard();
+}
+function closeNoCoins(){document.getElementById('no-coins-overlay').classList.remove('show');}
+
+// ═══ MYSTERY BOX ═══
+function openMysteryOverlay(){
+  document.getElementById('mystery-result').classList.remove('show');
+  document.getElementById('mystery-icon').className='mystery-box-icon';
+  document.getElementById('mystery-icon').textContent='🎰';
+  document.getElementById('mystery-open-btn').style.display='';
+  document.getElementById('mystery-prompt').textContent='Tap the box to open!';
+  document.getElementById('mystery-overlay').classList.add('show');
+}
+function closeMystery(){document.getElementById('mystery-overlay').classList.remove('show');}
+
+function openMysteryBox(){
+  if((state.coins||0)<MYSTERY_BOX_COST){showToast('❌ Need 50 coins!');return;}
+  const btn=document.getElementById('mystery-open-btn');
+  btn.style.display='none';
+  document.getElementById('mystery-prompt').textContent='Opening...';
+  const icon=document.getElementById('mystery-icon');
+  icon.className='mystery-box-icon spinning';
+
+  state.coins=Math.round((state.coins||0)-MYSTERY_BOX_COST);
+  syncCoinsDisplay();
+
+  // Pick prize by weight
+  const prize=weightedRandom(MYSTERY_PRIZES);
+
+  setTimeout(()=>{
+    icon.className='mystery-box-icon';
+    icon.textContent=prize.icon;
+
+    // Apply prize
+    if(prize.type==='coins'){
+      state.coins=Math.round((state.coins||0)+prize.value);
+      syncCoinsDisplay();
+      document.getElementById('mystery-prize-desc').textContent='+'+prize.value+' coins added!';
+    } else if(prize.type==='sticker'){
+      if(!state.purchasedStickers)state.purchasedStickers=[];
+      if(!state.purchasedStickers.includes(prize.value))state.purchasedStickers.push(prize.value);
+      const s=LUXURY_STICKERS.find(x=>x.id===prize.value);
+      state.activeSticker=s?.icon||prize.icon;
+      document.getElementById('mystery-prize-desc').textContent='Sticker equipped automatically!';
+    } else if(prize.type==='avatar'){
+      if(!state.purchasedAvatars)state.purchasedAvatars=[];
+      if(!state.purchasedAvatars.includes(prize.value))state.purchasedAvatars.push(prize.value);
+      const a=LUXURY_AVATARS.find(x=>x.id===prize.value);
+      state.avatar=a?.icon||prize.icon;
+      document.getElementById('mystery-prize-desc').textContent='Avatar equipped automatically!';
+    }
+
+    document.getElementById('mystery-rarity').textContent=prize.rarity;
+    document.getElementById('mystery-rarity').className='rarity-badge '+prize.rarityClass;
+    document.getElementById('mystery-prize-icon').textContent=prize.icon;
+    document.getElementById('mystery-prize-name').textContent=prize.name;
+    document.getElementById('mystery-result').classList.add('show');
+    document.getElementById('mystery-prompt').textContent='';
+    document.getElementById('mystery-open-btn').textContent='Open Another! 🎰 (50 🪙)';
+    document.getElementById('mystery-open-btn').style.display='';
+
+    saveStateCloud();
+    if(prize.rarity==='Legendary'||prize.rarity==='Ultra'||prize.rarity==='Mythic')spawnConfetti(120);
+    else spawnConfetti(40);
+    showToast('🎰 '+prize.rarity+'! '+prize.name);
+  },1000);
+}
+
+function weightedRandom(items){
+  const total=items.reduce((s,i)=>s+i.weight,0);
+  let r=Math.random()*total;
+  for(const item of items){r-=item.weight;if(r<=0)return item;}
+  return items[0];
+}
+
+// ═══ STREAK SHIELD ═══
+function showStreakInfo(){
+  const s=state.streak||0;
+  const shieldTxt=state.hasStreakShield?' 🛡️ (Protected!)':'';
+  if(s===0)showToast('Win a round to start your streak! 🔥');
+  else showToast('🔥 '+s+' round streak!'+shieldTxt);
+}
+
+// ═══ GIFT RECEIVED POPUP ═══
+let currentClaimGiftId=null;
+async function showGiftReceivedPopup(gift){
+  pendingGiftData=gift;
+  currentClaimGiftId=gift.id;
+  const fromName=gift.from_username||'A friend';
+  document.getElementById('gift-from-text').textContent='🎁 Gift from '+fromName+'!';
+  document.getElementById('gift-box-emoji').textContent='🎁';
+  document.getElementById('gift-box-emoji').className='gift-box';
+  document.getElementById('gift-reveal').style.display='none';
+  document.getElementById('gift-claim-btn').textContent='Tap to open! 🎁';
+  document.getElementById('gift-claim-btn').onclick=openGiftBox;
+  document.getElementById('gift-received-overlay').classList.add('show');
+}
+
+function openGiftBox(){
+  const box=document.getElementById('gift-box-emoji');
+  box.classList.add('open');
+  setTimeout(()=>{
+    const gift=pendingGiftData;
+    document.getElementById('gift-reveal').style.display='block';
+    if(gift.gift_type==='coins'){
+      document.getElementById('gift-value-big').textContent='+'+gift.gift_value+' 🪙';
+      document.getElementById('gift-value-label').textContent='coins from '+( gift.from_username||'your friend')+'!';
+    } else {
+      const icon=gift.gift_value?.split('|')[1]||'👑';
+      document.getElementById('gift-value-big').textContent=icon;
+      document.getElementById('gift-value-label').textContent='Sticker from '+(gift.from_username||'your friend')+'!';
+    }
+    document.getElementById('gift-claim-btn').textContent='Claim! 🎉';
+    document.getElementById('gift-claim-btn').onclick=claimReceivedGift;
+    spawnConfetti(80);
+  },500);
+}
+
+async function claimReceivedGift(){
+  if(!currentClaimGiftId)return;
+  const gift=pendingGiftData;
+  await sb.from('gifts').update({status:'claimed'}).eq('id',currentClaimGiftId);
+  if(gift.gift_type==='coins'){
+    state.coins=Math.round((state.coins||0)+parseInt(gift.gift_value));
+    showToast('🎁 +'+gift.gift_value+' coins from '+(gift.from_username||'friend')+'!');
+  } else {
+    const [stickerName,icon]=gift.gift_value.split('|');
+    if(!state.purchasedStickers)state.purchasedStickers=[];
+    if(stickerName&&!state.purchasedStickers.includes(stickerName))state.purchasedStickers.push(stickerName);
+    state.activeSticker=icon;
+    showToast('👑 Sticker '+icon+' from '+(gift.from_username||'friend')+'!');
+  }
+  syncCoinsDisplay();
+  document.getElementById('gift-received-overlay').classList.remove('show');
+  currentClaimGiftId=null;pendingGiftData=null;
+  await saveStateCloud();initDashboard();
+  await checkPendingGifts();
+}
+
+// ═══ TUTORIAL ═══
+function showTutorial(){tutSlide=1;document.querySelectorAll('.tut-slide').forEach(s=>s.classList.remove('active'));document.getElementById('tut-1').classList.add('active');document.getElementById('tutorial-overlay').classList.add('show');}
+function tutNext(){tutSlide++;document.querySelectorAll('.tut-slide').forEach(s=>s.classList.remove('active'));document.getElementById('tut-'+tutSlide)?.classList.add('active');}
+function closeTutorial(){document.getElementById('tutorial-overlay').classList.remove('show');state.tutorialSeen=true;saveStateCloud();}
+
+// ═══ AUTH ═══
+function switchAuthTab(tab){
+  document.getElementById('auth-login-form').style.display=tab==='login'?'block':'none';
+  document.getElementById('auth-register-form').style.display=tab==='register'?'block':'none';
+  document.getElementById('tab-login').classList.toggle('active',tab==='login');
+  document.getElementById('tab-register').classList.toggle('active',tab==='register');
+}
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const pw=document.getElementById('login-password').value;
+  if(!email||!pw){showToast('⚠️ Fill all fields');return;}
+  showToast('⏳ Logging in...');
+  const {data,error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error){showToast('❌ '+error.message);return;}
+  currentUser=data.user;await loadOrCreatePlayer();
+}
+async function doRegister(){
+  const username=document.getElementById('reg-username').value.trim();
+  const email=document.getElementById('reg-email').value.trim();
+  const pw=document.getElementById('reg-password').value;
+  const refCode=document.getElementById('reg-referral').value.trim().toUpperCase();
+  if(!username||!email||!pw){showToast('⚠️ Fill all fields');return;}
+  if(pw.length<6){showToast('⚠️ Password min 6 chars');return;}
+  showToast('⏳ Creating...');
+  const {data,error}=await sb.auth.signUp({email,password:pw,options:{data:{username}}});
+  if(error){showToast('❌ '+error.message);return;}
+  if(data.user){currentUser=data.user;window._pendingUsername=username;window._pendingRefCode=refCode;await loadOrCreatePlayer();}
+  else showToast('📧 Check your email!');
+}
+async function doGoogleLogin(){await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:'https://miniceo.fun'}});}
+async function doSignOut(){if(!confirm('Sign out?'))return;await sb.auth.signOut();currentUser=null;state={};document.body.className='';document.getElementById('navbar').style.display='none';showScreen('auth');}
+
+// ═══ PLAYER LOAD ═══
+async function loadOrCreatePlayer(){
+  const {data:player}=await sb.from('players').select('*').eq('id',currentUser.id).maybeSingle();
+  if(!player){
+    state=defaultState();
+    state.playerName=window._pendingUsername||currentUser.user_metadata?.full_name?.split(' ')[0]||currentUser.email?.split('@')[0]||'CEO';
+    state.referralCode=generateReferralCode(state.playerName);
+    hideLoading();showScreen('onboarding');return;
+  }
+  state.playerName=player.username;state.avatar=player.avatar||'😺';state.shopId=player.shop_id||'smoothie';
+  const {data:gs}=await sb.from('game_states').select('state').eq('player_id',currentUser.id).maybeSingle();
+  if(gs?.state)state={...defaultState(),...gs.state};
+  if(!state.unlockedShops)state.unlockedShops=[state.shopId];
+  if(!state.upgradeLevel)state.upgradeLevel={warehouse:0,staff:0,marketing:0};
+  if(!state.purchasedThemes)state.purchasedThemes=['default'];
+  if(!state.purchasedStickers)state.purchasedStickers=[];
+  if(!state.purchasedAvatars)state.purchasedAvatars=[];
+  if(!state.shopStaleRounds)state.shopStaleRounds={smoothie:0,sticker:0,icecream:0,accessories:0,coffee:0,fashion:0,foodtruck:0,luxury:0};
+  if(!state.flag)state.flag='🌍';
+  if(!state.bizName)state.bizName=state.playerName+"'s Empire";
+  if(!state.referralCode)state.referralCode=generateReferralCode(state.playerName);
+  if(typeof state.coins!=='number'||isNaN(state.coins))state.coins=START_COINS;
+  if(state.hasStreakShield===undefined)state.hasStreakShield=false;
+
+  if(window._pendingRefCode&&!state.referredBy){await handleReferral(window._pendingRefCode);window._pendingRefCode='';}
+
+  applyTheme(state.activeTheme||'default');
+  checkDailyReset();
+  todayChallenge=randomChallenge();
+  hideLoading();
+  if(!state.tutorialSeen)showTutorial();
+  await checkPendingGifts();
+  initDashboard();showScreen('dashboard');showNavbar();
+}
+
+async function handleReferral(refCode){
+  if(!refCode)return;
+  const {data:referrer}=await sb.from('players').select('id').eq('referral_code',refCode).maybeSingle();
+  if(!referrer)return;
+  state.referredBy=referrer.id;
+  state.coins+=REFERRAL_BONUS;
+  showToast('🎁 Referral bonus! +'+REFERRAL_BONUS+' coins!');
+  const {data:rgs}=await sb.from('game_states').select('state').eq('player_id',referrer.id).maybeSingle();
+  if(rgs?.state){
+    const rState={...rgs.state,coins:(rgs.state.coins||0)+REFERRAL_BONUS};
+    await sb.from('game_states').upsert({player_id:referrer.id,state:rState,updated_at:new Date().toISOString()});
+  }
+}
+
+function generateReferralCode(username){
+  return 'MC'+username.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4)+Math.abs(hashStr(username)).toString().slice(0,4);
+}
+
+// ═══ ONBOARDING ═══
+async function completeOnboarding(){
+  const bizName=document.getElementById('biz-name-inp').value.trim();
+  const selAvatar=document.querySelector('.avatar-opt.selected');
+  const selFlag=document.querySelector('.flag-opt.selected');
+  const selShop=document.querySelector('#onboard-shop-grid .shop-opt-ob.selected');
+  state.bizName=bizName||(state.playerName+"'s Empire");
+  state.avatar=selAvatar?selAvatar.dataset.avatar:'😺';
+  state.flag=selFlag?selFlag.dataset.flag:'🌍';
+  state.shopId=selShop?selShop.dataset.shop:'smoothie';
+  state.unlockedShops=[state.shopId];
+  state.referralCode=generateReferralCode(state.playerName);
+  if(!state.playerName)state.playerName=currentUser.email?.split('@')[0]||'CEO';
+  checkDailyReset();
+  await sb.from('players').upsert({id:currentUser.id,username:state.playerName,avatar:state.avatar,shop_id:state.shopId,referral_code:state.referralCode});
+  todayChallenge=randomChallenge();
+  await saveStateCloud();
+  applyTheme('default');
+  showTutorial();initDashboard();showScreen('dashboard');showNavbar();
+}
+
+// ═══ CLOUD SAVE ═══
+async function saveStateCloud(){
+  if(!currentUser)return;
+  if(typeof state.coins!=='number'||isNaN(state.coins))state.coins=0;
+  try{
+    await sb.from('game_states').upsert({player_id:currentUser.id,state,updated_at:new Date().toISOString()});
+    await sb.from('leaderboard').upsert({
+      player_id:currentUser.id,username:state.playerName,avatar:state.avatar,
+      flag:state.flag||'🌍',shop_id:state.shopId,
+      total_profit:Math.round(state.totalProfit||0),level:state.level||1,
+      updated_at:new Date().toISOString()
+    },{onConflict:'player_id'});
+    await sb.from('players').update({referral_code:state.referralCode}).eq('id',currentUser.id);
+    localStorage.setItem('miniceo_v9',JSON.stringify(state));
+    document.getElementById('sync-status').textContent='☁️ Saved '+new Date().toLocaleTimeString();
+  }catch(e){
+    localStorage.setItem('miniceo_v9',JSON.stringify(state));
+    document.getElementById('sync-status').textContent='💾 Local only';
+  }
+}
+
+// ═══ SCREENS ═══
+const SCREENS=['auth','onboarding','dashboard','play','results','coins-store','social','share'];
+function showScreen(name){
+  SCREENS.forEach(s=>document.getElementById('screen-'+s)?.classList.toggle('active',s===name));
+  ['nav-dashboard','nav-play','nav-coins','nav-social'].forEach(id=>document.getElementById(id)?.classList.remove('active'));
+  if(name==='dashboard'){document.getElementById('nav-dashboard')?.classList.add('active');}
+  if(name==='play'){document.getElementById('nav-play')?.classList.add('active');updatePlayScreen();}
+  if(name==='coins-store'){document.getElementById('nav-coins')?.classList.add('active');updateCoinsStore();}
+  if(name==='social'){document.getElementById('nav-social')?.classList.add('active');updateSocialScreen();}
+}
+function showNavbar(){document.getElementById('navbar').style.display='flex';}
+
+// ═══ GRID BUILDERS ═══
+function buildAvatarGrid(){
+  const ag=document.getElementById('avatar-grid');
+  AVATARS_BASE.forEach((a,i)=>{
+    const d=document.createElement('div');
+    d.className='avatar-opt'+(i===0?' selected':'');d.textContent=a;d.dataset.avatar=a;
+    d.onclick=()=>{document.querySelectorAll('.avatar-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    ag.appendChild(d);
+  });
+}
+function buildFlagGrid(){
+  const fg=document.getElementById('flag-grid');
+  FLAGS.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.className='flag-opt'+(i===0?' selected':'');d.textContent=f.flag;d.dataset.flag=f.flag;
+    d.onclick=()=>{document.querySelectorAll('.flag-opt').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    fg.appendChild(d);
+  });
+}
+function buildOnboardShopGrid(){
+  const sg=document.getElementById('onboard-shop-grid');
+  SHOPS.filter(s=>s.unlockCost===0).forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='shop-opt-ob'+(i===0?' selected':'');d.dataset.shop=s.id;
+    d.style.cssText='display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border-radius:var(--radius);border:2.5px solid var(--border);cursor:pointer;background:var(--bg);text-align:center;transition:all .15s;';
+    d.innerHTML=`<div style="font-size:30px;">${s.icon}</div><div style="font-size:12px;font-weight:800;color:var(--text);">${s.name}</div>`;
+    d.onclick=()=>{document.querySelectorAll('.shop-opt-ob').forEach(x=>x.classList.remove('selected'));d.classList.add('selected');};
+    sg.appendChild(d);
+  });
+}
+
+// ═══ DASHBOARD ═══
+function initDashboard(){
+  document.getElementById('dash-flag').textContent=state.flag||'🌍';
+  document.getElementById('dash-avatar').textContent=state.avatar;
+  document.getElementById('dash-icon-badge').textContent=state.activeSticker||'';
+  document.getElementById('dash-name').textContent=state.playerName;
+  document.getElementById('dash-biz-name').textContent=state.bizName||'';
+  document.getElementById('dash-cash').textContent='$'+Math.round(state.cash);
+  syncCoinsDisplay(); // ← single sync call
+  document.getElementById('dash-streak').textContent=state.streak||0;
+  document.getElementById('dash-level').textContent=state.level||1;
+  document.getElementById('dash-total-profit').textContent='$'+Math.round(state.totalProfit);
+  document.getElementById('dash-best-day').textContent='$'+Math.round(state.bestDay);
+  document.getElementById('dash-shop-count').textContent=(state.unlockedShops||[]).length;
+  const rep=Math.round(state.reputation);
+  document.getElementById('dash-rep-val').textContent=rep+'/100';
+  document.getElementById('dash-rep-bar').style.width=rep+'%';
+  document.getElementById('dash-rep-label').textContent=repLabel(rep);
+  document.getElementById('daily-ad-btn').style.display=state.dailyAdCollected?'none':'block';
+  document.getElementById('shield-indicator').style.display=state.hasStreakShield?'flex':'none';
+  document.getElementById('tournament-dash').style.display='block';
+  document.getElementById('tournament-rank-dash').textContent='Compete this week!';
+
+  const staleWarns=getStaleWarning();
+  const sw=document.getElementById('stale-warning');
+  if(staleWarns.length>0){sw.style.display='block';document.getElementById('stale-warning-text').textContent='⚠️ Old stock: '+staleWarns.join(', ');}
+  else sw.style.display='none';
+
+  if(!todayChallenge)todayChallenge=randomChallenge();
+  document.getElementById('challenge-text').textContent=todayChallenge.text;
+  document.getElementById('challenge-reward').textContent='+'+todayChallenge.reward+' coins';
+  document.getElementById('dash-tip').innerHTML='💡 <strong>Tip:</strong> '+TIPS[Math.floor(Math.random()*TIPS.length)];
+
+  renderMyShops();renderBadges();
+
+  const coins=Math.round(state.coins||0);
+  const btn=document.getElementById('btn-play-day');
+  if(coins<ROUND_COST){btn.disabled=true;btn.innerHTML='Need coins — watch an ad 📺';}
+  else{btn.disabled=false;btn.innerHTML='▶️ Play Round <span style="font-size:12px;opacity:.8;">(10 🪙)</span>';}
+}
+
+function getStaleWarning(){
+  const warns=[];
+  (state.unlockedShops||[]).forEach(sid=>{
+    const inv=state.shopInventories?.[sid]||0;
+    const stale=state.shopStaleRounds?.[sid]||0;
+    if(inv>0&&stale>=3)warns.push(SHOPS.find(s=>s.id===sid)?.icon+'');
+  });
+  return warns;
+}
+function applyStaleDecay(){
+  (state.unlockedShops||[]).forEach(sid=>{
+    const inv=state.shopInventories?.[sid]||0;
+    const stale=state.shopStaleRounds?.[sid]||0;
+    if(inv>0&&stale>=5){state.shopInventories[sid]=Math.floor(inv*0.7);state.shopStaleRounds[sid]=0;state.reputation=Math.max(10,state.reputation-5);}
+    else if(inv>0&&stale>=3){state.shopInventories[sid]=Math.floor(inv*0.9);}
+  });
+}
+function renderMyShops(){
+  const list=document.getElementById('my-shops-list');list.innerHTML='';
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const inv=state.shopInventories?.[sid]||0;
+    const profit=Math.round(state.shopProfits?.[sid]||0);
+    const stale=state.shopStaleRounds?.[sid]||0;
+    const d=document.createElement('div');d.className='shop-card';
+    d.innerHTML=`<div style="font-size:26px;">${shop.icon}</div><div style="flex:1;"><div style="font-size:13px;font-weight:800;color:var(--text);">${shop.name}${stale>=3?` <span style="font-size:10px;color:var(--red);">⚠️</span>`:''}</div><div style="font-size:11px;color:var(--muted);">Stock: ${inv} • -$${STAFF_COST}/round</div></div><div style="font-weight:900;font-size:14px;color:${profit>=0?'var(--green)':'var(--red)'};">${profit>=0?'+':''}$${profit}</div>`;
+    list.appendChild(d);
+  });
+}
+function repLabel(r){if(r>=90)return'🌟 Legendary';if(r>=80)return'⭐ Excellent';if(r>=70)return'😊 Great';if(r>=55)return'🙂 Good';if(r>=40)return'😐 Okay';return'😟 Struggling';}
+function renderBadges(){
+  const earned=BADGES.filter(b=>state.earnedBadges?.includes(b.id));
+  document.getElementById('badges-list').innerHTML=earned.length?earned.map(b=>`<span class="badge badge-purple">${b.icon} ${b.label}</span>`).join(''):'<span style="font-size:13px;color:var(--muted);">Play to earn badges!</span>';
+}
+function randomChallenge(){return CHALLENGES[Math.floor(Math.random()*CHALLENGES.length)];}
+
+// ═══ START ROUND ═══
+function startRound(){
+  if((state.coins||0)<ROUND_COST){document.getElementById('no-coins-overlay').classList.add('show');return;}
+  showScreen('play');
+}
+
+// ═══ PLAY SCREEN ═══
+function updatePlayScreen(){
+  document.getElementById('play-round-num').textContent=(state.totalRounds||0)+1;
+  document.getElementById('play-cash').textContent='$'+Math.round(state.cash);
+  syncCoinsDisplay();
+  document.getElementById('play-biz-title').textContent=state.bizName||state.playerName+"'s Empire";
+  shopConfigs={};
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    shopConfigs[sid]={price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+  });
+  activeConfigShopId=(state.unlockedShops||[])[0]||state.shopId;
+  buildShopConfigTabs();renderShopConfigPanel(activeConfigShopId);updateBudgetSummary();
+}
+function buildShopConfigTabs(){
+  const wrap=document.getElementById('play-shop-tabs-wrap');
+  const shops=state.unlockedShops||[];
+  if(shops.length<=1){wrap.innerHTML='';return;}
+  wrap.innerHTML=`<div class="shop-config-tabs">${shops.map(sid=>{const s=SHOPS.find(x=>x.id===sid);if(!s)return'';return`<button class="shop-config-tab${sid===activeConfigShopId?' active':''}" onclick="switchConfigShop('${sid}')">${s.icon} ${s.name}</button>`;}).join('')}</div>`;
+}
+function switchConfigShop(sid){saveCurrentShopConfig();activeConfigShopId=sid;buildShopConfigTabs();renderShopConfigPanel(sid);updateBudgetSummary();}
+function saveCurrentShopConfig(){
+  if(!activeConfigShopId||!shopConfigs[activeConfigShopId])return;
+  const pe=document.getElementById('sl-price');const ie=document.getElementById('sl-inv');
+  const ps=document.querySelector(`#promo-grid-${activeConfigShopId} .promo-opt.selected`);
+  if(pe)shopConfigs[activeConfigShopId].price=parseFloat(pe.value);
+  if(ie)shopConfigs[activeConfigShopId].invBuy=parseInt(ie.value);
+  if(ps)shopConfigs[activeConfigShopId].promoId=ps.dataset.promo||'none';
+}
+function getBulkDiscount(){const n=(state.unlockedShops||[]).length;if(n>=7)return 0.30;if(n>=5)return 0.20;if(n>=3)return 0.10;return 0;}
+function getUpgradeMult(type){
+  const lv=state.upgradeLevel?.[type]||0;
+  if(type==='warehouse'){return[1,0.90,0.80,0.65][lv]||1;}
+  if(type==='staff'){return[1,1.10,1.25,1.40][lv]||1;}
+  if(type==='marketing'){return[1,1.15,1.30,1.50][lv]||1;}
+  return 1;
+}
+function renderShopConfigPanel(shopId){
+  const shop=SHOPS.find(s=>s.id===shopId);if(!shop)return;
+  const cfg=shopConfigs[shopId]||{price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+  const warehouseMult=getUpgradeMult('warehouse');
+  const bulkDiscount=getBulkDiscount();
+  const effectiveCost=(shop.unitCost*warehouseMult*(1-bulkDiscount)).toFixed(2);
+  const stale=state.shopStaleRounds?.[shopId]||0;
+  const staleHtml=stale>=3?`<div class="stale-warn">⚠️ Stock is ${stale} rounds old — value reduced!</div>`:'';
+  const pricePct=((cfg.price-shop.minPrice)/(shop.maxPrice-shop.minPrice)*100).toFixed(1);
+
+  document.getElementById('play-shop-panel').innerHTML=`
+    ${staleHtml}
+    <div class="card">
+      <div class="card-title">💲 Price — ${shop.icon} ${shop.name}</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Price</span><span class="slider-val" id="price-val">$${cfg.price.toFixed(2)}</span></div>
+        <input type="range" id="sl-price" min="${shop.minPrice}" max="${shop.maxPrice}" step="0.5" value="${cfg.price}" oninput="onPriceChange(this)" style="--pct:${pricePct}%">
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--muted);"><span>$${shop.minPrice}</span><span>$${shop.maxPrice}</span></div>
+      </div>
+      <div id="price-tip" class="tip-bubble" style="margin:0;font-size:11px;">🧠 Find the sweet spot!</div>
+    </div>
+    <div class="card">
+      <div class="card-title">📦 Inventory — ${shop.icon} ${shop.name}</div>
+      <div class="slider-row">
+        <div class="slider-labels"><span class="slider-name">Units to buy</span><span class="slider-val" id="inv-val">${cfg.invBuy}</span></div>
+        <input type="range" id="sl-inv" min="0" max="100" step="5" value="${cfg.invBuy}" oninput="onInvChange(this)" style="--pct:${cfg.invBuy}%">
+      </div>
+      <div style="padding:8px 10px;background:var(--bg);border-radius:var(--radius-sm);font-size:12px;display:flex;justify-content:space-between;">
+        <span style="color:var(--muted);">$${effectiveCost}/unit${bulkDiscount>0?' (-'+Math.round(bulkDiscount*100)+'% bulk)':''}</span>
+        <span>Total: <strong id="inv-cost-display" style="color:var(--red);">$${Math.round(cfg.invBuy*parseFloat(effectiveCost))}</strong></span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎁 Promotion — ${shop.icon} ${shop.name}</div>
+      <div class="promo-grid" id="promo-grid-${shopId}"></div>
+    </div>`;
+
+  const pg=document.getElementById('promo-grid-'+shopId);
+  PROMOS.forEach(p=>{
+    const d=document.createElement('div');
+    d.className='promo-opt'+(p.id===cfg.promoId?' selected':'');d.dataset.promo=p.id;
+    d.innerHTML=`<div class="promo-icon">${p.icon}</div><div class="promo-name">${p.name}</div><div class="promo-effect">${p.effect}</div>`;
+    d.onclick=()=>{document.querySelectorAll(`#promo-grid-${shopId} .promo-opt`).forEach(x=>x.classList.remove('selected'));d.classList.add('selected');shopConfigs[shopId].promoId=p.id;updateBudgetSummary();};
+    pg.appendChild(d);
+  });
+  updatePriceTip(cfg.price,shop);
+}
+function onPriceChange(el){
+  const val=parseFloat(el.value);
+  document.getElementById('price-val').textContent='$'+val.toFixed(2);
+  const shop=SHOPS.find(s=>s.id===activeConfigShopId);
+  el.style.setProperty('--pct',((val-shop.minPrice)/(shop.maxPrice-shop.minPrice)*100).toFixed(1)+'%');
+  shopConfigs[activeConfigShopId].price=val;updatePriceTip(val,shop);updateBudgetSummary();
+}
+function onInvChange(el){
+  const val=parseInt(el.value);
+  const shop=SHOPS.find(s=>s.id===activeConfigShopId);
+  const cost=shop.unitCost*getUpgradeMult('warehouse')*(1-getBulkDiscount());
+  document.getElementById('inv-val').textContent=val;
+  document.getElementById('inv-cost-display').textContent='$'+Math.round(val*cost);
+  el.style.setProperty('--pct',val+'%');
+  shopConfigs[activeConfigShopId].invBuy=val;updateBudgetSummary();
+}
+function updatePriceTip(price,shop){
+  const mid=(shop.minPrice+shop.maxPrice)/2;const el=document.getElementById('price-tip');if(!el)return;
+  el.innerHTML=price>mid*1.4?'⚠️ <strong>Premium:</strong> Higher profit/sale, fewer customers.'
+    :price<mid*0.7?'💡 <strong>Budget:</strong> Great volume — watch margins!'
+    :'🧠 <strong>Sweet spot!</strong>';
+}
+function updateBudgetSummary(){
+  saveCurrentShopConfig();
+  const ads=parseInt(document.getElementById('sl-ads')?.value||10);
+  document.getElementById('ads-val').textContent='$'+ads;
+  document.getElementById('sl-ads')?.style.setProperty('--pct',(ads/80*100).toFixed(1)+'%');
+  const warehouseMult=getUpgradeMult('warehouse');
+  const bulkDiscount=getBulkDiscount();
+  const numShops=(state.unlockedShops||[]).length;
+  const staffTotal=STAFF_COST*numShops;
+  let totalInvCost=0;let budgetRows='';
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    const cost=shop.unitCost*warehouseMult*(1-bulkDiscount);
+    const invCost=Math.round(cfg.invBuy*cost);
+    totalInvCost+=invCost;
+    budgetRows+=`<div class="result-row"><span class="rr-label">${shop.icon} stock</span><span class="rr-minus">-$${invCost}</span></div>`;
+  });
+  const promo=PROMOS.find(p=>p.id===shopConfigs[activeConfigShopId]?.promoId)||PROMOS[0];
+  const cashAfter=Math.round(state.cash-totalInvCost-ads-staffTotal-(promo.costMod||0));
+  budgetRows+=`<div class="result-row"><span class="rr-label">Ads</span><span class="rr-minus">-$${ads}</span></div>`;
+  budgetRows+=`<div class="result-row"><span class="rr-label">Staff (${numShops})</span><span class="rr-minus">-$${staffTotal}</span></div>`;
+  budgetRows+=`<div class="result-row"><span class="rr-label">Round cost</span><span class="rr-minus">-${ROUND_COST} 🪙</span></div>`;
+  document.getElementById('budget-rows').innerHTML=budgetRows;
+  const caEl=document.getElementById('ps-cash-after');
+  caEl.textContent=cashAfter>=0?'$'+cashAfter:'-$'+Math.abs(cashAfter);
+  caEl.style.color=cashAfter>=0?'var(--green)':'var(--red)';
+  const btn=document.getElementById('btn-open-business');
+  if(btn){const ok=cashAfter>=0&&(state.coins||0)>=ROUND_COST;btn.disabled=!ok;btn.textContent=ok?'Open for Business! 🎉':'💸 Not enough!';}
+}
+
+// ═══ RUN ROUND ═══
+async function runRound(){
+  saveCurrentShopConfig();
+  if((state.coins||0)<ROUND_COST){document.getElementById('no-coins-overlay').classList.add('show');return;}
+  const ads=parseInt(document.getElementById('sl-ads')?.value||10);
+  const warehouseMult=getUpgradeMult('warehouse');
+  const bulkDiscount=getBulkDiscount();
+  const staffMult=getUpgradeMult('staff');
+  const marketingMult=getUpgradeMult('marketing');
+  const numShops=(state.unlockedShops||[]).length;
+  const staffTotal=STAFF_COST*numShops;
+  let totalInvCost=0;
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    totalInvCost+=cfg.invBuy*shop.unitCost*warehouseMult*(1-bulkDiscount);
+  });
+  const primaryPromo=PROMOS.find(p=>p.id===shopConfigs[state.shopId]?.promoId)||PROMOS[0];
+  const totalSpend=totalInvCost+ads+staffTotal+(primaryPromo.costMod||0);
+  if(totalSpend>state.cash){showToast("💸 Can't afford that!");return;}
+
+  state.coins=Math.max(0,Math.round((state.coins||0)-ROUND_COST));
+  state.cash-=(totalInvCost+ads+staffTotal+(primaryPromo.costMod||0));
+  applyStaleDecay();
+  (state.unlockedShops||[]).forEach(sid=>{
+    const cfg=shopConfigs[sid]||{invBuy:20};
+    if(cfg.invBuy>0){state.shopInventories[sid]=(state.shopInventories[sid]||0)+cfg.invBuy;state.shopStaleRounds[sid]=0;}
+  });
+
+  const isBadRound=Math.random()<0.20;
+  let mainEvent,badEventData=null;
+  if(isBadRound){
+    mainEvent=BAD_EVENTS[Math.floor(Math.random()*BAD_EVENTS.length)];
+    badEventData=mainEvent;
+    if(mainEvent.cashPenalty)state.cash=Math.max(0,state.cash-mainEvent.cashPenalty);
+    if(mainEvent.stockLoss)(state.unlockedShops||[]).forEach(sid=>{state.shopInventories[sid]=Math.floor((state.shopInventories[sid]||0)*(1-mainEvent.stockLoss));});
+    if(mainEvent.repPenalty)state.reputation=Math.max(5,state.reputation-mainEvent.repPenalty);
+  } else mainEvent=GOOD_EVENTS[Math.floor(Math.random()*GOOD_EVENTS.length)];
+
+  let totalRevenue=0,totalProfit=0,totalUnitsSold=0,totalInvCostActual=0;
+  let anySoldOut=false,anyPromo=false;
+  const shopResults=[];
+  (state.unlockedShops||[]).forEach(sid=>{
+    const shop=SHOPS.find(s=>s.id===sid);if(!shop)return;
+    const cfg=shopConfigs[sid]||{price:(shop.minPrice+shop.maxPrice)/2,invBuy:20,promoId:'none'};
+    const promo=PROMOS.find(p=>p.id===cfg.promoId)||PROMOS[0];
+    const shopCost=shop.unitCost*warehouseMult*(1-bulkDiscount);
+    const inv=state.shopInventories[sid]||0;
+    let demand=10+(state.reputation/100)*14+(state.totalRounds*0.1);
+    const mid=(shop.minPrice+shop.maxPrice)/2;
+    demand*=Math.pow(mid/cfg.price,1.4);
+    demand*=1+(ads/80)*0.5;
+    demand*=promo.mult||1;
+    demand*=mainEvent.mult||1;
+    demand*=staffMult;
+    demand*=marketingMult;
+    demand=Math.round(demand+(Math.random()-0.5)*5);
+    const unitsSold=Math.min(demand,inv);
+    const soldOut=demand>=inv&&inv>0;
+    const leftover=inv-unitsSold;
+    let effectivePrice=cfg.price;
+    if(promo.priceMod)effectivePrice*=promo.priceMod;
+    if(promo.revMod)effectivePrice*=promo.revMod;
+    const revenue=unitsSold*effectivePrice;
+    const cogs=unitsSold*shopCost;
+    const wasteCost=leftover*shopCost*0.15;
+    const shopProfit=revenue-cogs-wasteCost;
+    state.shopInventories[sid]=leftover;
+    if(leftover>0)state.shopStaleRounds[sid]=(state.shopStaleRounds[sid]||0)+1;
+    else state.shopStaleRounds[sid]=0;
+    state.shopProfits[sid]=(state.shopProfits[sid]||0)+shopProfit;
+    totalRevenue+=revenue;totalProfit+=shopProfit;totalUnitsSold+=unitsSold;totalInvCostActual+=cogs;
+    if(soldOut){anySoldOut=true;state.soldOuts++;}
+    if(promo.id!=='none')anyPromo=true;
+    shopResults.push({shop,shopProfit,unitsSold,soldOut,revenue,price:cfg.price});
+  });
+
+  totalProfit-=staffTotal;
+  if(badEventData?.cashPenalty)totalProfit-=badEventData.cashPenalty;
+
+  let repChange=0;
+  if(totalUnitsSold===0)repChange-=8;
+  if(anySoldOut)repChange+=3;
+  if(totalProfit>50)repChange+=2;
+  if(badEventData?.repPenalty)repChange-=badEventData.repPenalty;
+  repChange+=Math.round((Math.random()-0.5)*4);
+  repChange=Math.max(-12,Math.min(8,repChange));
+  const newRep=Math.min(100,Math.max(5,state.reputation+repChange));
+
+  state.cash=Math.round((state.cash+totalRevenue)*100)/100;
+  state.reputation=newRep;
+  state.totalProfit+=totalProfit;
+  if(totalProfit>state.bestDay)state.bestDay=totalProfit;
+
+  // Streak with Shield
+  if(totalProfit>0){
+    state.streak=(state.streak||0)+1;
+  } else {
+    if(state.hasStreakShield){
+      state.hasStreakShield=false;
+      showToast('🛡️ Streak Shield saved your streak!');
+    } else state.streak=0;
+  }
+
+  state.level=Math.max(1,Math.floor(state.totalProfit/300)+1);
+  state.totalRounds=(state.totalRounds||0)+1;
+  state.day=Math.floor((state.totalRounds||0)/5)+1;
+
+  // Streak bonus (RARE — only on milestones)
+  let streakBonus=0;
+  if(totalProfit>0){
+    if(state.streak%10===0&&state.streak>=10)streakBonus=3;
+    else if(state.streak%5===0&&state.streak>=5)streakBonus=2;
+    else if(state.streak%3===0&&state.streak>=3)streakBonus=1;
+  }
+
+  const challengeResult={profit:totalProfit,unitsSold:totalUnitsSold,anySoldOut,adsSpent:ads,newRep,revenue:totalRevenue,anyPromo};
+  const challengePassed=todayChallenge?.check(challengeResult);
+  const challengeCoins=challengePassed?todayChallenge.reward:0;
+
+  // BALANCED COIN ECONOMY
+  const totalCoinsEarned=calcRoundCoins(totalProfit,anySoldOut,anyPromo,streakBonus,challengeCoins);
+  state.coins=Math.round((state.coins||0)+totalCoinsEarned);
+  state.prevProfit=totalProfit;
+
+  const newBadges=checkBadges();
+  syncCoinsDisplay();
+  await saveStateCloud();
+
+  lastRoundResult={profit:totalProfit,unitsSold:totalUnitsSold,revenue:totalRevenue,invCost:totalInvCostActual,adsSpend:ads,coinsEarned:totalCoinsEarned,newRep,repChange,event:mainEvent,badEventData,challengePassed,newBadges,anySoldOut,shopResults,staffTotal,streakBonus};
+  renderResults(lastRoundResult,challengePassed,newBadges,anySoldOut,shopResults,streakBonus);
+  showScreen('results');
+}
+
+function checkBadges(){
+  const nb=[];
+  const checks={
+    first_round:(state.totalRounds||0)>=1,first_profit:(state.totalProfit||0)>0,
+    streak3:(state.streak||0)>=3,streak7:(state.streak||0)>=7,
+    sold_out:(state.soldOuts||0)>=1,big_round:(state.bestDay||0)>=200,
+    rep_80:(state.reputation||0)>=80,multi_shop:(state.unlockedShops||[]).length>=2,
+    coins100:(state.coins||0)>=100,day10:(state.day||0)>=10,
+    empire:(state.unlockedShops||[]).length>=4,
+  };
+  BADGES.forEach(b=>{
+    if(!state.earnedBadges?.includes(b.id)&&checks[b.id]){
+      state.earnedBadges.push(b.id);nb.push(b);
+      const bc=BADGE_COINS[b.id]||1;
+      state.coins=Math.round((state.coins||0)+bc);
+      showToast('🏅 '+b.label+' +'+bc+' coin!');
+    }
+  });
+  return nb;
+}
+
+// ═══ RENDER RESULTS ═══
+function renderResults(r,challengePassed,newBadges,anySoldOut,shopResults,streakBonus){
+  const profit=Math.round(r.profit);
+  const hero=document.getElementById('result-hero');
+  if(profit>80){hero.className='result-hero';document.getElementById('result-emoji').textContent='🚀';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Amazing!';}
+  else if(profit>20){hero.className='result-hero';document.getElementById('result-emoji').textContent='🎉';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Nice profit!';}
+  else if(profit>=0){hero.className='result-hero neutral';document.getElementById('result-emoji').textContent='😊';document.getElementById('result-headline').textContent='+$'+profit;document.getElementById('result-sublabel').textContent='Broke even!';}
+  else{hero.className='result-hero loss';document.getElementById('result-emoji').textContent='😬';document.getElementById('result-headline').textContent='-$'+Math.abs(profit);document.getElementById('result-sublabel').textContent='Bounce back!';}
+
+  const sb2=document.getElementById('streak-banner');
+  if(streakBonus>0&&profit>0){sb2.style.display='block';document.getElementById('streak-text').textContent=(state.streak||0)+' Round Streak!';document.getElementById('streak-bonus-text').textContent='+'+streakBonus+' bonus coin'+(streakBonus>1?'s':'')+'!';}
+  else sb2.style.display='none';
+
+  const be=document.getElementById('bad-event-extra');
+  if(r.badEventData&&(r.badEventData.cashPenalty||r.badEventData.stockLoss||r.badEventData.repPenalty)){
+    be.style.display='block';
+    document.getElementById('bad-event-icon').textContent=r.badEventData.icon;
+    document.getElementById('bad-event-title').textContent=r.badEventData.title;
+    let desc=r.badEventData.desc;
+    if(r.badEventData.cashPenalty)desc+=' (-$'+r.badEventData.cashPenalty+')';
+    document.getElementById('bad-event-desc').textContent=desc;
+    document.getElementById('bad-event-row').style.display='flex';
+    document.getElementById('bad-event-row-label').textContent=r.badEventData.title;
+    document.getElementById('bad-event-row-val').textContent=r.badEventData.cashPenalty?'-$'+r.badEventData.cashPenalty:'-';
+  }else{be.style.display='none';document.getElementById('bad-event-row').style.display='none';}
+
+  if(shopResults.length>1){
+    document.getElementById('shop-results-title').textContent='🏪 All Shops';
+    document.getElementById('shop-results-list').innerHTML=shopResults.map(sr=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:9px;background:var(--card);border-radius:var(--radius-sm);border:1.5px solid var(--border);margin-bottom:7px;">
+        <span style="font-size:22px;">${sr.shop.icon}</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:12px;color:var(--text);">${sr.shop.name}</div><div style="font-size:10px;color:var(--muted);">$${sr.price.toFixed(2)} • Sold ${sr.unitsSold}${sr.soldOut?' 🏪':''}</div></div>
+        <div style="font-weight:900;font-size:14px;color:${sr.shopProfit>=0?'var(--green)':'var(--red);'}">${sr.shopProfit>=0?'+':''}$${Math.round(sr.shopProfit)}</div>
+      </div>`).join('');
+  }else{document.getElementById('shop-results-title').textContent='';document.getElementById('shop-results-list').innerHTML='';}
+
+  const ev=r.event;
+  document.getElementById('result-event').className='event-banner '+ev.type;
+  document.getElementById('ev-icon').textContent=ev.icon;
+  document.getElementById('ev-title').textContent=ev.title;
+  document.getElementById('ev-desc').textContent=ev.desc;
+
+  document.getElementById('rr-rev').textContent='+$'+Math.round(r.revenue);
+  document.getElementById('rr-invcost').textContent='-$'+Math.round(r.invCost||0);
+  document.getElementById('rr-adcost').textContent='-$'+r.adsSpend;
+  document.getElementById('rr-staffcost').textContent='-$'+r.staffTotal;
+  document.getElementById('rr-profit').textContent=(profit>=0?'+':'')+('$'+profit);
+  document.getElementById('rr-profit').style.color=profit>=0?'var(--green)':'var(--red)';
+
+  const rep=Math.round(r.newRep);
+  document.getElementById('rep-change-label').textContent=(r.repChange>=0?'+':'')+r.repChange+' rep';
+  document.getElementById('rep-change-label').style.color=r.repChange>=0?'var(--green)':'var(--red)';
+  document.getElementById('rep-new-val').textContent=rep+'/100';
+  document.getElementById('result-rep-bar').style.width=rep+'%';
+  document.getElementById('rep-reason').textContent=r.unitsSold===0?'No sales — lower price or more ads.':anySoldOut?'Sold out! Buy more stock next round.':r.repChange>0?'Customers happy!':'Mixed day!';
+
+  const cCard=document.getElementById('challenge-result-card');
+  if(todayChallenge){cCard.style.display='block';document.getElementById('challenge-result-content').innerHTML=challengePassed?`<div class="badge badge-green">✅ ${todayChallenge.text}</div><div style="margin-top:6px;font-size:12px;color:var(--muted);">+${todayChallenge.reward} coins!</div>`:`<div class="badge badge-amber">❌ ${todayChallenge.text}</div>`;}
+  else cCard.style.display='none';
+
+  const nbCard=document.getElementById('new-badges-card');
+  if(newBadges.length>0){nbCard.style.display='block';document.getElementById('new-badges-content').innerHTML=newBadges.map(b=>`<span class="badge badge-purple">${b.icon} ${b.label}</span>`).join('');}
+  else nbCard.style.display='none';
+
+  const tips=[profit<0?'Revenue didn\'t cover costs — try higher price or reduce spending.':null,anySoldOut?'Sold out! Buy more stock next round.':null,'Watch daily ad for +50 free coins!'].filter(Boolean);
+  document.getElementById('explain-text').textContent=tips[0];
+  document.getElementById('coins-earned').textContent='+'+r.coinsEarned;
+  syncCoinsDisplay();
+
+  const btn=document.getElementById('btn-next-round');
+  if((state.coins||0)>=ROUND_COST){btn.textContent='Next Round ➡️';btn.disabled=false;btn.onclick=goToNextRound;}
+  else{btn.textContent='Need coins — watch ad 📺';btn.disabled=false;btn.onclick=()=>watchAdForCoins();}
+
+  if(profit>0)spawnConfetti(profit>80?120:60);
+}
+
+async function goToNextRound(){
+  if((state.coins||0)<ROUND_COST){document.getElementById('no-coins-overlay').classList.add('show');return;}
+  todayChallenge=randomChallenge();await saveStateCloud();showScreen('play');
+}
+
+// ═══ COINS STORE ═══
+function updateCoinsStore(){
+  syncCoinsDisplay();
+  const coins=Math.round(state.coins||0);
+  const dailyBtn=document.getElementById('store-daily-btn');
+  if(dailyBtn){if(state.dailyAdCollected){dailyBtn.textContent='✅ Done';dailyBtn.disabled=true;}else{dailyBtn.textContent='Collect';dailyBtn.disabled=false;}}
+
+  // Streak Shield
+  const shieldBtn=document.getElementById('shield-store-btn');
+  const shieldPrice=document.getElementById('shield-store-price');
+  if(state.hasStreakShield){
+    shieldBtn.innerHTML='<div class="badge badge-green">Active 🛡️</div>';
+    shieldPrice.textContent='Already protected!';
+    shieldPrice.style.color='var(--green)';
+  } else {
+    const canAfford=coins>=SHIELD_COST;
+    shieldBtn.innerHTML=`<button class="btn btn-sm ${canAfford?'btn-blue':'btn-secondary'}" onclick="buyStreakShield()" ${canAfford?'':'disabled'} style="width:auto;background:${canAfford?'var(--blue)':''};">${canAfford?'Buy 🛡️':'Need more'}</button>`;
+    shieldPrice.textContent='🪙 '+SHIELD_COST+' coins';
+    shieldPrice.style.color='var(--amber)';
+  }
+
+  document.getElementById('shop-unlock-list').innerHTML=SHOPS.filter(s=>s.unlockCost>0).map(s=>{
+    const owned=state.unlockedShops?.includes(s.id);
+    const canAfford=coins>=s.unlockCost;
+    return`<div class="coins-item"><div class="coins-item-icon">${s.icon}</div><div class="coins-item-info"><div class="coins-item-name">${s.name}</div><div class="coins-item-desc">${owned?'✅ Running!':'Adds to your empire!'}</div>${!owned?`<div class="coins-item-price">🪙 ${s.unlockCost.toLocaleString()}</div>`:''}</div>${owned?'<div class="badge badge-green">Active</div>':`<button class="btn btn-sm ${canAfford?'btn-amber':'btn-secondary'}" onclick="buyShop('${s.id}')" ${canAfford?'':'disabled'} style="width:auto;">${canAfford?'Unlock':'Need more'}</button>`}</div>`;
+  }).join('');
+
+  document.getElementById('upgrades-list').innerHTML=UPGRADES.map(u=>{
+    const currentLv=state.upgradeLevel?.[u.id]||0;
+    const nextLv=u.levels[currentLv];
+    const canAfford=nextLv&&coins>=nextLv.cost;
+    return`<div class="coins-item"><div class="coins-item-icon">${u.icon}</div><div class="coins-item-info"><div class="coins-item-name">${u.name}${currentLv>0?`<span class="lv-badge">Lv.${currentLv}</span>`:''}</div><div class="coins-item-desc">${currentLv>0?u.levels[currentLv-1].bonus:u.desc}</div>${nextLv?`<div class="coins-item-price">Next: ${nextLv.bonus} • 🪙 ${nextLv.cost}</div>`:'<div style="color:var(--green);font-size:11px;font-weight:700;">✅ Max Level!</div>'}</div>${nextLv?`<button class="btn btn-sm ${canAfford?'btn-primary':'btn-secondary'}" onclick="buyUpgrade('${u.id}')" ${canAfford?'':'disabled'} style="width:auto;">${canAfford?'Upgrade':'Need more'}</button>`:'<div class="badge badge-purple">MAX</div>'}</div>`;
+  }).join('');
+
+  document.getElementById('icons-list').innerHTML=`
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">🏷️ Stickers</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+    ${LUXURY_STICKERS.map(ic=>{
+      const owned=state.purchasedStickers?.includes(ic.id);
+      const active=state.activeSticker===ic.icon;
+      const canAfford=coins>=ic.cost;
+      const rc={Rare:'var(--blue)',Epic:'var(--purple)',Legendary:'var(--amber)',Ultra:'var(--red)'}[ic.rarity]||'var(--muted)';
+      return`<div style="text-align:center;padding:8px 4px;border-radius:var(--radius-sm);border:2px solid ${active?'var(--purple)':'var(--border)'};background:${active?'rgba(168,85,247,.1)':'var(--bg)'};cursor:pointer;" onclick="${owned?`toggleSticker('${ic.icon}')`:canAfford?`buyStickerAndEquip('${ic.id}','${ic.icon}')`:''}" >
+        <div style="font-size:24px;">${ic.icon}</div>
+        <div style="font-size:9px;color:${rc};font-weight:700;">${ic.rarity}</div>
+        ${!owned?`<div style="font-size:10px;color:var(--amber);font-weight:700;">🪙${ic.cost}</div>`:`<div style="font-size:9px;color:${active?'var(--purple)':'var(--green)'};">${active?'Active':'Owned'}</div>`}
+      </div>`;
+    }).join('')}
+    </div>
+    <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">🎭 Avatars</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+    ${LUXURY_AVATARS.map(av=>{
+      const owned=state.purchasedAvatars?.includes(av.id);
+      const active=state.avatar===av.icon;
+      const canAfford=coins>=av.cost;
+      const rc={Epic:'var(--purple)',Legendary:'var(--amber)',Ultra:'var(--red)',Mythic:'#FF0080'}[av.rarity]||'var(--muted)';
+      return`<div style="text-align:center;padding:8px 4px;border-radius:var(--radius-sm);border:2px solid ${active?'var(--purple)':'var(--border)'};background:${active?'rgba(168,85,247,.1)':'var(--bg)'};cursor:pointer;" onclick="${owned?`equipAvatar('${av.icon}')`:canAfford?`buyAvatarAndEquip('${av.id}','${av.icon}')`:''}" >
+        <div style="font-size:24px;">${av.icon}</div>
+        <div style="font-size:9px;color:${rc};font-weight:700;">${av.rarity}</div>
+        ${!owned?`<div style="font-size:10px;color:var(--amber);font-weight:700;">🪙${av.cost}</div>`:`<div style="font-size:9px;color:${active?'var(--purple)':'var(--green)'};">${active?'Active':'Owned'}</div>`}
+      </div>`;
+    }).join('')}
+    </div>`;
+
+  document.getElementById('themes-list').innerHTML=THEMES.map(t=>{
+    const owned=state.purchasedThemes?.includes(t.id);
+    const active=state.activeTheme===t.id;
+    const canAfford=t.cost===0||coins>=t.cost;
+    return`<div class="coins-item">
+      <div style="width:44px;height:44px;border-radius:10px;background:${t.id==='default'?'linear-gradient(135deg,#A855F7,#EC4899)':t.id==='pastel'?'linear-gradient(135deg,#FF69B4,#B2F5EA)':t.id==='neon'?'linear-gradient(135deg,#1A0033,#BF40FF)':'linear-gradient(135deg,#3D2B00,#FFD700)'};border:${active?'3px solid var(--purple)':'2px solid var(--border)'};flex-shrink:0;"></div>
+      <div class="coins-item-info"><div class="coins-item-name">${t.icon} ${t.name}</div><div class="coins-item-desc">${t.desc}</div>${!owned&&t.cost>0?`<div class="coins-item-price">🪙 ${t.cost}</div>`:''}</div>
+      ${t.cost===0||owned?`<button class="btn btn-sm ${active?'btn-secondary':'btn-green'}" onclick="applyThemeAndSave('${t.id}')" style="width:auto;">${active?'Active':'Use'}</button>`:canAfford?`<button class="btn btn-sm btn-primary" onclick="buyTheme('${t.id}')" style="width:auto;">Buy</button>`:`<button class="btn btn-sm btn-secondary" disabled style="width:auto;">Need more</button>`}
+    </div>`;
+  }).join('');
+}
+
+async function buyStreakShield(){
+  if((state.coins||0)<SHIELD_COST){showToast('❌ Need '+SHIELD_COST+' coins!');return;}
+  state.coins=Math.round((state.coins||0)-SHIELD_COST);
+  state.hasStreakShield=true;
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();initDashboard();
+  showToast('🛡️ Streak Shield activated!');
+}
+async function buyShop(shopId){
+  const shop=SHOPS.find(s=>s.id===shopId);
+  if(!shop||(state.coins||0)<shop.unlockCost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-shop.unlockCost);
+  state.unlockedShops.push(shopId);
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();spawnConfetti(80);showToast('🎉 '+shop.icon+' '+shop.name+' unlocked!');checkBadges();
+}
+async function buyUpgrade(id){
+  const u=UPGRADES.find(x=>x.id===id);
+  const currentLv=state.upgradeLevel?.[id]||0;
+  const nextLv=u?.levels[currentLv];
+  if(!nextLv||(state.coins||0)<nextLv.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-nextLv.cost);
+  state.upgradeLevel[id]=(state.upgradeLevel[id]||0)+1;
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();showToast('✅ '+u.name+' Lv.'+(state.upgradeLevel[id])+'!');
+}
+async function buyStickerAndEquip(id,icon){
+  const s=LUXURY_STICKERS.find(x=>x.id===id);
+  if(!s||(state.coins||0)<s.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-s.cost);
+  if(!state.purchasedStickers)state.purchasedStickers=[];
+  state.purchasedStickers.push(id);state.activeSticker=icon;
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();showToast('👑 '+s.name+' equipped!');initDashboard();
+}
+function toggleSticker(icon){state.activeSticker=state.activeSticker===icon?'':icon;saveStateCloud();updateCoinsStore();initDashboard();}
+async function buyAvatarAndEquip(id,icon){
+  const a=LUXURY_AVATARS.find(x=>x.id===id);
+  if(!a||(state.coins||0)<a.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-a.cost);
+  if(!state.purchasedAvatars)state.purchasedAvatars=[];
+  state.purchasedAvatars.push(id);state.avatar=icon;
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();showToast('🦁 '+a.name+' equipped!');initDashboard();
+}
+function equipAvatar(icon){state.avatar=icon;saveStateCloud();updateCoinsStore();initDashboard();}
+async function applyThemeAndSave(id){applyTheme(id);await saveStateCloud();updateCoinsStore();showToast('🎨 Theme applied!');}
+async function buyTheme(id){
+  const t=THEMES.find(x=>x.id===id);
+  if(!t||(state.coins||0)<t.cost){showToast('❌ Not enough coins!');return;}
+  state.coins=Math.round((state.coins||0)-t.cost);
+  state.purchasedThemes.push(id);applyTheme(id);
+  syncCoinsDisplay();
+  await saveStateCloud();updateCoinsStore();showToast('🎨 '+t.name+' applied!');
+}
+
+// ═══ SOCIAL ═══
+async function updateSocialScreen(){
+  document.getElementById('social-my-flag').textContent=state.flag||'🌍';
+  document.getElementById('social-my-avatar').textContent=state.avatar;
+  document.getElementById('social-my-name').textContent=state.playerName||'You';
+  document.getElementById('social-my-biz').textContent=(state.bizName||'')+' '+(state.activeSticker||'');
+  document.getElementById('my-score').textContent='$'+Math.round(state.totalProfit);
+  document.getElementById('ref-code').textContent=state.referralCode||generateReferralCode(state.playerName||'BOSS');
+  await loadLeaderboard(currentLbTab);
+  await loadFriendRequests();
+  await checkPendingGifts();
+}
+
+async function loadLeaderboard(tab){
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('lb-list').innerHTML='<div style="font-size:13px;color:var(--muted);">Loading...</div>';
+  let rows=[];
+  if(tab==='global'){
+    const {data,error}=await sb.from('leaderboard').select('*').order('total_profit',{ascending:false}).limit(10);
+    if(error)console.error('LB:',error.message);rows=data||[];
+  }else{
+    if(!currentUser)return;
+    const {data:fs}=await sb.from('friendships').select('player_id,friend_id').eq('status','accepted');
+    const ids=new Set([currentUser.id]);(fs||[]).forEach(f=>{ids.add(f.player_id);ids.add(f.friend_id);});
+    const {data}=await sb.from('leaderboard').select('*').in('player_id',[...ids]).order('total_profit',{ascending:false});
+    rows=data||[];
+  }
+  if(!rows.length){document.getElementById('lb-list').innerHTML='<div class="card-title">'+(tab==='friends'?'🏆 Friends':'🏆 Global')+'</div><div style="font-size:13px;color:var(--muted);">Play a round to appear here!</div>';return;}
+  const myIdx=rows.findIndex(r=>r.player_id===currentUser?.id);
+  document.getElementById('my-rank').textContent=myIdx>=0?'#'+(myIdx+1):'#?';
+  document.getElementById('lb-list').innerHTML='<div class="card-title">'+(tab==='friends'?'🏆 Friends':'🏆 Global')+'</div>'+
+    rows.slice(0,8).map((p,i)=>`
+      <div class="lb-row" onclick="viewPlayerProfile('${p.player_id}')" style="cursor:pointer;">
+        <div class="lb-rank">${medals[i]||('#'+(i+1))}</div>
+        <div style="font-size:16px;">${p.avatar||'😺'}</div>
+        <div style="font-size:14px;">${p.flag||'🌍'}</div>
+        <div class="lb-info"><div class="lb-name">${p.username||'Player'}</div><div class="lb-sub">${SHOPS.find(s=>s.id===p.shop_id)?.icon||'🏪'} Lv.${p.level||1}</div></div>
+        <div class="lb-score">$${(p.total_profit||0).toLocaleString()}</div>
+      </div>`).join('');
+}
+
+function switchLbTab(tab){
+  currentLbTab=tab;
+  const f=document.getElementById('tab-friends-lb');const g=document.getElementById('tab-global-lb');
+  if(tab==='friends'){f.style.cssText='border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--purple);color:#fff;border-color:var(--purple);';g.style.cssText='border-radius:0 12px 12px 0;flex:1;background:var(--bg);color:var(--purple);';}
+  else{g.style.cssText='border-radius:0 12px 12px 0;flex:1;background:var(--purple);color:#fff;border-color:var(--purple);';f.style.cssText='border-radius:12px 0 0 12px;flex:1;border-right:none;background:var(--bg);color:var(--purple);';}
+  loadLeaderboard(tab);
+}
+
+async function sendFriendRequest(){
+  const username=document.getElementById('add-friend-inp').value.trim();
+  if(!username){showToast('Enter a username!');return;}
+  const {data:friend}=await sb.from('players').select('id').eq('username',username).maybeSingle();
+  if(!friend){showToast('❌ "'+username+'" not found');return;}
+  const {error}=await sb.from('friendships').insert({player_id:currentUser.id,friend_id:friend.id,status:'pending'});
+  if(error){showToast('❌ '+(error.code==='23505'?'Already sent!':error.message));return;}
+  document.getElementById('add-friend-inp').value='';showToast('💌 Request sent!');
+}
+async function loadFriendRequests(){
+  if(!currentUser)return;
+  const {data}=await sb.from('friendships').select('id,player_id,players!friendships_player_id_fkey(username,avatar)').eq('friend_id',currentUser.id).eq('status','pending');
+  const card=document.getElementById('friend-requests-card');
+  if(!data||!data.length){card.style.display='none';return;}
+  card.style.display='block';
+  document.getElementById('req-count-badge').textContent=data.length;
+  document.getElementById('friend-requests-list').innerHTML=data.map(r=>`<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);"><span style="font-size:20px;">${r.players?.avatar||'😺'}</span><span style="flex:1;font-weight:700;font-size:13px;color:var(--text);">${r.players?.username||'Player'}</span><button class="btn btn-sm btn-green" onclick="acceptFriend('${r.id}')" style="width:auto;">Accept ✅</button></div>`).join('');
+}
+async function acceptFriend(id){
+  await sb.from('friendships').update({status:'accepted'}).eq('id',id);
+  showToast('🎉 Friend accepted!');await loadFriendRequests();await loadLeaderboard(currentLbTab);
+}
+
+// ═══ PROFILE ═══
+async function viewFriendProfile(){
+  const username=document.getElementById('add-friend-inp').value.trim();
+  if(!username){showToast('Enter a username first!');return;}
+  const {data:player}=await sb.from('players').select('*').eq('username',username).maybeSingle();
+  if(!player){showToast('❌ "'+username+'" not found');return;}
+  await viewPlayerProfile(player.id);
+}
+async function viewPlayerProfile(playerId){
+  const {data:gs}=await sb.from('game_states').select('state').eq('player_id',playerId).maybeSingle();
+  const {data:player}=await sb.from('players').select('*').eq('id',playerId).maybeSingle();
+  if(!player){showToast('❌ Player not found');return;}
+  const ps=gs?.state||{};
+  const shops=(ps.unlockedShops||[]).map(sid=>SHOPS.find(s=>s.id===sid)?.icon||'').join(' ');
+  const stickers=(ps.purchasedStickers||[]).map(id=>LUXURY_STICKERS.find(s=>s.id===id)?.icon||'').join(' ');
+  document.getElementById('profile-content').innerHTML=`
+    <div style="font-size:48px;margin-bottom:6px;">${ps.avatar||player.avatar||'😺'} ${ps.activeSticker||''}</div>
+    <div style="font-family:var(--font-d);font-size:22px;margin-bottom:4px;">${player.username}</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:14px;">${ps.bizName||player.username+"'s Empire"} ${ps.flag||'🌍'}</div>
+    <div style="background:var(--bg);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px;text-align:left;">
+      <div class="profile-stat"><span>💰 Total Profit</span><span style="font-weight:800;color:var(--green);">$${Math.round(ps.totalProfit||0).toLocaleString()}</span></div>
+      <div class="profile-stat"><span>⭐ Reputation</span><span style="font-weight:800;">${Math.round(ps.reputation||0)}/100</span></div>
+      <div class="profile-stat"><span>🔥 Streak</span><span style="font-weight:800;">${ps.streak||0} rounds</span></div>
+      <div class="profile-stat"><span>⭐ Level</span><span style="font-weight:800;">${ps.level||1}</span></div>
+      <div class="profile-stat"><span>🏪 Shops</span><span style="font-weight:800;">${shops||'🏪'}</span></div>
+      <div class="profile-stat" style="border:none;"><span>👑 Icons</span><span style="font-weight:800;">${stickers||'None yet'}</span></div>
+    </div>
+    ${currentUser?.id!==playerId?`<button class="btn btn-amber btn-sm" style="width:100%;margin-bottom:8px;" onclick="closeProfile();document.getElementById('gift-username-inp').value='${player.username}';openGiftModal();">🎁 Send Gift</button>`:''}`;
+  document.getElementById('profile-overlay').classList.add('show');
+}
+function closeProfile(){document.getElementById('profile-overlay').classList.remove('show');}
+
+// ═══ GIFTS ═══
+function openGiftModal(){
+  const username=document.getElementById('gift-username-inp').value.trim();
+  if(!username){showToast('Enter a friend\'s username first!');return;}
+  const ownedStickers=LUXURY_STICKERS.filter(s=>state.purchasedStickers?.includes(s.id));
+  const coins=Math.round(state.coins||0);
+  document.getElementById('gift-title').textContent='Send Gift to '+username;
+  document.getElementById('gift-content').innerHTML=`
+    <div class="card-title">💰 Send Coins</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;justify-content:center;">
+      ${[10,25,50,100,200].map(amt=>`<button class="btn btn-sm btn-amber" onclick="sendCoinGift('${username}',${amt})" ${coins<amt?'disabled':''} style="width:auto;">+${amt} 🪙</button>`).join('')}
+    </div>
+    ${ownedStickers.length>0?`
+    <div class="card-title">👑 Send a Sticker</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      ${ownedStickers.map(s=>`<button onclick="sendStickerGift('${username}','${s.id}','${s.icon}')" style="font-size:24px;background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:8px;cursor:pointer;">${s.icon}</button>`).join('')}
+    </div>`:'<div style="font-size:12px;color:var(--muted);">Buy stickers in the store to send them!</div>'}`;
+  document.getElementById('gift-overlay').classList.add('show');
+}
+function closeGift(){document.getElementById('gift-overlay').classList.remove('show');}
+
+async function sendCoinGift(username,amount){
+  if((state.coins||0)<amount){showToast('❌ Not enough coins!');return;}
+  const {data:friend}=await sb.from('players').select('id').eq('username',username).maybeSingle();
+  if(!friend){showToast('❌ "'+username+'" not found');return;}
+  await sb.from('gifts').insert({from_player_id:currentUser.id,to_player_id:friend.id,gift_type:'coins',gift_value:String(amount),status:'pending'});
+  state.coins=Math.round((state.coins||0)-amount);
+  syncCoinsDisplay();
+  await saveStateCloud();closeGift();
+  showToast('🎁 Sent '+amount+' coins to '+username+'!');initDashboard();
+}
+async function sendStickerGift(username,stickerName,icon){
+  const {data:friend}=await sb.from('players').select('id').eq('username',username).maybeSingle();
+  if(!friend){showToast('❌ "'+username+'" not found');return;}
+  await sb.from('gifts').insert({from_player_id:currentUser.id,to_player_id:friend.id,gift_type:'icon',gift_value:stickerName+'|'+icon,status:'pending'});
+  closeGift();showToast('🎁 Sticker sent to '+username+'!');
+}
+
+async function checkPendingGifts(){
+  if(!currentUser)return;
+  try{
+    // Get gifts with sender username
+    const {data}=await sb.from('gifts').select('*, players!gifts_from_player_id_fkey(username)').eq('to_player_id',currentUser.id).eq('status','pending');
+    const count=(data||[]).length;
+    document.getElementById('pending-gifts-btn').style.display=count>0?'block':'none';
+    const card=document.getElementById('pending-gifts-card');
+    if(!data||!count){card.style.display='none';return;}
+    card.style.display='block';
+    document.getElementById('gift-count-badge').textContent=count;
+
+    // Show first gift as popup
+    if(count>0&&data[0]){
+      const gift={...data[0],from_username:data[0].players?.username||'A friend'};
+      setTimeout(()=>showGiftReceivedPopup(gift),800);
+    }
+
+    document.getElementById('pending-gifts-list').innerHTML=data.map(g=>`
+      <div class="gift-item">
+        <div style="font-size:24px;">${g.gift_type==='coins'?'🪙':'👑'}</div>
+        <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text);">${g.gift_type==='coins'?'+'+g.gift_value+' coins':'Sticker: '+(g.gift_value?.split('|')[1]||'')}</div><div style="font-size:11px;color:var(--muted);">From ${g.players?.username||'friend'}</div></div>
+        <button class="btn btn-sm btn-green" onclick="claimGiftDirect('${g.id}','${g.gift_type}','${g.gift_value}','${g.players?.username||'friend'}')" style="width:auto;">Claim 🎁</button>
+      </div>`).join('');
+  }catch(e){console.log('gifts error',e);}
+}
+
+async function claimGiftDirect(giftId,type,value,fromName){
+  await sb.from('gifts').update({status:'claimed'}).eq('id',giftId);
+  if(type==='coins'){
+    state.coins=Math.round((state.coins||0)+parseInt(value));
+    showToast('🎁 +'+value+' coins from '+fromName+'!');
+  } else {
+    const [stickerName,icon]=value.split('|');
+    if(!state.purchasedStickers)state.purchasedStickers=[];
+    if(stickerName&&!state.purchasedStickers.includes(stickerName))state.purchasedStickers.push(stickerName);
+    state.activeSticker=icon;
+    showToast('👑 Sticker from '+fromName+'!');
+  }
+  spawnConfetti(40);
+  syncCoinsDisplay();
+  await saveStateCloud();await checkPendingGifts();initDashboard();
+}
+
+async function showPendingGifts(){showScreen('social');}
+
+function copyRefCode(){try{navigator.clipboard.writeText('Join Mini CEO! My code: '+document.getElementById('ref-code').textContent+' — we both get +100 coins! miniceo.fun');}catch(e){}showToast('📋 Code copied!');}
+
+// ═══ SHARE ═══
+function showShareCard(){
+  const r=lastRoundResult||{profit:0,unitsSold:0,newRep:state.reputation};
+  const shopIcons=(state.unlockedShops||[]).map(sid=>SHOPS.find(s=>s.id===sid)?.icon||'').join('');
+  document.getElementById('sc-biz-name').textContent=(state.flag||'🌍')+' '+state.bizName+' '+shopIcons;
+  document.getElementById('sc-tagline').textContent='Round '+(state.totalRounds||1)+' • $'+Math.round(state.totalProfit)+' total';
+  document.getElementById('sc-profit').textContent=(r.profit>=0?'+':'')+('$'+Math.round(r.profit||0));
+  document.getElementById('sc-sold').textContent=r.unitsSold||0;
+  document.getElementById('sc-rep').textContent=Math.round(r.newRep||state.reputation);
+  showScreen('share');
+}
+function buildShareText(){
+  const shopIcons=(state.unlockedShops||[]).map(sid=>SHOPS.find(s=>s.id===sid)?.icon||'').join('');
+  const r=lastRoundResult||{profit:0,unitsSold:0};
+  return`🏆 Mini CEO Challenge\n${state.flag||'🌍'} ${state.avatar} ${state.bizName} ${shopIcons}\n\nRound ${state.totalRounds}: $${Math.round(r.profit||0)} profit\n📦 ${r.unitsSold||0} sold • ⭐ Rep ${Math.round(state.reputation)}/100 • 🔥 Streak ${state.streak||0}\n\n🎮 miniceo.fun\nUse my referral: ${state.referralCode} for +100 coins!`;
+}
+function shareResult(){const text=buildShareText();if(navigator.share)navigator.share({title:'Mini CEO',text,url:'https://miniceo.fun'});else{try{navigator.clipboard.writeText(text);}catch(e){}showToast('📋 Copied!');}}
+function copyShareText(){try{navigator.clipboard.writeText(buildShareText());}catch(e){}showToast('📋 Copied! 🎉');}
+
+// ═══ CONFETTI ═══
+function spawnConfetti(count){
+  const canvas=document.getElementById('confetti-canvas');const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#A855F7','#EC4899','#F59E0B','#22C55E','#3B82F6','#14B8A6'];
+  const pieces=Array.from({length:count},()=>({x:Math.random()*canvas.width,y:-10-Math.random()*200,r:4+Math.random()*6,d:2+Math.random()*3,color:colors[Math.floor(Math.random()*colors.length)],tilt:0,tiltAngle:0,tiltSpeed:0.03+Math.random()*0.05}));
+  let frame=0;
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.beginPath();ctx.fillStyle=p.color;ctx.ellipse(p.x,p.y,p.r,p.r*0.6,p.tilt,0,2*Math.PI);ctx.fill();p.y+=p.d;p.tilt=Math.sin(p.tiltAngle)*10;p.tiltAngle+=p.tiltSpeed;if(p.y>canvas.height)p.y=-10;});if(++frame<200)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);}
+  draw();
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function hashStr(s=''){let h=0;for(let i=0;i<s.length;i++)h=Math.imul(31,h)+s.charCodeAt(i)|0;return h;}
+</script>
+</body>
+</html>
